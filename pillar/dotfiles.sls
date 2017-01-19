@@ -35,3 +35,12 @@ dotfiles:
   - file.managed:
     - location: .vim/autoload/plug.vim
       source: {{ github_file("junegunn/vim-plug", "plug.vim") }}
+  - file.recurse_symlink:
+    - source: .dotfiles/repos/public/default
+      # file.recurse_symlink use file.find to list files,
+      # find:
+      #     name: '.*'
+  {%- if grains.os_family == "MacOS" %}
+  - file.recurse_symlink:
+    - source: .dotfiles/repos/public/MacOS
+  {%- endif %}

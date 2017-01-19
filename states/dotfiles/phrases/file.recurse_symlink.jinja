@@ -1,0 +1,31 @@
+{% macro install(index, source, location=None, find={})%}
+phrase step {{ index }}:
+  test.nop: []
+
+  {%- if location is none %}
+    {%- set location = dotfiles.home %}
+  {%- else %}
+    {%- set location = macros.abspath(location) %}
+  {%- endif %}
+  {%- set source = macros.abspath(source) %}
+  {%- set source_length = source | length %}
+
+  {%- for target in salt['file.find'](macros.abspath(source), **find)
+        if not salt['file.directory_exists'](target) %}
+    {%- set name = location ~ target[source_length:] %}
+phrase step {{ index }}|{{ name }}:
+  file.symlink:
+    - name: '{{ name }}'
+    - makedirs: True
+    - target: '{{ target }}'
+    - user: {{ dotfiles.user or grains.username }}
+    {%- if grains.groupname is not none %}
+    - group: {{ dotfiles.group or grains.groupname }}
+    {%- endif %}
+    {%- for k, v in kwargs %}
+    - {{ k }}: {{ v | json }}
+    {%- endfor %}
+    - require_in:
+      - test: phrase step {{ index }}
+  {%- endfor %}
+{% endmacro %}
