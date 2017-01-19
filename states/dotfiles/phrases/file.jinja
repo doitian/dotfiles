@@ -1,0 +1,24 @@
+{%- macro install(index, location, source) -%}
+phrase step {{ index }}:
+  file.managed:
+    - name: '{{ macros.abspath(location) }}'
+    {%- if '://' in source %}
+    - source: '{{ source }}'
+    {%- else %}
+    - source: 'file://{{ macros.abspath(source) }}'
+    {%- endif %}
+    {%- if dotfiles.user is not none %}
+    - user: {{ dotfiles.user }}
+    {%- endif %}
+    {%- if dotfiles.group is not none %}
+    - group: {{ dotfiles.group }}
+    {%- endif %}
+    {%- if 'source_hash' not in kwargs %}
+    - skip_verify: True
+    {%- endif %}
+    - makedirs: True
+    - follow_symlinks: False
+    {%- for k, v in kwargs %}
+    - {{ k }}: {{ v | json }}
+    {%- endfor %}
+{%- endmacro %}

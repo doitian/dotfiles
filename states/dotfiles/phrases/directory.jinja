@@ -1,0 +1,15 @@
+{%- macro install(index, location) -%}
+phrase step {{ index }}:
+  file.directory:
+    - name: '{{ macros.abspath(location) }}'
+    {%- if dotfiles.user is not none %}
+    - user: {{ dotfiles.user }}
+    {%- endif %}
+    {%- if dotfiles.group is not none %}
+    - group: {{ dotfiles.group }}
+    {%- endif %}
+    - makedirs: True
+    {%- for k, v in kwargs %}
+    - {{ k }}: {{ v | json }}
+    {%- endfor %}
+{%- endmacro %}

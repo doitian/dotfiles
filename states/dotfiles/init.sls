@@ -1,3 +1,3 @@
 include:
   - .repos
-  - .stages
+  - .build

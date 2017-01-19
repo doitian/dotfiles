@@ -1,0 +1,13 @@
+{%- from "dotfiles/map.jinja" import dotfiles %}
+{%- import "dotfiles/macros.jinja" as macros %}
+
+{%- set functions = {} %}
+
+{%- set prefix = 'dotfiles/phrases' %}
+{%- set prefix_length = prefix | length %}
+
+{%- for file in salt['cp.list_master'](prefix=prefix) if file[-6:] == '.jinja' and '__index__' not in file %}
+{%- import file as module with context %}
+{%- set name = file[prefix_length + 1:-6] %}
+{%- do functions.update({name: module}) %}
+{%- endfor %}

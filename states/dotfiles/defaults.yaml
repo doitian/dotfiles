@@ -10,4 +10,4 @@ default:
   repos_dir: '{{ salt['file.join']('.dotfiles', 'repos') }}'
 
   repos: []
-  stages: []
+  phrases: []
