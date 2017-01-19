@@ -30,8 +30,8 @@ dotfiles:
     #   single: http://example.com/single
 
   phrases:
-  - directory:
+  - file.directory:
     - location: .vim/backup
-  - file:
+  - file.managed:
     - location: .vim/autoload/plug.vim
       source: {{ github_file("junegunn/vim-plug", "plug.vim") }}
