@@ -1,3 +1,6 @@
-/var
-/etc
-/config/roster
+.DS_Store
+var
+etc
+roster
+repos
+debug.sls

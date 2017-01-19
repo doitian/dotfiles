@@ -3,6 +3,7 @@ root_dir: ./
 file_roots:
   base:
     - states
+    - workspace
 pillar_roots:
   base:
     - pillar

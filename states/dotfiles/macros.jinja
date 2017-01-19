@@ -1,0 +1,13 @@
+{%- from "dotfiles/map.jinja" import dotfiles %}
+
+{%- macro abspath(location) -%}
+  {%- if location is none or location == "" -%}
+{{ dotfiles.home }}
+  {%- else -%}
+{{ salt['file.join'](dotfiles.home, location, *varargs) }}
+  {%- endif -%}
+{%- endmacro %}
+
+{%- macro repo_path(name) -%}
+{{ abspath(dotfiles.home, dotfiles.repos_dir, name) }}
+{%- endmacro %}
