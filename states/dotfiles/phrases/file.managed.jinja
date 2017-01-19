@@ -18,7 +18,7 @@ phrase step {{ index }}:
     {%- endif %}
     - makedirs: True
     - follow_symlinks: False
-    {%- for k, v in kwargs %}
+    {%- for k, v in kwargs.items() %}
     - {{ k }}: {{ v | json }}
     {%- endfor %}
 {%- endmacro %}

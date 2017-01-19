@@ -9,7 +9,7 @@ phrase step {{ index }}:
     - group: {{ dotfiles.group }}
     {%- endif %}
     - makedirs: True
-    {%- for k, v in kwargs %}
+    {%- for k, v in kwargs.items() %}
     - {{ k }}: {{ v | json }}
     {%- endfor %}
 {%- endmacro %}
