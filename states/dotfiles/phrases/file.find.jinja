@@ -12,7 +12,7 @@ phrase step {{ index }}:
   test.nop: []
 
     {%- for target in salt['file.find'](source, **kwargs)
-        if not salt['file.directory_exists'](target) %}
+        if not salt['file.directory_exists'](target) and target[-4:] not in ['.swp'] and target[-1] != '~' %}
       {%- set name = location ~ target[source_length:] %}
 phrase step {{ index }} {{ name }}:
   file.{% if managed %}managed{% else %}symlink{% endif %}:

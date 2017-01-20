@@ -32,6 +32,7 @@ dotfiles:
     chnroutes.py:
       single: {{ github_file("fivesheep/chnroutes", "chnroutes.py") }}
       mode: 0755
+
     # download_archive:
     #   archive: http://example.com/archive.zip
 
