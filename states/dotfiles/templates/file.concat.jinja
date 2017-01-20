@@ -1,7 +1,7 @@
 {%- for s in source -%}
 {%- if comment != '' and not (loop.first or loop.last) -%}
 # {{ s }} {{ '{{{1' }}
-{%- endif %}
+{% endif -%}
 {{ salt['cp.get_file_str'](s).decode('utf-8') }}
 {% if comment != '' and not (loop.first or loop.last) -%}
 # {{ s }} {{ '}}}1' }}
