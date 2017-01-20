@@ -1,0 +1,14 @@
+{%- macro install(index, location) -%}
+phrase step {{ index }}:
+  file.symlink:
+    - name: '{{ macros.abspath(location) }}'
+    - target: '{{ macros.abspath(kwargs.pop('target', kwargs.pop('source'))) }}'
+    - user: {{ dotfiles.user or grains.username }}
+    {%- if dotfiles.group is not none %}
+    - group: {{ dotfiles.group }}
+    {%- endif %}
+    - makedirs: True
+    {%- for k, v in kwargs.items() %}
+    - {{ k }}: {{ v | json }}
+    {%- endfor %}
+{%- endmacro %}

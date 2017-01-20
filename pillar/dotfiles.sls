@@ -22,22 +22,75 @@ dotfiles:
     on-my-zsh:
       git: {{ github("robbyrussell/oh-my-zsh") }}
       location: .oh-my-zsh
-    # location: .dotfiles/repos/private
-
+    bd.zsh:
+      single: {{ github_file("Tarrasch/zsh-bd", "bd.zsh") }}
+    plug.vim:
+      single: {{ github_file("junegunn/vim-plug", "plug.vim") }}
+    flora_pac:
+      single: {{ github_file("Leask/Flora_Pac", "flora_pac") }}
+      mode: 0755
+    chnroutes.py:
+      single: {{ github_file("fivesheep/chnroutes", "chnroutes.py") }}
+      mode: 0755
     # download_archive:
     #   archive: http://example.com/archive.zip
-    # download_single:
-    #   single: http://example.com/single
 
   phrases:
   - file.directory:
+    - location: .zcompcache
     - location: .vim/backup
-  - file.managed:
+  - file.symlink:
     - location: .vim/autoload/plug.vim
-      source: {{ github_file("junegunn/vim-plug", "plug.vim") }}
+      source: .dotfiles/repos/plug.vim
+    - location: bin/flora_pac
+      source: .dotfiles/repos/flora_pac
+      mode: 0555
+    - location: bin/chnroutes.py
+      source: .dotfiles/repos/chnroutes.py
+      mode: 0555
+  - file.managed:
+    - location: .gitconfig
+      source: .dotfiles/repos/public/gitconfig.jinja
+      template: jinja
+      mode: 0640
+  - file.concat:
+    - location: .zshrc
+      comment: '# '
+      mode: 0440
+      source:
+        - .dotfiles/repos/public/zshrc
+        {%- load_yaml as libs %}
+        - completion
+        - directories
+        - functions
+        - grep
+        - history
+        - key-bindings
+        - git
+        - misc
+        - spectrum
+        - termsupport
+        - theme-and-appearance
+        {%- endload %}
+        {%- for l in libs %}
+        - .oh-my-zsh/lib/{{ l }}.zsh
+        {%- endfor %}
+        {%- for p in ['safe-paste', 'ssh-agent', 'rake-fast'] %}
+        - .oh-my-zsh/plugins/{{ p }}/{{ p }}.plugin.zsh
+        {%- endfor %}
+        - .oh-my-zsh/plugins/gitfast/git-prompt.sh
+        - find:
+            path: .dotfiles/repos/public/zsh
+            name: '*.zsh'
+        - .dotfiles/repos/bd.zsh
+        - .dotfiles/repos/public/zshrc.after
+
   - file.find:
     - source: .dotfiles/repos/public/default
       symlink: True
+    - source: .dotfiles/repos/private/default
+      symlink: True
+      private: True
   {%- if grains.os_family == "MacOS" %}
   - file.find:
     - source: .dotfiles/repos/public/MacOS

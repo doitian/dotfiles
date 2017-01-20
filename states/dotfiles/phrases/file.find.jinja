@@ -11,14 +11,18 @@
 phrase step {{ index }}:
   test.nop: []
 
-    {%- for target in salt['file.find'](macros.abspath(source), **kwargs)
-          if not salt['file.directory_exists'](target) %}
+    {%- for target in salt['file.find'](source, **kwargs)
+        if not salt['file.directory_exists'](target) %}
       {%- set name = location ~ target[source_length:] %}
-phrase step {{ index }}|{{ name }}:
+phrase step {{ index }} {{ name }}:
   file.{% if managed %}managed{% else %}symlink{% endif %}:
     - name: '{{ name }}'
     - makedirs: True
+      {%- if managed %}
+    - source: 'file://{{ target }}'
+      {%- else %}
     - target: '{{ target }}'
+      {%- endif %}
       {%- if symlink %}
     - user: {{ dotfiles.user or grains.username }}
       {%- endif %}

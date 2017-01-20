@@ -1,0 +1,38 @@
+{%- macro install(index, location, source, comment='') -%}
+phrase step {{ index }}:
+  file.managed:
+    - name: '{{ macros.abspath(location) }}'
+    - source: salt://dotfiles/templates/file.concat.jinja
+    - template: jinja
+    - context:
+        comment: '{{ comment }}'
+        source:
+        {%- for s in source %}
+          {%- if s is mapping %}
+            {%- if 'find' in s %}
+              {%- set path = macros.abspath(s.find.pop('path')) %}
+              {%- for f in salt['file.find'](path, **s.find)
+                  if not salt['file.directory_exists'](f) %}
+          - 'file://{{ f }}'
+              {%- endfor %}
+            {%- else %}
+          - '{{ s }}'
+            {%- endif %}
+          {%- elif '://' in s %}
+          - '{{ s }}'
+          {%- else %}
+          - 'file://{{ macros.abspath(s) }}'
+          {%- endif %}
+        {%- endfor %}
+    {%- if dotfiles.user is not none %}
+    - user: {{ dotfiles.user }}
+    {%- endif %}
+    {%- if dotfiles.group is not none %}
+    - group: {{ dotfiles.group }}
+    {%- endif %}
+    - makedirs: True
+    - follow_symlinks: False
+    {%- for k, v in kwargs.items() %}
+    - {{ k }}: {{ v | json }}
+    {%- endfor %}
+{%- endmacro %}

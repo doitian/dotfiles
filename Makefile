@@ -17,19 +17,21 @@ endif
 PILLAR = {$(PILLAR_PAIRS)}
 
 EXEC := $(if $(DRYRUN),@echo '[DRYRUN]',)
-SALT_ARGS :=
+SALT_ARGS := --state-output=mixed
 
-install:
-	$(EXEC) salt-call $(SALT_ARGS) state.apply pillar="$(PILLAR)"
+install: sls
 
-uninstall:
-	$(EXEC) salt-call $(SALT_ARGS) state.apply dotfiles.uninstall pillar="$(PILLAR)"
+uninstall: SLS := dotfiles.uninstall
+build build-all: SLS := dotfiles.build
+repos repos-all: SLS := dotfiles.repos
 
-all uninstall-all: PILLAR_PAIRS += 'private':True,
-all: install
-uninstall-all: uninstall
+all build-all repos-all: PILLAR_PAIRS += 'private':True,
+uninstall all build build-all repos repos-all: sls
 
 pillar:
 	@echo "$(PILLAR)"
 
-.PHONY: install uninstall pillar
+sls:
+	$(EXEC) salt-call $(SALT_ARGS) state.apply $(SLS) pillar="$(PILLAR)"
+
+.PHONY: install uninstall repos build build-all repos-all all pillar sls

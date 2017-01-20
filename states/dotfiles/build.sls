@@ -6,8 +6,10 @@
   {%- for function, steps in function_steps_dict.items() %}
     {%- if functions[function] is defined %}
       {%- for step in steps -%}
-        {%- do globals.update(index=globals.index+1) %}
+        {%- if not step.pop('private', False) or dotfiles.private %}
+          {%- do globals.update(index=globals.index+1) %}
 {{ functions[function].install(index=globals.index, **step) }}
+        {%- endif %}
       {%- endfor %}
     {%- else %}
       {%- do globals.update(index=globals.index+1) %}
