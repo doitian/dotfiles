@@ -1,0 +1,17 @@
+base:
+  pkgs: []
+
+  rbenv:
+    versions: []
+    pkgs: []
+  mas:
+    pkgs: []
+  pip:
+    pkgs: []
+  npm:
+    pkgs: []
+  golang:
+    gopath: codebase/gopath
+    pkgs: []
+
+default: {}

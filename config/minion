@@ -10,3 +10,4 @@ file_roots:
 pillar_roots:
   base:
     - pillar
+user: 'ian'
