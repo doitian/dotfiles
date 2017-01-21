@@ -32,9 +32,9 @@ dotfiles:
     chnroutes.py:
       single: {{ github_file("fivesheep/chnroutes", "chnroutes.py") }}
       mode: 0755
-
-    # download_archive:
-    #   archive: http://example.com/archive.zip
+    qshell:
+      archive: http://devtools.qiniu.com/qshell-v2.0.0.zip
+      enforce_toplevel: False
 
   phrases:
   - file.directory:
@@ -49,6 +49,12 @@ dotfiles:
     - location: bin/chnroutes.py
       source: .dotfiles/repos/chnroutes.py
       mode: 0555
+    - location: bin/qshell
+      source: .dotfiles/repos/qshell/qshell_{{ salt['grains.filter_by']({
+        'MacOS': 'darwin_amd64',
+        'Windows': 'windows_amd64',
+        'default': 'linux_amd64'
+      }) }}
   - file.managed:
     - location: .gitconfig
       source: .dotfiles/repos/public/gitconfig.jinja

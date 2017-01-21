@@ -11,3 +11,5 @@
 {%- macro repo_path(name) -%}
 {{ abspath(dotfiles.home, dotfiles.repos_dir, name) }}
 {%- endmacro %}
+
+{%- macro noop(ignore) -%}{%- endmacro %}

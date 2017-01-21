@@ -28,3 +28,10 @@ phrase step {{ index }}:
     - {{ k }}: {{ v | json }}
     {%- endfor %}
 {%- endmacro %}
+
+{%- macro uninstall(index, location) -%}
+{{ macros.noop(kwargs) -}}
+phrase step {{ index }}:
+  file.absent:
+    - name: '{{ macros.abspath(location) }}'
+{%- endmacro %}

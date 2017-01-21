@@ -13,3 +13,9 @@ phrase step {{ index }}:
     - {{ k }}: {{ v | json }}
     {%- endfor %}
 {%- endmacro %}
+
+{%- macro uninstall(index) -%}
+{{ macros.noop(kwargs) -}}
+phrase step {{ index }}:
+  test.nop: []
+{%- endmacro %}

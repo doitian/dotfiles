@@ -9,6 +9,7 @@ Homebrew packages:
     - pkgs:
       - ant
       - bash
+      - caddy
       - colordiff
       - coreutils
       - ctags
@@ -22,6 +23,7 @@ Homebrew packages:
       - git-number
       - git-extras
       - htop-osx
+      - hugo
       - imagemagick
       - jq
       - lua

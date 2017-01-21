@@ -48,3 +48,27 @@ phrase step {{ index }}:
     - name: eighther managed or symlink, but not both
   {%- endif %}
 {%- endmacro %}
+
+{% macro uninstall(index, source, location=None, managed=False, symlink=False)%}
+{{ macros.noop(kwargs) -}}
+  {%- if location is none %}
+    {%- set location = dotfiles.home %}
+  {%- else %}
+    {%- set location = macros.abspath(location) %}
+  {%- endif %}
+  {%- set source = macros.abspath(source) %}
+  {%- set source_length = source | length %}
+
+  {%- if (managed and not symlink) or (not managed and symlink) %}
+phrase step {{ index }}:
+  test.nop: []
+
+    {%- for target in salt['file.find'](source, **kwargs)
+        if not salt['file.directory_exists'](target) and target[-4:] not in ['.swp'] and target[-1] != '~' %}
+      {%- set name = location ~ target[source_length:] %}
+phrase step {{ index }} {{ name }}:
+  file.absent:
+    - name: '{{ name }}'
+    {%- endfor %}
+  {%- endif %}
+{%- endmacro %}
