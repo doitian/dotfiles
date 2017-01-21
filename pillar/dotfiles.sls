@@ -54,6 +54,9 @@ dotfiles:
       source: .dotfiles/repos/public/gitconfig.jinja
       template: jinja
       mode: 0640
+    - location: .safebin
+      contents: "{{ salt['grains.get_or_set_hash']('dotfiles:safebin_secret', length=8, chars='abcdefghijklmnopqrstuvwxyz0123456789') }}"
+      mode: 0400
   - file.concat:
     - location: .zshrc
       comment: '# '
@@ -100,4 +103,8 @@ dotfiles:
     - source: .dotfiles/repos/public/MacOS_cp
       managed:
         mode: 440
+  - file.managed:
+    - source: .dotfiles/repos/public/environment.plist.jinja
+      template: jinja
+      location: .MacOSX/environment.plist
   {%- endif %}

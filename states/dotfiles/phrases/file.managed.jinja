@@ -1,11 +1,13 @@
-{%- macro install(index, location, source) -%}
+{%- macro install(index, location, source=None) -%}
 phrase step {{ index }}:
   file.managed:
     - name: '{{ macros.abspath(location) }}'
-    {%- if '://' in source %}
+    {%- if source is not none %}
+      {%- if '://' in source %}
     - source: '{{ source }}'
-    {%- else %}
+      {%- else %}
     - source: 'file://{{ macros.abspath(source) }}'
+      {%- endif %}
     {%- endif %}
     {%- if dotfiles.user is not none %}
     - user: {{ dotfiles.user }}
@@ -15,6 +17,10 @@ phrase step {{ index }}:
     {%- endif %}
     {%- if 'source_hash' not in kwargs %}
     - skip_verify: True
+    {%- endif %}
+    {%- if 'template' in kwargs and 'context' not in kwargs %}
+    - context:
+        dotfiles: {{ dotfiles | json }}
     {%- endif %}
     - makedirs: True
     - follow_symlinks: False

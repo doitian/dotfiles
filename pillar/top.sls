@@ -2,4 +2,3 @@ base:
   '*':
   - dotfiles
   - git
-  - bootstrap
