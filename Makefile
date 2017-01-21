@@ -31,7 +31,10 @@ uninstall all build build-all repos repos-all: sls
 pillar:
 	@echo "$(PILLAR)"
 
-sls:
+sls: config/minion
 	$(EXEC) salt-call $(SALT_ARGS) state.apply $(SLS) pillar="$(PILLAR)"
+
+config/minion:
+	bin/setup
 
 .PHONY: install uninstall repos build build-all repos-all all pillar sls
