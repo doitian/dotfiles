@@ -1,5 +1,5 @@
 # vim: ft=yaml:
-root_dir: ./
+root_dir: .
 file_roots:
   base:
     - states

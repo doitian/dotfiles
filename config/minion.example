@@ -2,7 +2,7 @@
 id: local
 file_client: local
 minion_id_caching: False
-root_dir: ./
+root_dir: .
 file_roots:
   base:
     - states
