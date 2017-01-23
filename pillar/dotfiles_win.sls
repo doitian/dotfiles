@@ -10,6 +10,9 @@ https://github.com/{{ user_repo }}.git
 https://raw.githubusercontent.com/{{ user_repo }}/{{ branch }}/{{ file }}
 {%- endmacro -%}
 
+{%- set onedrive = salt['environ.get']('ONEDRIVE', 'OneDrive') %}
+{%- set cmderr = salt['file.join'](salt['environ.get']('ONEDRIVE', 'OneDrive'), 'Apps', 'cmder') %}
+
 dotfiles:
   # All repos are created in .dotfiles/NAME
   repos:
@@ -34,3 +37,23 @@ dotfiles:
     - location: .gitconfig
       source: .dotfiles\repos\public\gitconfig.jinja
       template: jinja
+  - file.find:
+    - source: .dotfiles\repos\public\Windows_cmder
+      location: '{{ cmderr }}'
+      managed: True
+  - win.setx:
+    - name: CODEBASE
+      value: D:\codebase
+      replace: False
+    - name: GOPATH
+      value: '{{ salt['environ.get']('CODEBASE', default='D:\codebase') }}\gopath'
+    - name: ONEDRIVE
+      value: '{{ onedrive }}'
+      replace: False
+    - name: Path
+      location:
+        - bin
+        - '{{ onedrive }}\Apps\cmder\vendor\git-for-windows\bin'
+        - '{{ onedrive }}\Apps\Apache-Subversion-1.8.13\bin'
+        - '{{ onedrive }}\Apps\Sublime'
+        - '{{ salt['environ.get']('CODEBASE', default='D:\codebase') }}\gopath\bin'

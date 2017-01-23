@@ -1,0 +1,44 @@
+{%- macro get_value(val, islocation=False) -%}
+  {%- if val is list -%}
+    {%- load_yaml as value_list %}
+      {%- for e in val %} 
+- '{{ get_value(e, islocation) }}'
+      {%- endfor %}
+    {%- endload -%}
+{{ value_list | join(';')}}
+  {%- else %}
+    {%- if islocation -%}
+{{ macros.abspath(val) }}
+    {%- else -%}
+{{ val }}
+    {%- endif %}
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro install(index, name, location=None, value=None) -%}
+{%- set value = get_value(location, True) %}
+  {%- if value == salt['environ.get'](name, default="") %}
+phrase step {{ index }}:
+  test.nop: []
+  {%- else %}
+phrase step {{ index }}:
+  cmd.run:
+    {%- if location is not none %}
+    - name: |
+        setx {{ name }} "{{ get_value(location, True) }}"
+    {%- else %}
+    - name: |
+        setx {{ name }} "{{ get_value(value) }}"
+    {%- endif %}
+    {%- for k, v in kwargs.items() %}
+    - {{ k }}: {{ v | json }}
+    {%- endfor %}
+  {%- endif %}
+{%- endmacro %}
+
+{%- macro uninstall(index, name) -%}
+{{ macros.noop(kwargs) -}}
+phrase step {{ index }}:
+  cmd.run:
+    - name: 'REG delete HKCU\Environment /F /V {{ name }}'
+{%- endmacro %}
