@@ -15,7 +15,6 @@ dotfiles:
   repos:
     public:
       git: {{ github("doitian/dotfiles-public") }}
-      # location: .dotfiles/repos/public
     private:
       git: {{ github("doitian/dotfiles-private") }}
       private: True
@@ -52,7 +51,6 @@ dotfiles:
     - location: bin/qshell
       source: .dotfiles/repos/qshell/qshell_{{ salt['grains.filter_by']({
         'MacOS': 'darwin_amd64',
-        'Windows': 'windows_amd64',
         'default': 'linux_amd64'
       }) }}
   - file.managed:
