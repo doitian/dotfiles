@@ -40,8 +40,8 @@ dotfiles:
       source: .dotfiles\repos\public\gitconfig.jinja
       template: jinja
   - file.find:
-    - source: .dotfiles\repos\public\Windows_cmder
-      location: '{{ cmderr }}'
+    - location: '{{ cmderr }}'
+      source: .dotfiles\repos\public\Windows_cmder
       managed: True
   - win.setx:
     - name: CODEBASE
@@ -55,7 +55,8 @@ dotfiles:
     - name: Path
       location:
         - bin
-        - '{{ onedrive }}\Apps\cmder\vendor\git-for-windows\bin'
         - '{{ onedrive }}\Apps\Apache-Subversion-1.8.13\bin'
         - '{{ onedrive }}\Apps\Sublime'
+        - '{{ onedrive }}\Apps\PortableGit\cmd'
+        - '{{ onedrive }}\Apps\PortableGit\usr\bin'
         - '{{ salt['environ.get']('CODEBASE', default='D:\codebase') }}\gopath\bin'
