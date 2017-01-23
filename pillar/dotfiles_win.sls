@@ -28,6 +28,8 @@ dotfiles:
   - file.directory:
     - location: .vim/backup
   - file.managed:
+    - location: .vimrc
+      source: .dotfiles\repos\public\default\.vimrc
     - location: .vim\autoload\plug.vim
       source: .dotfiles\repos\plug.vim
     - location: bin/qshell
