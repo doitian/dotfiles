@@ -15,21 +15,21 @@
   {%- endif %}
 {%- endmacro %}
 
-{%- macro install(index, name, location=None, value=None) -%}
-{%- set value = get_value(location, True) %}
-  {%- if value == salt['environ.get'](name, default="") %}
+{%- macro install(index, name, replace=True, location=None, value=None) -%}
+  {%- if location is not none %}
+    {%- set value = get_value(location, True) %}
+  {%- else %}
+    {%- set value = get_value(value) %}
+  {% endif %}
+  {%- set existing_value = salt['environ.get'](name, default=None) %}
+  {%- if value == existing_value or (not replace and existing_value is not none) %}
 phrase step {{ index }}:
   test.nop: []
   {%- else %}
 phrase step {{ index }}:
   cmd.run:
-    {%- if location is not none %}
     - name: |
-        setx {{ name }} "{{ get_value(location, True) }}"
-    {%- else %}
-    - name: |
-        setx {{ name }} "{{ get_value(value) }}"
-    {%- endif %}
+        setx {{ name }} "{{ value }}"
     {%- for k, v in kwargs.items() %}
     - {{ k }}: {{ v | json }}
     {%- endfor %}

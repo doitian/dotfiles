@@ -48,7 +48,7 @@ dotfiles:
     - name: GOPATH
       value: '{{ salt['environ.get']('CODEBASE', default='D:\codebase') }}\gopath'
     - name: ONEDRIVE
-      value: '{{ onedrive }}'
+      location: '{{ onedrive }}'
       replace: False
     - name: Path
       location:
