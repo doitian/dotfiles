@@ -101,9 +101,6 @@ dotfiles:
       private: True
   {%- if grains.os_family == "MacOS" %}
   - file.find:
-    - source: .dotfiles/repos/public/MacOS
-      symlink: True
-  - file.find:
     - source: .dotfiles/repos/public/MacOS_cp
       managed:
         mode: 440
