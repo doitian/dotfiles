@@ -20,9 +20,6 @@ dotfiles:
       git: {{ github("doitian/dotfiles-public") }}
     plug.vim:
       single: {{ github_file("junegunn/vim-plug", "plug.vim") }}
-    qshell:
-      archive: http://devtools.qiniu.com/qshell-v2.0.0.zip
-      enforce_toplevel: False
 
   phrases:
   - file.directory:
@@ -32,8 +29,6 @@ dotfiles:
       source: .dotfiles\repos\public\default\.vimrc
     - location: .vim\autoload\plug.vim
       source: .dotfiles\repos\plug.vim
-    - location: bin/qshell
-      source: .dotfiles\repos\qshell\qshell_windows_amd64.exe
     - location: .cvsignore
       source: .dotfiles\repos\public\default\.cvsignore
     - location: .gitconfig
