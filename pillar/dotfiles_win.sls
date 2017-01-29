@@ -20,6 +20,9 @@ dotfiles:
       git: {{ github("doitian/dotfiles-public") }}
     plug.vim:
       single: {{ github_file("junegunn/vim-plug", "plug.vim") }}
+    hugo:
+      archive: https://github.com/spf13/hugo/releases/download/v0.18.1/hugo_0.18.1_Windows-64bit.zip
+      enforce_toplevel: False
 
   phrases:
   - file.directory:
@@ -34,6 +37,8 @@ dotfiles:
     - location: .gitconfig
       source: .dotfiles\repos\public\gitconfig.jinja
       template: jinja
+    - location: bin\hugo.exe
+      source: .dotfiles\repos\hugo\hugo_0.18.1_windows_amd64.exe
   - file.find:
     - location: '{{ cmderr }}'
       source: .dotfiles\repos\public\Windows_cmder
