@@ -53,6 +53,8 @@ dotfiles:
         'MacOS': 'darwin_amd64',
         'default': 'linux_amd64'
       }) }}
+    - location: .bash_profile
+      source: .dotfiles/repos/public/default/.zshenv
   - file.managed:
     - location: .gitconfig
       source: .dotfiles/repos/public/gitconfig.jinja
@@ -92,7 +94,13 @@ dotfiles:
             name: '*.zsh'
         - .dotfiles/repos/bd.zsh
         - .dotfiles/repos/public/zshrc.after
-
+  - file.concat:
+    - location: .bashrc
+      comment: '# '
+      mode: 0440
+      source:
+        - .dotfiles/repos/public/zsh/aliases.zsh
+        - .dotfiles/repos/public/zsh/functions.zsh
   - file.find:
     - source: .dotfiles/repos/public/default
       symlink: True
