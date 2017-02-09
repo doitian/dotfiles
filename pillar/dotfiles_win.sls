@@ -11,7 +11,6 @@ https://raw.githubusercontent.com/{{ user_repo }}/{{ branch }}/{{ file }}
 {%- endmacro -%}
 
 {%- set onedrive = salt['environ.get']('ONEDRIVE', 'OneDrive') %}
-{%- set cmderr = salt['file.join'](salt['environ.get']('ONEDRIVE', 'OneDrive'), 'Apps', 'cmder') %}
 
 dotfiles:
   # All repos are created in .dotfiles/NAME
@@ -39,9 +38,10 @@ dotfiles:
       template: jinja
     - location: bin\hugo.exe
       source: .dotfiles\repos\hugo\hugo_0.18.1_windows_amd64.exe
+  {% set posh_profile_dir = salt['environ.get']('PSModulePath').split(';')[0]|replace('\Modules', '') %}
   - file.find:
-    - location: '{{ cmderr }}'
-      source: .dotfiles\repos\public\Windows_cmder
+    - source: .dotfiles\repos\public\WindowsPowerShell
+      location: {{ posh_profile_dir}}
       managed: True
   - win.setx:
     - name: CODEBASE
