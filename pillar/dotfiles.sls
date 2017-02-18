@@ -99,6 +99,7 @@ dotfiles:
       comment: '# '
       mode: 0440
       source:
+        - .dotfiles/repos/public/bashrc
         - .dotfiles/repos/public/zsh/aliases.zsh
         - .dotfiles/repos/public/zsh/functions.zsh
   - file.find:
