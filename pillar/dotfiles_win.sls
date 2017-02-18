@@ -62,6 +62,6 @@ dotfiles:
         - '{{ onedrive }}\Apps\PortableGit\cmd'
         - '{{ onedrive }}\Apps\PortableGit\usr\bin'
         - '{{ onedrive }}\Apps\cmake-3.8.0-rc1-win64-x64\bin'
-        - '{{ onedrive }}\Apps\lua\bin'
         - '{{ salt['environ.get']('CODEBASE', default='D:\codebase') }}\gopath\bin'
         - '{{ salt['environ.get']('CODEBASE', default='D:\codebase') }}\vcpkg'
+        - '{{ salt['environ.get']('CODEBASE', default='D:\codebase') }}\vcpkg\installed\x64-windows\tools'
