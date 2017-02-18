@@ -49,6 +49,8 @@ dotfiles:
       replace: False
     - name: GOPATH
       value: '{{ salt['environ.get']('CODEBASE', default='D:\codebase') }}\gopath'
+    - name: VCPKG_ROOT
+      value: '{{ salt['environ.get']('CODEBASE', default='D:\codebase') }}\vcpkg'
     - name: ONEDRIVE
       location: '{{ onedrive }}'
       replace: False
@@ -59,4 +61,7 @@ dotfiles:
         - '{{ onedrive }}\Apps\Sublime'
         - '{{ onedrive }}\Apps\PortableGit\cmd'
         - '{{ onedrive }}\Apps\PortableGit\usr\bin'
+        - '{{ onedrive }}\Apps\cmake-3.8.0-rc1-win64-x64\bin'
+        - '{{ onedrive }}\Apps\lua\bin'
         - '{{ salt['environ.get']('CODEBASE', default='D:\codebase') }}\gopath\bin'
+        - '{{ salt['environ.get']('CODEBASE', default='D:\codebase') }}\vcpkg'
