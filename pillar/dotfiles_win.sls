@@ -59,6 +59,7 @@ dotfiles:
         - bin
         - '{{ onedrive }}\Apps\Apache-Subversion-1.8.13\bin'
         - '{{ onedrive }}\Apps\Sublime'
+        - '{{ onedrive }}\Apps\vim\vim80'
         - '{{ onedrive }}\Apps\PortableGit\cmd'
         - '{{ onedrive }}\Apps\PortableGit\usr\bin'
         - '{{ onedrive }}\Apps\cmake-3.8.0-rc1-win64-x64\bin'
