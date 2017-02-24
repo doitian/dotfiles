@@ -3,7 +3,6 @@ Homebrew packages:
     - pkgs:
       - ant
       - bash
-      - caddy
       - colordiff
       - coreutils
       - ctags
@@ -11,7 +10,6 @@ Homebrew packages:
       - duti
       - editorconfig
       - fasd
-      - gettext
       - gist
       - git
       - git-number
@@ -20,7 +18,7 @@ Homebrew packages:
       - hugo
       - imagemagick
       - jq
-      - lua
+      - lua@5.3
       - mtr
       - pidof
       - postgresql
@@ -43,7 +41,6 @@ Homebrew packages:
       - rbenv-communal-gems
       - rbenv-aliases
       - rbenv-bundler
-      - lua@5.3
       
 macvim:
   pkg.installed:
