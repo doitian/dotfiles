@@ -49,15 +49,12 @@ Homebrew packages:
       - rbenv-communal-gems
       - rbenv-aliases
       - rbenv-bundler
+      - lua@5.3
       
 macvim:
   pkg.installed:
     - options:
       - '--override-system-vim' 
-
-lua53:
-  pkg.installed:
-    - taps: 'homebrew/versions'
 
 npm packages:
   npm.installed:
