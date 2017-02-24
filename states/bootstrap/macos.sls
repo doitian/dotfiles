@@ -1,9 +1,3 @@
-pip2:
-  cmd.run:
-    - name: sudo /usr/bin/easy_install pip
-    - unless:
-      - test -f /usr/local/bin/pip2 
-
 Homebrew packages:
   pkg.installed:
     - pkgs:
