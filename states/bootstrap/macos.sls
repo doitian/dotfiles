@@ -1,3 +1,8 @@
+# pip
+# - pygments
+# - autopep8
+# gem
+
 Homebrew packages:
   pkg.installed:
     - pkgs:
@@ -50,7 +55,8 @@ macvim:
 npm packages:
   npm.installed:
     - names:
-      - js-beautify
+      - prettier
+      - flow-bin
       - eslint
       - eslint-plugin-react
       - jsonlint
