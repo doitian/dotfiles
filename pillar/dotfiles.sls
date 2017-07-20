@@ -25,15 +25,12 @@ dotfiles:
       single: {{ github_file("Tarrasch/zsh-bd", "bd.zsh") }}
     plug.vim:
       single: {{ github_file("junegunn/vim-plug", "plug.vim") }}
-    flora_pac:
-      single: {{ github_file("Leask/Flora_Pac", "flora_pac") }}
-      mode: 0755
-    chnroutes.py:
-      single: {{ github_file("fivesheep/chnroutes", "chnroutes.py") }}
-      mode: 0755
     qshell:
-      archive: http://devtools.qiniu.com/qshell-v2.0.0.zip
-      enforce_toplevel: False
+      single: {{ salt['grains.filter_by']({
+        'MacOS': 'http://devtools.qiniu.com/2.0.9/qshell-darwin-x64',
+        'default': 'http://devtools.qiniu.com/2.0.9/qshell-linux-x64'
+      }) }}
+      mode: 0555
 
   phrases:
   - file.directory:
@@ -42,17 +39,9 @@ dotfiles:
   - file.symlink:
     - location: .vim/autoload/plug.vim
       source: .dotfiles/repos/plug.vim
-    - location: bin/flora_pac
-      source: .dotfiles/repos/flora_pac
-      mode: 0555
-    - location: bin/chnroutes.py
-      source: .dotfiles/repos/chnroutes.py
-      mode: 0555
     - location: bin/qshell
-      source: .dotfiles/repos/qshell/qshell_{{ salt['grains.filter_by']({
-        'MacOS': 'darwin_amd64',
-        'default': 'linux_amd64'
-      }) }}
+      source: .dotfiles/repos/qshell
+      mode: 0555
     - location: .bash_profile
       source: .dotfiles/repos/public/default/.zshenv
   - file.managed:
