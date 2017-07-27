@@ -49,9 +49,9 @@ dotfiles:
       source: .dotfiles/repos/public/gitconfig.jinja
       template: jinja
       mode: 0640
-    - location: .aria2/aria2.conf
+    - location: .aria2/aria2rpc.conf
       makrdirs: True
-      source: .dotfiles/repos/public/aria2.conf.jinja
+      source: .dotfiles/repos/public/aria2rpc.conf.jinja
       template: jinja
       mode: 0640
     - location: .safebin
