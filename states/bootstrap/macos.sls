@@ -42,7 +42,8 @@ Homebrew packages:
 macvim:
   pkg.installed:
     - options:
-      - '--override-system-vim' 
+      - '--with-override-system-vim' 
+      - '--with-custom-python'
 
 npm packages:
   npm.installed:
