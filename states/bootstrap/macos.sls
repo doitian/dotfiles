@@ -1,8 +1,3 @@
-# pip
-# - pygments
-# - autopep8
-# gem
-
 Homebrew packages:
   pkg.installed:
     - pkgs:
@@ -38,11 +33,9 @@ Homebrew packages:
       - unrar
       - zsh-completions
       - mas
-      - python3
       - node
       - rbenv
       - rbenv-default-gems
-      - rbenv-communal-gems
       - rbenv-aliases
       - rbenv-bundler
       
