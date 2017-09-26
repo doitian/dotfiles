@@ -23,6 +23,7 @@ phrase step {{ index }}:
         dotfiles: {{ dotfiles | json }}
     {%- endif %}
     - makedirs: True
+    - dir_mode: 0755
     - follow_symlinks: False
     {%- for k, v in kwargs.items() %}
     - {{ k }}: {{ v | json }}

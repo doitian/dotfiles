@@ -18,6 +18,7 @@ phrase step {{ index }} {{ name }}:
   file.{% if managed %}managed{% else %}symlink{% endif %}:
     - name: '{{ name }}'
     - makedirs: True
+    - dir_mode: 0755
       {%- if managed %}
     - source: 'file://{{ target }}'
       {%- else %}

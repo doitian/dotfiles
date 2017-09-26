@@ -31,6 +31,7 @@ phrase step {{ index }}:
     - group: {{ dotfiles.group }}
     {%- endif %}
     - makedirs: True
+    - dir_mode: 0755
     - follow_symlinks: False
     {%- for k, v in kwargs.items() %}
     - {{ k }}: {{ v | json }}

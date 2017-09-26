@@ -16,7 +16,7 @@ dotfiles:
     public:
       git: {{ github("doitian/dotfiles-public") }}
     private:
-      git: {{ github("doitian/dotfiles-private") }}
+      git: {{ github("doitian/dotfiles-private", "git") }}
       private: True
     on-my-zsh:
       git: {{ github("robbyrussell/oh-my-zsh") }}
@@ -36,6 +36,8 @@ dotfiles:
   - file.directory:
     - location: .zcompcache
     - location: .vim/backup
+    - location: bin
+    - location: Library/KeyBindings
   - file.symlink:
     - location: .vim/autoload/plug.vim
       source: .dotfiles/repos/plug.vim
