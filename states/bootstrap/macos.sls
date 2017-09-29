@@ -1,7 +1,7 @@
 Homebrew packages:
   pkg.installed:
     - pkgs:
-      - ant
+      - aria2
       - bash
       - colordiff
       - coreutils
@@ -10,34 +10,39 @@ Homebrew packages:
       - duti
       - editorconfig
       - fasd
+      - fswatch
       - gist
       - git
       - git-extras
+      - gradle
       - htop-osx
+      - hub
       - hugo
       - imagemagick
       - jq
       - lua@5.3
+      - mas
       - mtr
+      - node
       - pidof
       - postgresql
       - pstree
+      - rbenv
+      - rbenv-aliases
+      - rbenv-bundler
+      - rbenv-default-gems
       - redis
       - rlwrap
       - subversion
       - tag
+      - telnet
       - the_silver_searcher
-      - tig
       - tmux
       - tree
       - unrar
+      - yarn
+      - zsh
       - zsh-completions
-      - mas
-      - node
-      - rbenv
-      - rbenv-default-gems
-      - rbenv-aliases
-      - rbenv-bundler
       
 macvim:
   pkg.installed:
