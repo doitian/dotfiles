@@ -46,6 +46,12 @@ dotfiles:
       mode: 0555
     - location: .bash_profile
       source: .dotfiles/repos/public/default/.zshenv
+    - location: .tmux.conf
+    {%- if grains.os_family == "MacOS" %}
+      source: .dotfiles/repos/public/tmux.conf
+    {%- else %}
+      source: .dotfiles/repos/public/tmux.linux.conf
+    {%- endif %}
   - file.managed:
     - location: .gitconfig
       source: .dotfiles/repos/public/gitconfig.jinja
