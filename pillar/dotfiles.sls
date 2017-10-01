@@ -37,7 +37,9 @@ dotfiles:
     - location: .zcompcache
     - location: .vim/backup
     - location: bin
+    {%- if grains.os_family == "MacOS" %}
     - location: Library/KeyBindings
+    {%- endif %}
   - file.symlink:
     - location: .vim/autoload/plug.vim
       source: .dotfiles/repos/plug.vim
