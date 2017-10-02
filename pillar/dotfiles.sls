@@ -37,6 +37,7 @@ dotfiles:
     - location: .zcompcache
     - location: .vim/backup
     - location: bin
+    - location: .zsh-completions
     {%- if grains.os_family == "MacOS" %}
     - location: Library/KeyBindings
     {%- endif %}
