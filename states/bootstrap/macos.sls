@@ -10,7 +10,6 @@ Homebrew packages:
       - duti
       - editorconfig
       - fasd
-      - fswatch
       - gist
       - git
       - git-extras
@@ -40,6 +39,7 @@ Homebrew packages:
       - tmux
       - tree
       - unrar
+      - watchexec
       - yarn
       - zsh
       - zsh-completions
