@@ -44,12 +44,6 @@ Homebrew packages:
       - zsh
       - zsh-completions
       
-macvim:
-  pkg.installed:
-    - options:
-      - '--with-override-system-vim' 
-      - '--with-custom-python'
-
 npm packages:
   npm.installed:
     - names:
