@@ -71,6 +71,7 @@ npm packages:
 622066258: Softmatic WebLayers
 407963104: Pixelmator
 557168941: Tweetbot
+937984704: Amphetamine
 {%- endload %}
 
 {%- for id, name in mas_packages.items() %}
