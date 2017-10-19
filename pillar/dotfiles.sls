@@ -65,6 +65,9 @@ dotfiles:
       source: .dotfiles/repos/public/aria2rpc.conf.jinja
       template: jinja
       mode: 0640
+    - location: .gitignore
+      contents: "*"
+      mode: 0440
     - location: .safebin
       contents: "{{ salt['grains.get_or_set_hash']('dotfiles:safebin_secret', length=8, chars='abcdefghijklmnopqrstuvwxyz0123456789') }}"
       mode: 0400
