@@ -5,23 +5,19 @@ This repository is used to manage dotfiles, my public dotfiles repository has be
 Install
 
 ```
-make
+./manage.sh repos
+./manage.sh install
 ```
 
 Uninstall
 
 ```
-make uninstall
+./manage.sh uninstall
 ```
 
 With private staffs
 
 ```
-make install private=True
-make uninstall private=True
+./manage.sh install -p
+./manage.sh uninstall -p
 ```
-
-Other userful Makefile variables:
-
-- user: install dotfiles for this user
-- group: set installed file group owner to this

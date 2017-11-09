@@ -48,7 +48,7 @@ function ensure_git_clone() {
 }
 
 function head_cat() {
-  echo "$* {{{1"
+  echo "$* {{""{1"
   cat "$2"
 }
 
@@ -92,6 +92,8 @@ function cmd_install() {
   cat repos/public/gitconfig.tmpl | tmpl_apply > ~/.gitconfig
   if [ "$UNAME" = "Darwin" ]; then
     cat repos/public/gitconfig.macos >> ~/.gitconfig
+  else
+    cat repos/public/gitconfig.common >> ~/.gitconfig
   fi
   chmod 0640 ~/.gitconfig
 
@@ -99,12 +101,15 @@ function cmd_install() {
   cat repos/public/aria2rpc.conf.tmpl | tmpl_apply | get_or_set_hash aria2rpc 8 > ~/.aria2/aria2rpc.conf
   chmod 0640 ~/.aria2/aria2rpc.conf
 
+  rm -f ~/.gitignore
   echo '*' > ~/.gitignore
   chmod 0440 ~/.gitignore
 
+  rm -f ~/.safebin
   echo __HASH__ | get_or_set_hash safebin 4 > ~/.safebin
   chmod 0400 ~/.safebin
 
+  rm -f ~/.zshrc
   (
     cat repos/public/zshrc
     local l
@@ -123,6 +128,7 @@ function cmd_install() {
   ) > ~/.zshrc
   chmod 0440 ~/.zshrc
 
+  rm -f ~/.bashrc
   (
     cat repos/public/bashrc
     head_cat '#' repos/public/zsh/aliases.zsh
@@ -133,7 +139,7 @@ function cmd_install() {
   find_relative repos/public/default | xargs -I % ln -snf "$DOTFILES_DIR/repos/public/default/%" "$HOME/%"
   find_relative repos/private/default | xargs -I % ln -snf "$DOTFILES_DIR/repos/private/default/%" "$HOME/%"
   if [ "$UNAME" = "Darwin" ]; then
-    rsync -av --progress --chmod=F0400 -h repos/public/MacOS_cp/ ~/
+    rsync -av --progress -h repos/public/MacOS_cp/ ~/
     mkdir -p ~/.MacOSX
     cat repos/public/environment.plist.tmpl | tmpl_apply > ~/.MacOSX/environment.plist
   fi
