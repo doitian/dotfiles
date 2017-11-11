@@ -137,7 +137,7 @@ function cmd_install() {
   chmod 0440 ~/.bashrc
 
   find_relative repos/public/default | xargs -I % ln -snf "$DOTFILES_DIR/repos/public/default/%" "$HOME/%"
-  find_relative repos/private/default | xargs -I % ln -snf "$DOTFILES_DIR/repos/private/default/%" "$HOME/%"
+  private find_relative repos/private/default | xargs -I % ln -snf "$DOTFILES_DIR/repos/private/default/%" "$HOME/%"
   if [ "$UNAME" = "Darwin" ]; then
     rsync -av --progress -h repos/public/MacOS_cp/ ~/
     mkdir -p ~/.MacOSX
