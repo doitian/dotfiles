@@ -9,7 +9,7 @@ set -u
 [ -n "${DEBUG:-}" ] && set -x || true
 
 TMPL_NAME=ian
-TMPL_EMAIL=$(echo bWVAaWFueS5tZQ== | base64 -D)
+TMPL_EMAIL=$(echo bWVAaWFueS5tZQ== | base64 --decode)
 TMPL_HOME="$HOME"
 
 function tmpl_apply() {
@@ -150,7 +150,7 @@ function cmd_uninstall() {
   rmdir ~/.MacOSX || true
 
   find_relative repos/public/MacOS_cp/ | xargs -I % rm -f "$HOME/%"
-  find_relative repos/private/default | xargs -I % rm -f "$HOME/%"
+  private find_relative repos/private/default | xargs -I % rm -f "$HOME/%"
   find_relative repos/public/default | xargs -I % rm -f "$HOME/%"
 
   rm -f ~/.bashrc
