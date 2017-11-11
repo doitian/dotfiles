@@ -58,8 +58,12 @@ function find_relative() {
 
 function cmd_repos() {
   mkdir -p repos
-  ensure_git_clone git@github.com:doitian/dotfiles-public.git repos/public
-  private ensure_git_clone git@github.com:doitian/dotfiles-private.git repos/private
+  if [ "$PRIVATE" = "true" ]; then
+    ensure_git_clone git@github.com:doitian/dotfiles-public.git repos/public
+    ensure_git_clone git@github.com:doitian/dotfiles-private.git repos/private
+  else
+    ensure_git_clone https://github.com/doitian/dotfiles-public.git repos/public
+  fi
   ensure_git_clone https://github.com/robbyrussell/oh-my-zsh.git "$HOME/.oh-my-zsh"
   curl -sSLo repos/bd.zsh https://raw.githubusercontent.com/Tarrasch/zsh-bd/master/bd.zsh
   curl -sSLo repos/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
