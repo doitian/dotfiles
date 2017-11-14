@@ -11,8 +11,6 @@ fi
 
 brew install aria2 bash colordiff coreutils ctags dos2unix duti editorconfig fasd gist git git-extras gradle htop-osx hub hugo imagemagick jq lua@5.3 mas mtr node pidof postgresql pstree rbenv rbenv-aliases rbenv-bundler rbenv-default-gems redis rlwrap subversion tag telnet the_silver_searcher tmux tree unrar watchexec yarn zsh zsh-completions python python3
 
-brew install macvim --with-override-system-vim
-
 npm install -g prettier eslint eslint-plugin-react
 
 pip3 install flake8 autopep8
