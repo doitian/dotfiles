@@ -31,7 +31,6 @@ for pkg in \
 "734418810: SSH Tunnel" \
 "424389933: Final Cut Pro" \
 "622066258: Softmatic WebLayers" \
-"407963104: Pixelmator" \
 "557168941: Tweetbot" \
 "937984704: Amphetamine" \
 ; do
