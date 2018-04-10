@@ -9,7 +9,63 @@ if ! type brew; then
   ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
 
-brew install aria2 bash colordiff coreutils ctags dos2unix duti editorconfig fasd gist git git-extras gradle htop-osx hub hugo imagemagick jq lua@5.3 mas mtr node pidof postgresql pstree rbenv rbenv-aliases rbenv-bundler rbenv-default-gems redis rlwrap subversion tag telnet the_silver_searcher tmux tree unrar watchexec yarn zsh zsh-completions python python3
+brew_packages=(
+  aria2
+  bash
+  braid
+  clang-format
+  colordiff
+  coreutils
+  ctags
+  dos2unix
+  duti
+  editorconfig
+  fasd
+  fzf
+  gist
+  git
+  git-extras
+  git-lfs
+  git-open
+  gradle
+  grep
+  htop
+  hub
+  hugo
+  imagemagick
+  jq
+  lua@5.3
+  mas
+  mtr
+  node
+  pidof
+  pipenv
+  postgresql
+  pstree
+  python
+  python3
+  rbenv
+  rbenv-aliases
+  rbenv-bundler
+  rbenv-default-gems
+  reattach-to-user-namespace
+  redis
+  rlwrap
+  subversion
+  tag
+  telnet
+  the_silver_searcher
+  tig
+  tmux
+  tree
+  unrar
+  watchexec
+  yarn
+  zsh
+  zsh-completions
+)
+
+brew install "${brew_packages[@]}"
 
 npm install -g prettier eslint eslint-plugin-react
 
