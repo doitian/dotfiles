@@ -78,6 +78,7 @@ function cmd_repos() {
 function cmd_install() {
   mkdir -p ~/.zcompcache
   mkdir -p ~/.vim/backup
+  mkdir -p ~/.vim/undo
   mkdir -p ~/bin
   mkdir -p ~/.zsh-completions
   if [ "$UNAME" = "Darwin" ]; then
