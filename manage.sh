@@ -69,7 +69,7 @@ function cmd_repos() {
   curl -sSLo repos/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   curl -sSLo repos/qshell-v2.1.8.zip 'http://devtools.qiniu.com/qshell-v2.1.8.zip'
   mkdir -p repos/qshell
-  unzip repos/qshell-v2.1.8.zip -d repos/qshell
+  unzip -o repos/qshell-v2.1.8.zip -d repos/qshell
 }
 
 function cmd_install() {
