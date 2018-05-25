@@ -67,12 +67,9 @@ function cmd_repos() {
   ensure_git_clone https://github.com/robbyrussell/oh-my-zsh.git "$HOME/.oh-my-zsh"
   curl -sSLo repos/bd.zsh https://raw.githubusercontent.com/Tarrasch/zsh-bd/master/bd.zsh
   curl -sSLo repos/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  if [ "$UNAME" = "Darwin" ]; then
-    curl -sSLo repos/qshell 'http://devtools.qiniu.com/2.0.9/qshell-darwin-x64'
-  else
-    curl -sSLo repos/qshell 'http://devtools.qiniu.com/2.0.9/qshell-linux-x64'
-  fi
-  chmod 0755 repos/qshell
+  curl -sSLo repos/qshell-v2.1.8.zip 'http://devtools.qiniu.com/qshell-v2.1.8.zip'
+  mkdir -p repos/qshell
+  unzip repos/qshell-v2.1.8.zip -d repos/qshell
 }
 
 function cmd_install() {
@@ -86,7 +83,11 @@ function cmd_install() {
   fi
 
   ln -snf "$DOTFILES_DIR/repos/plug.vim" ~/.vim/autoload/plug.vim
-  ln -snf "$DOTFILES_DIR/repos/qshell" ~/bin/qshell
+  if [ "$UNAME" = "Darwin" ]; then
+    ln -snf "$DOTFILES_DIR/repos/qshell/qshell-darwin-x64" ~/bin/qshell
+  else
+    ln -snf "$DOTFILES_DIR/repos/qshell/qshell-linux-x64" ~/bin/qshell
+  fi
   ln -snf "$DOTFILES_DIR/repos/public/default/.zshenv" ~/.bash_profile
   if [ "$UNAME" = "Darwin" ]; then
     ln -snf "$DOTFILES_DIR/repos/public/tmux.conf" ~/.tmux.conf
