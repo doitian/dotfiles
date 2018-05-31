@@ -50,11 +50,11 @@ brew_packages=(
   rbenv-default-gems
   reattach-to-user-namespace
   redis
+  ripgrep
   rlwrap
   subversion
   tag
   telnet
-  the_silver_searcher
   tig
   tmux
   tree
