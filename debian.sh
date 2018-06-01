@@ -11,10 +11,12 @@ if [ "$UID" = 0 ]; then
   if ! id ian; then
     useradd -s /usr/bin/zsh -m ian
   fi
-  (
+  if ! [ -f /etc/sudoers.d/ian ]; then
+    (
     echo 'Defaults:ian !requiretty'
     echo 'ian ALL=(ALL:ALL) NOPASSWD: ALL'
-  ) | sudo EDITOR='tee -a' visudo -f /etc/sudoers.d/ian
+    ) | sudo EDITOR='tee -a' visudo -f /etc/sudoers.d/ian
+  fi
 
   pushd /home/ian
   if ! [ -d .ssh ]; then
@@ -66,8 +68,8 @@ if ! command -v fzf &> /dev/null; then
   sudo /usr/local/opt/fzf/install --bin
   sudo ln -snf /usr/local/opt/fzf/bin/fzf /usr/local/bin
   sudo ln -snf /usr/local/opt/fzf/bin/fzf-tmux /usr/local/bin
-  /usr/local/opt/fzf/install --update-rc --completion --key-bindings
 fi
+/usr/local/opt/fzf/install --update-rc --completion --key-bindings
 
 if ! command -v rbenv &> /dev/null; then
   sudo git clone --depth 1 https://github.com/rbenv/rbenv.git /usr/local/opt/rbenv
