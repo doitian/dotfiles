@@ -43,7 +43,7 @@ function ensure_git_clone() {
     git -C "$target" remote set-url origin "$origin"
     git -C "$target" pull
   else
-    git clone "$origin" "$target"
+    git clone --depth 1 "$origin" "$target"
   fi
 }
 
