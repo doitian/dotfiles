@@ -43,12 +43,35 @@ if uname -a | grep -q Ubuntu; then
   CUSTOM_PKGS="libssl-dev libmysqlclient-dev"
 fi
 
-sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
-echo 'deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main' | sudo tee /etc/apt/sources.list.d/ansible.list
-sudo apt-get update -y
-sudo apt-get install -y unzip vim tmux build-essential autoconf flex bison texinfo libtool libreadline-dev zlib1g-dev
-sudo apt-get install -y redis-server mysql-server nodejs $CUSTOM_PKGS
-sudo update-alternatives --install /usr/bin/editor editor /usr/bin/vim 100
+INSTALL_APT=true
+INSTALL_RUBY=true
+INSTALL_RUST=true
+while [ "$#" != 0 ]; do
+  case "$1" in
+    --no-apt)
+      INSTALL_APT=
+      ;;
+    --no-ruby)
+      INSTALL_RUBY=
+      ;;
+    --no-rust)
+      INSTALL_RUST=
+      ;;
+    *)
+      echo 'debian.sh [--no-apt] [--no-ruby] [--no-rust]' >&2
+      exit 1
+      ;;
+  esac
+done
+
+if [ -n "$INSTALL_APT" ]; then
+  sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
+  echo 'deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main' | sudo tee /etc/apt/sources.list.d/ansible.list
+  sudo apt-get update -y
+  sudo apt-get install -y unzip vim tmux build-essential autoconf flex bison texinfo libtool libreadline-dev zlib1g-dev
+  sudo apt-get install -y redis-server mysql-server nodejs $CUSTOM_PKGS
+  sudo update-alternatives --install /usr/bin/editor editor /usr/bin/vim 100
+fi
 
 ln -snf /usr/bin/python3 ~/bin/python3
 
@@ -90,30 +113,32 @@ fi
 popd # repos
 
 # Ruby
-if ! command -v rbenv &> /dev/null; then
-  sudo git clone --depth 1 https://github.com/rbenv/rbenv.git /usr/local/opt/rbenv
-  pushd /usr/local/opt/rbenv
-  sudo src/configure
-  sudo make -C src
-  sudo ln -snf /usr/local/opt/rbenv/bin/rbenv /usr/local/bin
-  popd # /usr/local/opt/rbenv
-fi
+if [ -n "$INSTALL_RUBY" ]; then
+  if ! command -v rbenv &> /dev/null; then
+    sudo git clone --depth 1 https://github.com/rbenv/rbenv.git /usr/local/opt/rbenv
+    pushd /usr/local/opt/rbenv
+    sudo src/configure
+    sudo make -C src
+    sudo ln -snf /usr/local/opt/rbenv/bin/rbenv /usr/local/bin
+    popd # /usr/local/opt/rbenv
+  fi
 
-mkdir -p ~/.rbenv/plugins
-if ! [ -d ~/.rbenv/plugins/ruby-build ]; then
-  git clone --depth 1 https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
-fi
-if ! [ -d ~/.rbenv/versions/2.2.3 ]; then
-  if [ -n "$IS_UBUNTU" ]; then
-    RUBY_CONFIGURE_OPTS=--disable-install-doc rbenv install 2.2.3
-  else
-    curl -fsSL https://gist.github.com/mislav/055441129184a1512bb5.txt |\
-      RUBY_CONFIGURE_OPTS=--disable-install-doc rbenv install --patch 2.2.3
+  mkdir -p ~/.rbenv/plugins
+  if ! [ -d ~/.rbenv/plugins/ruby-build ]; then
+    git clone --depth 1 https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+  fi
+  if ! [ -d ~/.rbenv/versions/2.2.3 ]; then
+    if [ -n "$IS_UBUNTU" ]; then
+      RUBY_CONFIGURE_OPTS=--disable-install-doc rbenv install 2.2.3
+    else
+      curl -fsSL https://gist.github.com/mislav/055441129184a1512bb5.txt |\
+        RUBY_CONFIGURE_OPTS=--disable-install-doc rbenv install --patch 2.2.3
+    fi
   fi
 fi
 
 # Rust
-if ! command -v rustc &> /dev/null; then
+if [ -n "$INSTALL_RUST" ] && ! command -v rustc &> /dev/null; then
   pushd repos
   curl https://sh.rustup.rs -sSf > rustup-installer.sh
   bash rustup-installer.sh --default-host x86_64-unknown-linux-gnu --default-toolchain nightly-2018-05-23 --no-modify-path -y
