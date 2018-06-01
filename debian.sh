@@ -34,7 +34,7 @@ SSH
   exit 0
 fi
 
-mkdir -p ~/bin
+mkdir -p ~/bin repos
 
 CUSTOM_PKGS="libssl1.0-dev default-libmysqlclient-dev"
 IS_UBUNTU=
