@@ -36,11 +36,18 @@ fi
 
 mkdir -p ~/bin
 
+CUSTOM_PKGS="libssl1.0-dev default-libmysqlclient-dev"
+IS_UBUNTU=
+if uname -a | grep -q Ubuntu; then
+  IS_UBUNTU=true
+  CUSTOM_PKGS="libssl-dev libmysqlclient-dev"
+fi
+
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
 echo 'deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main' | sudo tee /etc/apt/sources.list.d/ansible.list
 sudo apt-get update -y
-sudo apt-get install -y vim tmux build-essential autoconf flex bison texinfo libtool libssl1.0-dev libreadline-dev zlib1g-dev \
-  redis-server mysql-server default-libmysqlclient-dev nodejs
+sudo apt-get install -y vim tmux build-essential autoconf flex bison texinfo libtool libreadline-dev zlib1g-dev \
+  redis-server mysql-server nodejs $CUSTOM_PKGS
 sudo update-alternatives --install /usr/bin/editor editor /usr/bin/vim 100
 
 ln -snf /usr/bin/python3 ~/bin/python3
@@ -71,6 +78,19 @@ if ! command -v fzf &> /dev/null; then
 fi
 /usr/local/opt/fzf/install --update-rc --completion --key-bindings
 
+if ! [ -f "$HOME/.dotfiles/repos/watchexec-1.8.6-x86_64-unknown-linux-gnu/watchexec" ]; then
+  curl -LO https://github.com/mattgreen/watchexec/releases/download/1.8.6/watchexec-1.8.6-x86_64-unknown-linux-gnu.tar.gz
+  tar -xzf watchexec-1.8.6-x86_64-unknown-linux-gnu.tar.gz
+  ln -snf "$HOME/.dotfiles/repos/watchexec-1.8.6-x86_64-unknown-linux-gnu/watchexec" ~/bin/watchexec
+  rm -f watchexec-1.8.6-x86_64-unknown-linux-gnu.tar.gz
+fi
+
+if ! command -v caddy &> /dev/null; then
+  curl https://getcaddy.com | bash -s personal
+fi
+
+
+# Ruby
 if ! command -v rbenv &> /dev/null; then
   sudo git clone --depth 1 https://github.com/rbenv/rbenv.git /usr/local/opt/rbenv
   pushd /usr/local/opt/rbenv
@@ -85,10 +105,15 @@ if ! [ -d ~/.rbenv/plugins/ruby-build ]; then
   git clone --depth 1 https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
 fi
 if ! [ -d ~/.rbenv/versions/2.2.3 ]; then
-  curl -fsSL https://gist.github.com/mislav/055441129184a1512bb5.txt |\
-    RUBY_CONFIGURE_OPTS=--disable-install-doc rbenv install --patch 2.2.3
+  if [ -n "$IS_UBUNTU" ]; then
+    RUBY_CONFIGURE_OPTS=--disable-install-doc rbenv install 2.2.3
+  else
+    curl -fsSL https://gist.github.com/mislav/055441129184a1512bb5.txt |\
+      RUBY_CONFIGURE_OPTS=--disable-install-doc rbenv install --patch 2.2.3
+  fi
 fi
 
+# Rust
 if ! command -v rustc &> /dev/null; then
   pushd repos
   curl https://sh.rustup.rs -sSf > rustup-installer.sh
@@ -97,15 +122,3 @@ if ! command -v rustc &> /dev/null; then
   cargo install clippy --vers 0.0.204 --force
   popd repos
 fi
-
-if ! [ -f "$HOME/.dotfiles/repos/watchexec-1.8.6-x86_64-unknown-linux-gnu/watchexec" ]; then
-  curl -LO https://github.com/mattgreen/watchexec/releases/download/1.8.6/watchexec-1.8.6-x86_64-unknown-linux-gnu.tar.gz
-  tar -xzf watchexec-1.8.6-x86_64-unknown-linux-gnu.tar.gz
-  ln -snf "$HOME/.dotfiles/repos/watchexec-1.8.6-x86_64-unknown-linux-gnu/watchexec" ~/bin/watchexec
-  rm -f watchexec-1.8.6-x86_64-unknown-linux-gnu.tar.gz
-fi
-
-if ! command -v caddy &> /dev/null; then
-  curl https://getcaddy.com | bash -s personal
-fi
-
