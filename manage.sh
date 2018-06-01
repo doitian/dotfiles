@@ -56,6 +56,10 @@ function find_relative() {
   find "$@" -type f | sed -e "s|^${1%/}/||"
 }
 
+function find_relative_d() {
+  find "$@" -type d | sed -e "s|^${1%/}/||"
+}
+
 function cmd_repos() {
   mkdir -p repos
   if [ "$PRIVATE" = "true" ]; then
@@ -76,6 +80,7 @@ function cmd_install() {
   mkdir -p ~/.zcompcache
   mkdir -p ~/.vim/backup
   mkdir -p ~/.vim/undo
+  mkdir -p ~/.vim/autoload
   mkdir -p ~/bin
   mkdir -p ~/.zsh-completions
   if [ "$UNAME" = "Darwin" ]; then
@@ -143,7 +148,9 @@ function cmd_install() {
   chmod 0440 ~/.bashrc
 
   find_relative repos/public/default | xargs -I % ln -snf "$DOTFILES_DIR/repos/public/default/%" "$HOME/%"
+  find_relative_d repos/public/default | xargs -I % mkdir -p "$HOME/%"
   private find_relative repos/private/default | xargs -I % ln -snf "$DOTFILES_DIR/repos/private/default/%" "$HOME/%"
+  private find_relative_d repos/private/default | xargs -I % mkdir -p "$HOME/%"
   if [ "$UNAME" = "Darwin" ]; then
     rsync -av --progress -h repos/public/MacOS_cp/ ~/
     mkdir -p ~/.MacOSX
