@@ -46,8 +46,8 @@ fi
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
 echo 'deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main' | sudo tee /etc/apt/sources.list.d/ansible.list
 sudo apt-get update -y
-sudo apt-get install -y vim tmux build-essential autoconf flex bison texinfo libtool libreadline-dev zlib1g-dev \
-  redis-server mysql-server nodejs $CUSTOM_PKGS
+sudo apt-get install -y unzip vim tmux build-essential autoconf flex bison texinfo libtool libreadline-dev zlib1g-dev
+sudo apt-get install -y redis-server mysql-server nodejs $CUSTOM_PKGS
 sudo update-alternatives --install /usr/bin/editor editor /usr/bin/vim 100
 
 ln -snf /usr/bin/python3 ~/bin/python3
@@ -68,15 +68,13 @@ if ! command -v fasd &> /dev/null; then
   rm -rf fasd
 fi
 
-popd # repos
-
 if ! command -v fzf &> /dev/null; then
   sudo git clone --depth 1 https://github.com/junegunn/fzf.git /usr/local/opt/fzf
   sudo /usr/local/opt/fzf/install --bin
   sudo ln -snf /usr/local/opt/fzf/bin/fzf /usr/local/bin
   sudo ln -snf /usr/local/opt/fzf/bin/fzf-tmux /usr/local/bin
 fi
-/usr/local/opt/fzf/install --update-rc --completion --key-bindings
+/usr/local/opt/fzf/install --no-update-rc --completion --key-bindings
 
 if ! [ -f "$HOME/.dotfiles/repos/watchexec-1.8.6-x86_64-unknown-linux-gnu/watchexec" ]; then
   curl -LO https://github.com/mattgreen/watchexec/releases/download/1.8.6/watchexec-1.8.6-x86_64-unknown-linux-gnu.tar.gz
@@ -89,6 +87,7 @@ if ! command -v caddy &> /dev/null; then
   curl https://getcaddy.com | bash -s personal
 fi
 
+popd # repos
 
 # Ruby
 if ! command -v rbenv &> /dev/null; then
