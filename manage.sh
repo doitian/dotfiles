@@ -152,7 +152,7 @@ function cmd_install() {
   private find_relative_d repos/private/default | xargs -I % mkdir -p "$HOME/%"
   private find_relative repos/private/default | xargs -I % ln -snf "$DOTFILES_DIR/repos/private/default/%" "$HOME/%"
   if [ "$UNAME" = "Darwin" ]; then
-    rsync -av --progress -h repos/public/MacOS_cp/ ~/
+    # rsync -av --progress -h repos/public/MacOS_cp/ ~/
     mkdir -p ~/.MacOSX
     cat repos/public/environment.plist.tmpl | tmpl_apply > ~/.MacOSX/environment.plist
   fi
