@@ -124,7 +124,7 @@ function cmd_install() {
   (
     cat repos/public/zshrc
     local l
-    for l in completion directories functions grep history key-bindings git misc spectrum termsupport theme-and-appearance; do
+    for l in completion directories functions git grep history key-bindings misc spectrum termsupport theme-and-appearance; do
       head_cat '#' ~/.oh-my-zsh/lib/$l.zsh
     done
     for l in safe-paste ssh-agent rake-fast; do
