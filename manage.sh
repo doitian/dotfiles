@@ -156,6 +156,9 @@ function cmd_install() {
     mkdir -p ~/.MacOSX
     cat repos/public/environment.plist.tmpl | tmpl_apply > ~/.MacOSX/environment.plist
   fi
+
+  ln -snf "$DOTFILES_DIR/repos/public/gittmpl" "$HOME/.gittmpl"
+  ln -snf "$DOTFILES_DIR/repos/public/vimscripts" "$HOME/.vim/scripts"
 }
 
 function cmd_uninstall() {
@@ -176,6 +179,8 @@ function cmd_uninstall() {
   rm -f ~/.bash_profile
   rm -f ~/bin/qshell
   rm -f ~/.vim/autoload/plug.vim
+  rm -f ~/.gittmpl
+  rm -f ~/.vim/scripts
 
   rm -rf ~/Library/KeyBindings/
 }
