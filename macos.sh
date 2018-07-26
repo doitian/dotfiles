@@ -10,7 +10,6 @@ if ! type brew; then
 fi
 
 brew_packages=(
-  aria2
   bash
   braid
   clang-format
@@ -43,7 +42,7 @@ brew_packages=(
   postgresql
   pstree
   python
-  python3
+  python@2
   rbenv
   rbenv-aliases
   rbenv-bundler

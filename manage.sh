@@ -112,10 +112,6 @@ function cmd_install() {
   cat repos/public/aria2rpc.conf.tmpl | tmpl_apply | get_or_set_hash aria2rpc 8 > ~/.aria2/aria2rpc.conf
   chmod 0640 ~/.aria2/aria2rpc.conf
 
-  rm -f ~/.gitignore
-  echo '*' > ~/.gitignore
-  chmod 0440 ~/.gitignore
-
   rm -f ~/.safebin
   echo __HASH__ | get_or_set_hash safebin 4 > ~/.safebin
   chmod 0400 ~/.safebin
