@@ -88,6 +88,7 @@ for pkg in \
 "622066258: Softmatic WebLayers" \
 "557168941: Tweetbot" \
 "937984704: Amphetamine" \
+"1314980676: iText" \
 ; do
   id="${pkg%:*}"
   name="${pkg#*: }"
