@@ -78,6 +78,7 @@ for pkg in \
 "490152466: iBooks Author" \
 "1055511498: Day One" \
 "618061906: Softmatic ScreenLayers" \
+"622066258: Softmatic WebLayers" \
 "451691288: Contacts Sync For Google Gmail" \
 "461369673: VOX" \
 "682658836: GarageBand" \
@@ -85,8 +86,6 @@ for pkg in \
 "595615424: QQMusic" \
 "734418810: SSH Tunnel" \
 "424389933: Final Cut Pro" \
-"622066258: Softmatic WebLayers" \
-"557168941: Tweetbot" \
 "937984704: Amphetamine" \
 "1314980676: iText" \
 ; do
