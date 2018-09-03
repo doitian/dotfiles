@@ -11,6 +11,7 @@ fi
 
 brew_packages=(
   bash
+  bat
   braid
   clang-format
   colordiff
@@ -66,7 +67,7 @@ brew_packages=(
 
 brew install "${brew_packages[@]}"
 
-npm install -g prettier eslint eslint-plugin-react
+npm install -g prettier eslint eslint-plugin-react diff-so-fancy tldr
 
 pip3 install flake8 autopep8
 

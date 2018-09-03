@@ -106,6 +106,10 @@ function cmd_install() {
   else
     cat repos/public/gitconfig.common >> ~/.gitconfig
   fi
+  if command -v diff-so-fancy &> /dev/null; then
+    git config --global pager.diff "diff-so-fancy | less --tabs=1,5 -RFX"
+    git config --global pager.show "diff-so-fancy | less --tabs=1,5 -RFX"
+  fi
   chmod 0640 ~/.gitconfig
 
   mkdir -p ~/.aria2/
