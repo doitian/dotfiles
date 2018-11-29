@@ -73,8 +73,6 @@ if [ -n "$INSTALL_APT" ]; then
   sudo update-alternatives --install /usr/bin/editor editor /usr/bin/vim 100
 fi
 
-ln -snf /usr/bin/python3 ~/bin/python3
-
 pushd repos
 
 if ! command -v rg &> /dev/null; then
