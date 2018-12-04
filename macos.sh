@@ -12,7 +12,6 @@ fi
 brew_packages=(
   bash
   bat
-  braid
   clang-format
   colordiff
   coreutils
@@ -48,6 +47,7 @@ brew_packages=(
   rbenv-aliases
   rbenv-bundler
   rbenv-default-gems
+  rsync
   reattach-to-user-namespace
   redis
   ripgrep
