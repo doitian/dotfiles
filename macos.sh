@@ -13,7 +13,6 @@ brew_packages=(
   bash
   bat
   clang-format
-  colordiff
   coreutils
   ctags
   dos2unix
