@@ -71,9 +71,6 @@ function cmd_repos() {
   ensure_git_clone https://github.com/robbyrussell/oh-my-zsh.git "$HOME/.oh-my-zsh"
   curl -sSLo repos/bd.zsh https://raw.githubusercontent.com/Tarrasch/zsh-bd/master/bd.zsh
   curl -sSLo repos/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  curl -sSLo repos/qshell-v2.1.8.zip 'http://devtools.qiniu.com/qshell-v2.1.8.zip'
-  mkdir -p repos/qshell
-  unzip -o repos/qshell-v2.1.8.zip -d repos/qshell
 }
 
 function cmd_install() {
@@ -88,11 +85,6 @@ function cmd_install() {
   fi
 
   ln -snf "$DOTFILES_DIR/repos/plug.vim" ~/.vim/autoload/plug.vim
-  if [ "$UNAME" = "Darwin" ]; then
-    ln -snf "$DOTFILES_DIR/repos/qshell/qshell-darwin-x64" ~/bin/qshell
-  else
-    ln -snf "$DOTFILES_DIR/repos/qshell/qshell-linux-x64" ~/bin/qshell
-  fi
   ln -snf "$DOTFILES_DIR/repos/public/default/.zshenv" ~/.bash_profile
   if [ "$UNAME" = "Darwin" ]; then
     ln -snf "$DOTFILES_DIR/repos/public/tmux.conf" ~/.tmux.conf
@@ -177,7 +169,6 @@ function cmd_uninstall() {
   rm -f ~/.gitconfig
   rm -f ~/.tmux.conf
   rm -f ~/.bash_profile
-  rm -f ~/bin/qshell
   rm -f ~/.vim/autoload/plug.vim
   rm -f ~/.gittmpl
   rm -f ~/.vim/scripts
