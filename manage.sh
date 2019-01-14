@@ -57,7 +57,7 @@ function find_relative() {
 }
 
 function find_relative_d() {
-  find "$@" -type d -mindepth | sed -e "s|^${1%/}/||" | grep -v 
+  find "$@" -type d -mindepth 1 | sed -e "s|^${1%/}/||"
 }
 
 function cmd_repos() {
