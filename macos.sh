@@ -87,7 +87,6 @@ for pkg in \
 "734418810: SSH Tunnel" \
 "424389933: Final Cut Pro" \
 "937984704: Amphetamine" \
-"1314980676: iText" \
 "732710998: Enpass" \
 ; do
   id="${pkg%:*}"
