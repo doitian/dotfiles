@@ -15,7 +15,6 @@ brew_packages=(
   clang-format
   coreutils
   ctags
-  dos2unix
   duti
   editorconfig
   fasd
@@ -34,7 +33,6 @@ brew_packages=(
   jq
   lua@5.3
   mas
-  mtr
   node
   pidof
   pipenv
