@@ -77,6 +77,7 @@ function cmd_install() {
   mkdir -p ~/.zcompcache
   mkdir -p ~/.vim/backup
   mkdir -p ~/.vim/undo
+  mkdir -p ~/.vim/swap
   mkdir -p ~/.vim/autoload
   mkdir -p ~/bin
   mkdir -p ~/.zsh-completions
