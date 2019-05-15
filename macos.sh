@@ -39,7 +39,6 @@ brew_packages=(
   postgresql
   pstree
   python
-  python@2
   rbenv
   rbenv-aliases
   rbenv-bundler
