@@ -36,11 +36,11 @@ fi
 
 mkdir -p ~/bin repos
 
-CUSTOM_PKGS="libssl1.0-dev default-libmysqlclient-dev"
+CUSTOM_PKGS="libssl1.0-dev"
 IS_UBUNTU=
 if uname -a | grep -q Ubuntu; then
   IS_UBUNTU=true
-  CUSTOM_PKGS="libssl-dev libmysqlclient-dev"
+  CUSTOM_PKGS="libssl-dev"
 fi
 
 INSTALL_APT=true
@@ -69,7 +69,7 @@ if [ -n "$INSTALL_APT" ]; then
   echo 'deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main' | sudo tee /etc/apt/sources.list.d/ansible.list
   sudo apt-get update -y
   sudo apt-get install -y unzip vim tmux build-essential autoconf flex bison texinfo libtool libreadline-dev zlib1g-dev
-  sudo apt-get install -y redis-server mysql-server nodejs $CUSTOM_PKGS
+  sudo apt-get install -y $CUSTOM_PKGS
   sudo update-alternatives --install /usr/bin/editor editor /usr/bin/vim 100
 fi
 
