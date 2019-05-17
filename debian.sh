@@ -142,8 +142,6 @@ fi
 if [ -n "$INSTALL_RUST" ] && ! command -v rustc &> /dev/null; then
   pushd repos
   curl https://sh.rustup.rs -sSf > rustup-installer.sh
-  bash rustup-installer.sh --default-host x86_64-unknown-linux-gnu --default-toolchain nightly-2018-05-23 --no-modify-path -y
-  rustup component add rustfmt-preview --toolchain=nightly-2018-05-23
-  cargo install clippy --vers 0.0.204 --force
+  bash rustup-installer.sh --default-host x86_64-unknown-linux-gnu --default-toolchain stable --no-modify-path -y
   popd repos
 fi
