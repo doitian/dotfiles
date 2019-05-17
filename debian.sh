@@ -50,12 +50,15 @@ while [ "$#" != 0 ]; do
   case "$1" in
     --no-apt)
       INSTALL_APT=
+      shift
       ;;
     --no-ruby)
       INSTALL_RUBY=
+      shift
       ;;
     --no-rust)
       INSTALL_RUST=
+      shift
       ;;
     *)
       echo 'debian.sh [--no-apt] [--no-ruby] [--no-rust]' >&2
