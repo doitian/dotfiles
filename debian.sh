@@ -130,10 +130,10 @@ if [ -n "$INSTALL_RUBY" ]; then
   fi
   if ! [ -d ~/.rbenv/versions/2.2.3 ]; then
     if [ -n "$IS_UBUNTU" ]; then
-      RUBY_CONFIGURE_OPTS=--disable-install-doc rbenv install 2.2.3
+      echo 'RUBY_CONFIGURE_OPTS=--disable-install-doc rbenv install 2.2.3'
     else
-      curl -fsSL https://gist.github.com/mislav/055441129184a1512bb5.txt |\
-        RUBY_CONFIGURE_OPTS=--disable-install-doc rbenv install --patch 2.2.3
+      echo 'curl -fsSL https://gist.github.com/mislav/055441129184a1512bb5.txt |\'
+      echo '  RUBY_CONFIGURE_OPTS=--disable-install-doc rbenv install --patch 2.2.3'
     fi
   fi
 fi
@@ -143,5 +143,5 @@ if [ -n "$INSTALL_RUST" ] && ! command -v rustc &> /dev/null; then
   pushd repos
   curl https://sh.rustup.rs -sSf > rustup-installer.sh
   bash rustup-installer.sh --default-host x86_64-unknown-linux-gnu --default-toolchain stable --no-modify-path -y
-  popd repos
+  popd # repos
 fi
