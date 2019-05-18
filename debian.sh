@@ -11,11 +11,11 @@ if [ "$UID" = 0 ]; then
   if ! id ian; then
     useradd -s /usr/bin/zsh -m ian
   fi
-  if ! [ -f /etc/sudoers.d/ian ]; then
+  if ! [ -f /etc/sudoers.d/99-ian ]; then
     (
     echo 'Defaults:ian !requiretty'
     echo 'ian ALL=(ALL:ALL) NOPASSWD: ALL'
-    ) | sudo EDITOR='tee -a' visudo -f /etc/sudoers.d/ian
+    ) | sudo EDITOR='tee -a' visudo -f /etc/sudoers.d/99-ian
   fi
 
   pushd /home/ian
@@ -68,20 +68,18 @@ while [ "$#" != 0 ]; do
 done
 
 if [ -n "$INSTALL_APT" ]; then
-  sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 93C4A3FD7BB9C367
-  echo 'deb http://ppa.launchpad.net/ansible/ansible/ubuntu trusty main' | sudo tee /etc/apt/sources.list.d/ansible.list
   sudo apt-get update -y
-  sudo apt-get install -y unzip vim tmux build-essential autoconf flex bison texinfo libtool libreadline-dev zlib1g-dev
-  sudo apt-get install -y $CUSTOM_PKGS
+  sudo apt-get install -y unzip vim tmux build-essential autoconf flex bison texinfo libtool libreadline-dev zlib1g-dev $CUSTOM_PKGS
   sudo update-alternatives --install /usr/bin/editor editor /usr/bin/vim 100
 fi
 
 pushd repos
 
 if ! command -v rg &> /dev/null; then
-  curl -LO https://github.com/BurntSushi/ripgrep/releases/download/0.8.1/ripgrep_0.8.1_amd64.deb
-  sudo dpkg -i ripgrep_0.8.1_amd64.deb
-  rm -f ripgrep_0.8.1_amd64.deb
+  RIPGREP_VERSION=11.0.1
+  curl -LO https://github.com/BurntSushi/ripgrep/releases/download/${RIPGREP_VERSION}/ripgrep_${RIPGREP_VERSION}_amd64.deb
+  sudo dpkg -i ripgrep_${RIPGREP_VERSION}_amd64.deb
+  rm -f ripgrep_${RIPGREP_VERSION}_amd64.deb
 fi
 
 if ! command -v fasd &> /dev/null; then
@@ -128,14 +126,7 @@ if [ -n "$INSTALL_RUBY" ]; then
   if ! [ -d ~/.rbenv/plugins/ruby-build ]; then
     git clone --depth 1 https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
   fi
-  if ! [ -d ~/.rbenv/versions/2.2.3 ]; then
-    if [ -n "$IS_UBUNTU" ]; then
-      echo 'RUBY_CONFIGURE_OPTS=--disable-install-doc rbenv install 2.2.3'
-    else
-      echo 'curl -fsSL https://gist.github.com/mislav/055441129184a1512bb5.txt |\'
-      echo '  RUBY_CONFIGURE_OPTS=--disable-install-doc rbenv install --patch 2.2.3'
-    fi
-  fi
+  echo 'RUBY_CONFIGURE_OPTS=--disable-install-doc rbenv install <version>'
 fi
 
 # Rust
