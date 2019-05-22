@@ -65,6 +65,7 @@ brew install "${brew_packages[@]}"
 
 npm install -g prettier eslint eslint-plugin-react diff-so-fancy tldr
 
+pip3 install -U -r requirements.txt
 pip3 install flake8 autopep8
 
 for pkg in \
