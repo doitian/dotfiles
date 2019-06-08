@@ -11,7 +11,6 @@ fi
 
 brew_packages=(
   bash
-  bat
   clang-format
   coreutils
   ctags
