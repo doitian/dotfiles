@@ -52,16 +52,8 @@ while [ "$#" != 0 ]; do
       INSTALL_APT=
       shift
       ;;
-    --no-ruby)
-      INSTALL_RUBY=
-      shift
-      ;;
-    --no-rust)
-      INSTALL_RUST=
-      shift
-      ;;
     *)
-      echo 'debian.sh [--no-apt] [--no-ruby] [--no-rust]' >&2
+      echo 'debian.sh [--no-apt]' >&2
       exit 1
       ;;
   esac
@@ -110,29 +102,3 @@ if ! command -v caddy &> /dev/null; then
 fi
 
 popd # repos
-
-# Ruby
-if [ -n "$INSTALL_RUBY" ]; then
-  if ! command -v rbenv &> /dev/null; then
-    sudo git clone --depth 1 https://github.com/rbenv/rbenv.git /usr/local/opt/rbenv
-    pushd /usr/local/opt/rbenv
-    sudo src/configure
-    sudo make -C src
-    sudo ln -snf /usr/local/opt/rbenv/bin/rbenv /usr/local/bin
-    popd # /usr/local/opt/rbenv
-  fi
-
-  mkdir -p ~/.rbenv/plugins
-  if ! [ -d ~/.rbenv/plugins/ruby-build ]; then
-    git clone --depth 1 https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
-  fi
-  echo 'RUBY_CONFIGURE_OPTS=--disable-install-doc rbenv install <version>'
-fi
-
-# Rust
-if [ -n "$INSTALL_RUST" ] && ! command -v rustc &> /dev/null; then
-  pushd repos
-  curl https://sh.rustup.rs -sSf > rustup-installer.sh
-  bash rustup-installer.sh --default-host x86_64-unknown-linux-gnu --default-toolchain stable --no-modify-path -y
-  popd # repos
-fi

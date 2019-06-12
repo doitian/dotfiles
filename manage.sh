@@ -69,6 +69,7 @@ function cmd_repos() {
     ensure_git_clone https://github.com/doitian/dotfiles-public.git repos/public
   fi
   ensure_git_clone https://github.com/robbyrussell/oh-my-zsh.git "$HOME/.oh-my-zsh"
+  ensure_git_clone https://github.com/asdf-vm/asdf.git "$HOME/.asdf"
   curl -sSLo repos/bd.zsh https://raw.githubusercontent.com/Tarrasch/zsh-bd/master/bd.zsh
   curl -sSLo repos/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 }

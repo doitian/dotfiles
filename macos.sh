@@ -23,14 +23,12 @@ brew_packages=(
   git-extras
   git-lfs
   git-open
-  gradle
   grep
   htop
   hub
   hugo
   imagemagick
   jq
-  lua@5.3
   mas
   node
   pidof
@@ -38,10 +36,6 @@ brew_packages=(
   postgresql
   pstree
   python
-  rbenv
-  rbenv-aliases
-  rbenv-bundler
-  rbenv-default-gems
   rsync
   reattach-to-user-namespace
   redis
