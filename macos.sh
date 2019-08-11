@@ -24,7 +24,6 @@ brew_packages=(
   git-lfs
   git-open
   grep
-  htop
   hub
   hugo
   imagemagick
