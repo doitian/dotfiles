@@ -66,8 +66,6 @@ for pkg in \
 "419330170: Moom" \
 "490152466: iBooks Author" \
 "1055511498: Day One" \
-"618061906: Softmatic ScreenLayers" \
-"622066258: Softmatic WebLayers" \
 "451691288: Contacts Sync For Google Gmail" \
 "682658836: GarageBand" \
 "595615424: QQMusic" \
