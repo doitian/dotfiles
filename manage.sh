@@ -104,6 +104,11 @@ function cmd_install() {
     git config --global pager.diff "diff-so-fancy | less --tabs=1,5 -RFX"
     git config --global pager.show "diff-so-fancy | less --tabs=1,5 -RFX"
   fi
+  if gpg --list-secret-keys 5030A8CEDBEF767B &> /dev/null; then
+    git config --global user.email 'me+cloud@iany.me'
+    git config --global user.signingkey '5030A8CEDBEF767B'
+    git config --global commit.gpgSign true
+  fi
   chmod 0640 ~/.gitconfig
 
   mkdir -p ~/.aria2/
