@@ -95,8 +95,4 @@ if ! [ -f "$HOME/.dotfiles/repos/watchexec-1.8.6-x86_64-unknown-linux-gnu/watche
   rm -f watchexec-1.8.6-x86_64-unknown-linux-gnu.tar.gz
 fi
 
-if ! command -v caddy &> /dev/null; then
-  curl https://getcaddy.com | bash -s personal
-fi
-
 popd # repos
