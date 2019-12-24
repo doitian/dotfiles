@@ -43,17 +43,15 @@ if uname -a | grep -q Ubuntu; then
   CUSTOM_PKGS="libssl-dev"
 fi
 
-INSTALL_APT=true
-INSTALL_RUBY=true
-INSTALL_RUST=true
+INSTALL_APT=
 while [ "$#" != 0 ]; do
   case "$1" in
-    --no-apt)
-      INSTALL_APT=
+    --apt)
+      INSTALL_APT=true
       shift
       ;;
     *)
-      echo 'debian.sh [--no-apt]' >&2
+      echo 'debian.sh [--apt]' >&2
       exit 1
       ;;
   esac
