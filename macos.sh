@@ -40,10 +40,8 @@ brew_packages=(
   redis
   ripgrep
   rlwrap
-  subversion
   tag
   telnet
-  tig
   tmux
   tree
   unrar
