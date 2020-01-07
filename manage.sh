@@ -100,6 +100,7 @@ function cmd_install() {
   else
     cat repos/public/gitconfig.common >> ~/.gitconfig
   fi
+  private git config --global core.hooksPath "$DOTFILES_DIR/repos/private/githooks"
   if command -v diff-so-fancy &> /dev/null; then
     git config --global pager.diff "diff-so-fancy | less --tabs=1,5 -RFX"
     git config --global pager.show "diff-so-fancy | less --tabs=1,5 -RFX"
