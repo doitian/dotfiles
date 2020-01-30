@@ -105,15 +105,17 @@ function cmd_install() {
     git config --global pager.diff "diff-so-fancy | less --tabs=1,5 -RFX"
     git config --global pager.show "diff-so-fancy | less --tabs=1,5 -RFX"
   fi
-  if gpg --list-secret-keys 5030A8CEDBEF767B &> /dev/null; then
-    git config --global user.email 'me+cloud@iany.me'
-    git config --global user.signingkey '5030A8CEDBEF767B'
-    git config --global commit.gpgSign true
-  fi
-  if gpg --list-secret-keys 8F0347373FB23F12 &> /dev/null; then
-    git config --global user.email 'me+win@iany.me'
-    git config --global user.signingkey '8F0347373FB23F12'
-    git config --global commit.gpgSign true
+  if command -v gpg &> /dev/null; then
+    if gpg --list-secret-keys 5030A8CEDBEF767B &> /dev/null; then
+      git config --global user.email 'me+cloud@iany.me'
+      git config --global user.signingkey '5030A8CEDBEF767B'
+      git config --global commit.gpgSign true
+    fi
+    if gpg --list-secret-keys 8F0347373FB23F12 &> /dev/null; then
+      git config --global user.email 'me+win@iany.me'
+      git config --global user.signingkey '8F0347373FB23F12'
+      git config --global commit.gpgSign true
+    fi
   fi
   chmod 0640 ~/.gitconfig
 
