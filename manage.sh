@@ -164,7 +164,6 @@ function cmd_install() {
     cat repos/public/environment.plist.tmpl | tmpl_apply > ~/.MacOSX/environment.plist
   fi
 
-  ln -snf "$DOTFILES_DIR/repos/public/gittmpl" "$HOME/.gittmpl"
   ln -snf "$DOTFILES_DIR/repos/public/vimscripts" "$HOME/.vim/scripts"
 
   if [ -f "$HOME/Library/Spelling/LocalDictionary" ]; then
@@ -192,7 +191,6 @@ function cmd_uninstall() {
   rm -f ~/.tmux.conf
   rm -f ~/.bash_profile
   rm -f ~/.vim/autoload/plug.vim
-  rm -f ~/.gittmpl
   rm -f ~/.vim/scripts
 
   rm -rf ~/Library/KeyBindings/
