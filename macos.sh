@@ -24,7 +24,6 @@ brew_packages=(
   git-lfs
   git-open
   grep
-  hub
   hugo
   imagemagick
   jq
