@@ -164,6 +164,7 @@ function cmd_install() {
     cat repos/public/environment.plist.tmpl | tmpl_apply > ~/.MacOSX/environment.plist
   fi
 
+  ln -snf "$DOTFILES_DIR/repos/private/githooks" "$HOME/.githooks"
   ln -snf "$DOTFILES_DIR/repos/private/vimscripts" "$HOME/.vim/scripts"
   ln -snf "$DOTFILES_DIR/repos/private/projections" "$HOME/.vim/projections"
 
@@ -189,6 +190,7 @@ function cmd_uninstall() {
   rm -f ~/.gitignore
   rm -rf ~/.aria2/
   rm -f ~/.gitconfig
+  rm -f ~/.githooks
   rm -f ~/.tmux.conf
   rm -f ~/.bash_profile
   rm -f ~/.vim/autoload/plug.vim
