@@ -164,7 +164,8 @@ function cmd_install() {
     cat repos/public/environment.plist.tmpl | tmpl_apply > ~/.MacOSX/environment.plist
   fi
 
-  ln -snf "$DOTFILES_DIR/repos/public/vimscripts" "$HOME/.vim/scripts"
+  ln -snf "$DOTFILES_DIR/repos/private/vimscripts" "$HOME/.vim/scripts"
+  ln -snf "$DOTFILES_DIR/repos/private/projections" "$HOME/.vim/projections"
 
   if [ -f "$HOME/Library/Spelling/LocalDictionary" ]; then
     ln -snf "$HOME/Library/Spelling/LocalDictionary" "$HOME/.vim-spell-en.utf-8.add"
@@ -192,6 +193,7 @@ function cmd_uninstall() {
   rm -f ~/.bash_profile
   rm -f ~/.vim/autoload/plug.vim
   rm -f ~/.vim/scripts
+  rm -f ~/.vim/projections
 
   rm -rf ~/Library/KeyBindings/
 }
