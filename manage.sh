@@ -100,22 +100,10 @@ function cmd_install() {
   else
     cat repos/public/gitconfig.common >> ~/.gitconfig
   fi
-  private git config --global core.hooksPath "$DOTFILES_DIR/repos/private/githooks"
+  git config --global core.hooksPath "$HOME/.githooks"
   if command -v diff-so-fancy &> /dev/null; then
     git config --global pager.diff "diff-so-fancy | less --tabs=1,5 -RFX"
     git config --global pager.show "diff-so-fancy | less --tabs=1,5 -RFX"
-  fi
-  if command -v gpg &> /dev/null; then
-    if gpg --list-secret-keys 5030A8CEDBEF767B &> /dev/null; then
-      git config --global user.email 'me+cloud@iany.me'
-      git config --global user.signingkey '5030A8CEDBEF767B'
-      git config --global commit.gpgSign true
-    fi
-    if gpg --list-secret-keys 8F0347373FB23F12 &> /dev/null; then
-      git config --global user.email 'me+win@iany.me'
-      git config --global user.signingkey '8F0347373FB23F12'
-      git config --global commit.gpgSign true
-    fi
   fi
   chmod 0640 ~/.gitconfig
 
@@ -158,6 +146,8 @@ function cmd_install() {
   find_relative repos/public/default | xargs -I % ln -snf "$DOTFILES_DIR/repos/public/default/%" "$HOME/%"
   private find_relative_d repos/private/default | xargs -I % mkdir -p "$HOME/%"
   private find_relative repos/private/default | xargs -I % ln -snf "$DOTFILES_DIR/repos/private/default/%" "$HOME/%"
+
+  private ln -snf "$DOTFILES_DIR/repos/private/mutt" ~/.mutt
   if [ "$UNAME" = "Darwin" ]; then
     rsync -av --progress -h repos/public/MacOS_cp/ ~/
     mkdir -p ~/.MacOSX
