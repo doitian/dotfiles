@@ -147,6 +147,7 @@ function cmd_install() {
   private find_relative_d repos/private/default | xargs -I % mkdir -p "$HOME/%"
   private find_relative repos/private/default | xargs -I % ln -snf "$DOTFILES_DIR/repos/private/default/%" "$HOME/%"
 
+  private ln -snf "$DOTFILES_DIR/repos/private/UltiSnips" ~/.vim/UltiSnips
   private ln -snf "$DOTFILES_DIR/repos/private/mutt" ~/.mutt
   if [ "$UNAME" = "Darwin" ]; then
     rsync -av --progress -h repos/public/MacOS_cp/ ~/
@@ -179,6 +180,8 @@ function cmd_uninstall() {
   rm -f ~/.tmux.conf
   rm -f ~/.bash_profile
   rm -f ~/.vim/autoload/plug.vim
+  rm -f ~/.mutt
+  rm -f ~/.vim/UltiSnips
 
   rm -rf ~/Library/KeyBindings/
 }
