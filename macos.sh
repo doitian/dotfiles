@@ -20,9 +20,7 @@ brew_packages=(
   fzf
   gist
   git
-  git-extras
   git-lfs
-  git-open
   grep
   hugo
   imagemagick
@@ -31,17 +29,15 @@ brew_packages=(
   node
   pidof
   pipenv
-  postgresql
   pstree
   python
   rsync
   reattach-to-user-namespace
-  redis
   ripgrep
   rlwrap
   tag
-  telnet
   tmux
+  trash
   tree
   unrar
   watchexec
