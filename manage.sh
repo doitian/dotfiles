@@ -154,6 +154,8 @@ function cmd_install() {
 
   private ln -snf "$DOTFILES_DIR/repos/private/UltiSnips" ~/.vim/UltiSnips
   private ln -snf "$DOTFILES_DIR/repos/private/mutt" ~/.mutt
+  private mkdir -p ~/.mutt/cred/
+  private find_relative ~/.mutt/accounts | xargs -I % touch ~/.mutt/cred/%
   if [ "$UNAME" = "Darwin" ]; then
     rsync -av --progress -h repos/public/MacOS_cp/ ~/
     mkdir -p ~/.MacOSX
