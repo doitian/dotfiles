@@ -144,8 +144,13 @@ function cmd_install() {
 
   find_relative_d repos/public/default | xargs -I % mkdir -p "$HOME/%"
   find_relative repos/public/default | xargs -I % ln -snf "$DOTFILES_DIR/repos/public/default/%" "$HOME/%"
+  mkdir -p "$HOME/.config"
   private find_relative_d repos/private/default | xargs -I % mkdir -p "$HOME/%"
   private find_relative repos/private/default | xargs -I % ln -snf "$DOTFILES_DIR/repos/private/default/%" "$HOME/%"
+
+  if [ "$UNAME" = "Linux" ]; then
+    find_relative repos/public/xdg | xargs -I % ln -snf "$DOTFILES_DIR/repos/public/xdg/%" "$HOME/.config/%"
+  fi
 
   private ln -snf "$DOTFILES_DIR/repos/private/UltiSnips" ~/.vim/UltiSnips
   private ln -snf "$DOTFILES_DIR/repos/private/mutt" ~/.mutt
@@ -170,6 +175,7 @@ function cmd_uninstall() {
   find_relative repos/public/MacOS_cp | xargs -I % rm -f "$HOME/%"
   private find_relative repos/private/default | xargs -I % rm -f "$HOME/%"
   find_relative repos/public/default | xargs -I % rm -f "$HOME/%"
+  find_relative repos/public/xdg | xargs -I % rm -f "$HOME/.config/%"
 
   rm -f ~/.bashrc
   rm -f ~/.zshrc
