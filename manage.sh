@@ -149,6 +149,7 @@ function cmd_install() {
   private find_relative repos/private/default | xargs -I % ln -snf "$DOTFILES_DIR/repos/private/default/%" "$HOME/%"
 
   if [ "$UNAME" = "Linux" ]; then
+    find_relative_d repos/public/xdg | xargs -I % mkdir -p "$HOME/.config/%"
     find_relative repos/public/xdg | xargs -I % ln -snf "$DOTFILES_DIR/repos/public/xdg/%" "$HOME/.config/%"
   fi
 
