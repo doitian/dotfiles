@@ -122,7 +122,7 @@ function cmd_install() {
     for l in completion directories functions git grep history key-bindings misc spectrum termsupport theme-and-appearance; do
       head_cat '#' ~/.oh-my-zsh/lib/$l.zsh
     done
-    for l in safe-paste ssh-agent rake-fast; do
+    for l in safe-paste gpg-agent rake-fast; do
       head_cat '#' ~/.oh-my-zsh/plugins/$l/$l.plugin.zsh
     done
     head_cat '#' ~/.oh-my-zsh/plugins/gitfast/git-prompt.sh
