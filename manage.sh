@@ -72,6 +72,7 @@ function cmd_repos() {
   ensure_git_clone https://github.com/asdf-vm/asdf.git "$HOME/.asdf"
   curl -sSLo repos/bd.zsh https://raw.githubusercontent.com/Tarrasch/zsh-bd/master/bd.zsh
   curl -sSLo repos/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  curl -sSLo repos/unicodes.txt https://gist.github.com/doitian/f80a5f885946e10f3b42cc1e0392192b/raw/6d8227a4d7161ac7de77fbe290659a3d2e5cb1a3/unicodes.txt
 }
 
 function cmd_install() {
