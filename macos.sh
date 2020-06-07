@@ -29,7 +29,6 @@ brew_packages=(
   node
   pidof
   pipenv
-  pstree
   python
   rsync
   reattach-to-user-namespace
@@ -38,7 +37,6 @@ brew_packages=(
   tag
   tmux
   trash
-  tree
   unrar
   watchexec
   yarn
