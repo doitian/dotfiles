@@ -21,3 +21,5 @@ With private staffs
 ./manage.sh install -p
 ./manage.sh uninstall -p
 ```
+
+Windows: [dotfiles-windows](https://github.com/doitian/dotfiles-windows).
