@@ -70,7 +70,6 @@ function cmd_repos() {
   fi
   ensure_git_clone https://github.com/robbyrussell/oh-my-zsh.git "$HOME/.oh-my-zsh"
   ensure_git_clone https://github.com/asdf-vm/asdf.git "$HOME/.asdf"
-  ensure_git_clone https://github.com/bigH/git-fuzzy.git repos/git-fuzzy
   curl -sSLo repos/bd.zsh https://raw.githubusercontent.com/Tarrasch/zsh-bd/master/bd.zsh
   curl -sSLo repos/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   curl -sSLo repos/unicodes.txt https://gist.github.com/doitian/f80a5f885946e10f3b42cc1e0392192b/raw/6d8227a4d7161ac7de77fbe290659a3d2e5cb1a3/unicodes.txt
@@ -165,8 +164,6 @@ function cmd_install() {
       ln -snf "$HOME/Library/Spelling/LocalDictionary" "$HOME/Library/Application Support/Code/User/spellright.dict"
     fi
   fi
-
-  ln -snf "$DOTFILES_DIR/repos/git-fuzzy/bin/git-fuzzy" "$HOME/bin/git-fuzzy"
 }
 
 function cmd_uninstall() {
@@ -188,7 +185,6 @@ function cmd_uninstall() {
   rm -f ~/.vim/autoload/plug.vim
   rm -f ~/.mutt
   rm -f ~/.vim/UltiSnips
-  rm -f ~/bin/git-fuzzy
 
   rm -rf ~/Library/KeyBindings/
 }
