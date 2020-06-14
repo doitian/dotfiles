@@ -164,6 +164,13 @@ function cmd_install() {
       ln -snf "$HOME/Library/Spelling/LocalDictionary" "$HOME/Library/Application Support/Code/User/spellright.dict"
     fi
   fi
+
+  if [ -n "${WSLENV:-}" ]; then
+    ln -snf "$(which plink.exe)" "$HOME/bin/ssh"
+    ln -snf "$(which pscp.exe)" "$HOME/bin/scp"
+    ln -snf "$(which gpg.exe)" "$HOME/bin/gpg"
+    ln -snf "$(which gopass.exe)" "$HOME/bin/gopass"
+  fi
 }
 
 function cmd_uninstall() {
@@ -187,6 +194,13 @@ function cmd_uninstall() {
   rm -f ~/.vim/UltiSnips
 
   rm -rf ~/Library/KeyBindings/
+
+  if [ -n "${WSLENV:-}" ]; then
+    rm -f "$HOME/bin/ssh"
+    rm -f "$HOME/bin/scp"
+    rm -f "$HOME/bin/gpg"
+    rm -f "$HOME/bin/gopass"
+  fi
 }
 
 function main() {
