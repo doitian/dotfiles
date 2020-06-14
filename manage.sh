@@ -65,6 +65,7 @@ function cmd_repos() {
   if [ "$PRIVATE" = "true" ]; then
     ensure_git_clone git@github.com:doitian/dotfiles-public.git repos/public
     ensure_git_clone git@github.com:doitian/dotfiles-private.git repos/private
+    chmod 600 repos/private/default/.ssh/config
   else
     ensure_git_clone https://github.com/doitian/dotfiles-public.git repos/public
   fi
@@ -170,6 +171,7 @@ function cmd_install() {
     ln -snf "$(which pscp.exe)" "$HOME/bin/scp"
     ln -snf "$(which gpg.exe)" "$HOME/bin/gpg"
     ln -snf "$(which gopass.exe)" "$HOME/bin/gopass"
+    git config --global core.sshCommand "$(which plink.exe)"
   fi
 }
 
