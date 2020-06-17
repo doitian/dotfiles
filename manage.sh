@@ -213,10 +213,10 @@ function main() {
   fi
 
   case "$command" in
-    repos)
+    repos|r)
       cmd_repos
       ;;
-    install)
+    install|i)
       cmd_install
       ;;
     uninstall)
