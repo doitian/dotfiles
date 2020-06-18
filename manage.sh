@@ -90,11 +90,6 @@ function cmd_install() {
 
   ln -snf "$DOTFILES_DIR/repos/plug.vim" ~/.vim/autoload/plug.vim
   ln -snf "$DOTFILES_DIR/repos/public/default/.zshenv" ~/.bash_profile
-  if [ "$UNAME" = "Darwin" ]; then
-    ln -snf "$DOTFILES_DIR/repos/public/tmux.conf" ~/.tmux.conf
-  else
-    ln -snf "$DOTFILES_DIR/repos/public/tmux.linux.conf" ~/.tmux.conf
-  fi
 
   cat repos/public/gitconfig.tmpl | tmpl_apply > ~/.gitconfig
   if [ "$UNAME" = "Darwin" ]; then
@@ -189,7 +184,6 @@ function cmd_uninstall() {
   rm -f ~/.gitignore
   rm -rf ~/.aria2/
   rm -f ~/.gitconfig
-  rm -f ~/.tmux.conf
   rm -f ~/.bash_profile
   rm -f ~/.vim/autoload/plug.vim
   rm -f ~/.mutt
