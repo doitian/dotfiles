@@ -40,9 +40,11 @@ function ensure_git_clone() {
   local origin="$1"
   local target="$2"
   if [ -d "$target" ]; then
+    echo "==> pull $origin"
     git -C "$target" remote set-url origin "$origin"
     git -C "$target" pull
   else
+    echo "==> clone clone $origin"
     git clone --depth 1 "$origin" "$target"
   fi
 }
@@ -70,9 +72,18 @@ function cmd_repos() {
     ensure_git_clone https://github.com/doitian/dotfiles-public.git repos/public
   fi
   ensure_git_clone https://github.com/robbyrussell/oh-my-zsh.git "$HOME/.oh-my-zsh"
-  ensure_git_clone https://github.com/asdf-vm/asdf.git "$HOME/.asdf"
+  if [ -d "$HOME/.asdf" ]; then
+    echo "==> asdf update"
+    source "$HOME/.asdf/asdf.sh"
+    asdf update
+  else
+    ensure_git_clone https://github.com/asdf-vm/asdf.git "$HOME/.asdf"
+  fi
+  echo "==> curl bd.zsh"
   curl -sSLo repos/bd.zsh https://raw.githubusercontent.com/Tarrasch/zsh-bd/master/bd.zsh
+  echo "==> curl plug.vim"
   curl -sSLo repos/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  echo "==> curl unicodes.txt"
   curl -sSLo repos/unicodes.txt https://gist.github.com/doitian/f80a5f885946e10f3b42cc1e0392192b/raw/6d8227a4d7161ac7de77fbe290659a3d2e5cb1a3/unicodes.txt
 }
 
