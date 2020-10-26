@@ -88,6 +88,10 @@ function cmd_repos() {
 }
 
 function cmd_install() {
+  echo "Run following code to handle completion insecurities"
+  echo "source ~/.oh-my-zsh/lib/compfix.zsh"
+  echo "handle_completion_insecurities"
+
   mkdir -p ~/.zcompcache
   mkdir -p ~/.vim/backup
   mkdir -p ~/.vim/undo
@@ -130,7 +134,7 @@ function cmd_install() {
     for l in completion directories functions git grep history key-bindings misc spectrum termsupport theme-and-appearance; do
       head_cat '#' ~/.oh-my-zsh/lib/$l.zsh
     done
-    for l in gpg-agent rake-fast; do
+    for l in gpg-agent; do
       head_cat '#' ~/.oh-my-zsh/plugins/$l/$l.plugin.zsh
     done
     head_cat '#' ~/.oh-my-zsh/plugins/gitfast/git-prompt.sh
