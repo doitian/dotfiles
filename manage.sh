@@ -183,6 +183,12 @@ function cmd_install() {
     ln -snf "$(which gopass.exe)" "$HOME/bin/gopass"
     git config --global core.sshCommand "$(which plink.exe)"
   fi
+
+  mkdir -p ~/.gnupg
+  cp "$DOTFILES_DIR/repos/public/gpg-agent.conf" ~/.gnupg/gpg-agent.conf
+  if [ -f /usr/local/bin/pinentry-mac ]; then
+    echo 'pinentry-program /usr/local/bin/pinentry-mac' >> ~/.gnupg/gpg-agent.conf
+  fi
 }
 
 function cmd_uninstall() {
