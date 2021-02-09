@@ -177,11 +177,11 @@ function cmd_install() {
   fi
 
   if [ -n "${WSLENV:-}" ]; then
-    ln -snf "$(which plink.exe)" "$HOME/bin/ssh"
-    ln -snf "$(which pscp.exe)" "$HOME/bin/scp"
+    ln -snf "$(which ssh.exe)" "$HOME/bin/ssh"
+    ln -snf "$(which scp.exe)" "$HOME/bin/scp"
     ln -snf "$(which gpg.exe)" "$HOME/bin/gpg"
     ln -snf "$(which gopass.exe)" "$HOME/bin/gopass"
-    git config --global core.sshCommand "$(which plink.exe)"
+    git config --global core.sshCommand "$(which ssh.exe)"
   fi
 
   mkdir -p ~/.gnupg
