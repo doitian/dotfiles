@@ -106,18 +106,22 @@ function cmd_install() {
   ln -snf "$DOTFILES_DIR/repos/plug.vim" ~/.vim/autoload/plug.vim
   ln -snf "$DOTFILES_DIR/repos/public/default/.zshenv" ~/.bash_profile
 
-  cat repos/public/gitconfig.tmpl | tmpl_apply > ~/.gitconfig
+  GITCONFIG_PATH="$HOME/.gitconfig"
+  if [ -n "$$GITHUB_CODESPACE_TOKEN" ]; then
+    GITCONFIG_PATH="$HOME/.gitconfig.tmp"
+  fi
+  cat repos/public/gitconfig.tmpl | tmpl_apply > "$GITCONFIG_PATH"
   if [ "$UNAME" = "Darwin" ]; then
-    cat repos/public/gitconfig.macos >> ~/.gitconfig
+    cat repos/public/gitconfig.macos >> "$GITCONFIG_PATH"
   else
-    cat repos/public/gitconfig.common >> ~/.gitconfig
+    cat repos/public/gitconfig.common >> "$GITCONFIG_PATH"
   fi
   git config --global core.hooksPath "$HOME/.githooks"
   if command -v diff-so-fancy &> /dev/null; then
     git config --global pager.diff "diff-so-fancy | less --tabs=1,5 -RFX"
     git config --global pager.show "diff-so-fancy | less --tabs=1,5 -RFX"
   fi
-  chmod 0640 ~/.gitconfig
+  chmod 0640 "$GITCONFIG_PATH"
 
   mkdir -p ~/.aria2/
   cat repos/public/aria2rpc.conf.tmpl | tmpl_apply | get_or_set_hash aria2rpc 8 > ~/.aria2/aria2rpc.conf
