@@ -107,7 +107,7 @@ function cmd_install() {
   ln -snf "$DOTFILES_DIR/repos/public/default/.zshenv" ~/.bash_profile
 
   GITCONFIG_PATH="$HOME/.gitconfig"
-  if [ -n "$$GITHUB_CODESPACE_TOKEN" ]; then
+  if [ -n "$GITHUB_CODESPACE_TOKEN" ]; then
     GITCONFIG_PATH="$HOME/.gitconfig.user"
     git config --global include.path .gitconfig.user
   fi
