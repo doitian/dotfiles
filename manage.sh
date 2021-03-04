@@ -67,7 +67,6 @@ function cmd_repos() {
   if [ "$PRIVATE" = "true" ]; then
     ensure_git_clone git@github.com:doitian/dotfiles-public.git repos/public
     ensure_git_clone git@github.com:doitian/dotfiles-private.git repos/private
-    chmod 600 repos/private/default/.ssh/config
   else
     ensure_git_clone https://github.com/doitian/dotfiles-public.git repos/public
   fi
