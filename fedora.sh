@@ -54,11 +54,11 @@ if ! command -v fzf &> /dev/null; then
 fi
 /usr/local/opt/fzf/install --no-update-rc --completion --key-bindings
 
-if ! [ -f "$HOME/.dotfiles/repos/watchexec-1.8.6-x86_64-unknown-linux-gnu/watchexec" ]; then
-  curl -LO https://github.com/mattgreen/watchexec/releases/download/1.8.6/watchexec-1.8.6-x86_64-unknown-linux-gnu.tar.gz
-  tar -xzf watchexec-1.8.6-x86_64-unknown-linux-gnu.tar.gz
-  ln -snf "$HOME/.dotfiles/repos/watchexec-1.8.6-x86_64-unknown-linux-gnu/watchexec" ~/bin/watchexec
-  rm -f watchexec-1.8.6-x86_64-unknown-linux-gnu.tar.gz
+if ! [ -f "$HOME/.dotfiles/repos/watchexec-1.14.1-x86_64-unknown-linux-gnu/watchexec" ]; then
+  curl -LO https://github.com/mattgreen/watchexec/releases/download/1.14.1/watchexec-1.14.1-x86_64-unknown-linux-gnu.tar.gz
+  tar -xzf watchexec-1.14.1-x86_64-unknown-linux-gnu.tar.gz
+  ln -snf "$HOME/.dotfiles/repos/watchexec-1.14.1-x86_64-unknown-linux-gnu/watchexec" ~/bin/watchexec
+  rm -f watchexec-1.14.1-x86_64-unknown-linux-gnu.tar.gz
 fi
 
 popd # repos
