@@ -1,0 +1,14 @@
+#cloud-config
+packages:
+  - zsh
+  - git
+  - dirmngr
+
+users:
+  - name: ian
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: users, admin
+    lock_passwd: true
+    shell: /usr/bin/zsh
+    ssh_authorized_keys:
+      - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO+Gm8XO6FLDbmYjaFfHoFMtAe/YvkTycV/Sj/uXH6sp ian@card"
