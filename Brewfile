@@ -19,7 +19,6 @@ brew "git"
 brew "git-lfs"
 brew "gnu-sed"
 brew "gnupg"
-brew "gocryptfs"
 brew "gopass"
 brew "hugo"
 brew "imagemagick"
@@ -44,6 +43,8 @@ brew "tmux"
 brew "trash"
 brew "watchexec"
 cask "a-better-finder-rename"
+cask "android-platform-tools"
+cask "anki"
 cask "app-cleaner"
 cask "audio-hijack"
 cask "baidunetdisk"
@@ -52,6 +53,8 @@ cask "carbon-copy-cloner"
 cask "deckset"
 cask "dropbox"
 cask "fission"
+cask "garmin-express"
+cask "google-chrome"
 cask "handbrake"
 cask "iina"
 cask "imageoptim"
@@ -59,7 +62,7 @@ cask "keyboard-maestro"
 cask "macvim"
 cask "mathpix-snipping-tool"
 cask "mendeley"
-cask "microsoft-edge"
+cask "microsoft-auto-update"
 cask "microsoft-excel"
 cask "microsoft-powerpoint"
 cask "microsoft-word"
@@ -68,10 +71,11 @@ cask "obsidian"
 cask "omnigraffle"
 cask "omniplan"
 cask "oracle-jdk"
-cask "osxfuse"
 cask "paragon-ntfs"
+cask "paw"
 cask "pdf-expert"
 cask "snagit"
+cask "sony-xperia-companion"
 cask "tableflip"
 cask "telegram"
 cask "uhk-agent"
@@ -81,15 +85,22 @@ cask "wacom-tablet"
 cask "xmind-zen"
 cask "yubico-authenticator"
 mas "Amphetamine", id: 937984704
+mas "Bear", id: 1091189122
+mas "Cardflow", id: 1439830689
+mas "com.pixelmatorteam.pixelmator.x", id: 1289583905
 mas "Contacts Sync for Google Gmail", id: 451691288
 mas "Day One", id: 1055511498
 mas "Final Cut Pro", id: 424389933
 mas "GoodNotes", id: 1444383602
+mas "HazeOver", id: 430798174
+mas "iA Writer", id: 775737590
 mas "Kindle", id: 405399194
-mas "Klib", id: 1196268448
+mas "LiquidText", id: 922765270
 mas "Mischief", id: 928430260
 mas "Motion", id: 434290957
+mas "Notability", id: 360593530
+mas "Numbers", id: 409203825
+mas "QQ音乐", id: 595615424
 mas "ScanScan", id: 1249901692
-mas "Studies", id: 1071676469
-mas "Vectornator", id: 1219074514
 mas "Vimeo", id: 1356686763
+mas "Yoink", id: 457622435
