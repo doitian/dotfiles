@@ -138,7 +138,7 @@ function cmd_install() {
     for l in completion directories functions git grep history key-bindings misc spectrum termsupport theme-and-appearance; do
       head_cat '#' ~/.oh-my-zsh/lib/$l.zsh
     done
-    for l in gpg-agent; do
+    for l in gpg-agent sudo; do
       head_cat '#' ~/.oh-my-zsh/plugins/$l/$l.plugin.zsh
     done
     head_cat '#' ~/.oh-my-zsh/plugins/gitfast/git-prompt.sh
