@@ -54,11 +54,12 @@ if ! command -v fzf &> /dev/null; then
 fi
 /usr/local/opt/fzf/install --no-update-rc --completion --key-bindings
 
-if ! [ -f "$HOME/.dotfiles/repos/watchexec-1.14.1-x86_64-unknown-linux-gnu/watchexec" ]; then
-  curl -LO https://github.com/mattgreen/watchexec/releases/download/1.14.1/watchexec-1.14.1-x86_64-unknown-linux-gnu.tar.gz
-  tar -xzf watchexec-1.14.1-x86_64-unknown-linux-gnu.tar.gz
-  ln -snf "$HOME/.dotfiles/repos/watchexec-1.14.1-x86_64-unknown-linux-gnu/watchexec" ~/bin/watchexec
-  rm -f watchexec-1.14.1-x86_64-unknown-linux-gnu.tar.gz
+WATCHEXEC_VERSION=1.16.1
+if ! [ -f "$HOME/.dotfiles/repos/watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu/watchexec" ]; then
+  curl -LO https://github.com/watchexec/watchexec/releases/download/cli-v$WATCHEXEC_VERSION/watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu.tar.xz
+  tar -xJf watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu.tar.xz
+  ln -snf "$HOME/.dotfiles/repos/watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu/watchexec" ~/bin/watchexec
+  rm -f watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu.tar.gz
 fi
 
 popd # repos
