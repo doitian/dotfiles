@@ -19,6 +19,7 @@ if [ "$UID" = 0 ]; then
 ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO+Gm8XO6FLDbmYjaFfHoFMtAe/YvkTycV/Sj/uXH6sp ian
 SSH
     ssh-keyscan -H github.com | sudo -H -u ian tee .ssh/known_hosts
+    sudo chmod o-rw,g-w .ssh/authorized_keys .ssh/known_hosts
   fi
   if ! [ -d .dotfiles ]; then
     git clone --depth 1 git@github.com:doitian/dotfiles.git .dotfiles
