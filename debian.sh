@@ -6,7 +6,7 @@ set -u
 
 if [ "$UID" = 0 ]; then
   apt-get update -y
-  apt-get install -y git zsh dirmngr
+  apt-get install -y git zsh dirmngr rust-fd-find
 
   if ! id ian; then
     useradd -s /usr/bin/zsh -m ian
