@@ -6,7 +6,7 @@ set -u
 
 if [ "$UID" = 0 ]; then
   apt-get update -y
-  apt-get install -y git zsh dirmngr rust-fd-find
+  apt-get install -y git zsh dirmngr
 
   if ! id ian; then
     useradd -s /usr/bin/zsh -m ian
@@ -59,7 +59,7 @@ done
 
 if [ -n "$INSTALL_APT" ]; then
   $SUDO apt-get update -y
-  $SUDO apt-get install -y unzip vim tmux build-essential autoconf flex bison texinfo libtool libreadline-dev zlib1g-dev $CUSTOM_PKGS
+  $SUDO apt-get install -y unzip vim tmux build-essential autoconf flex bison texinfo libtool libreadline-dev zlib1g-dev rust-fd-find $CUSTOM_PKGS
   $SUDO update-alternatives --install /usr/bin/editor editor /usr/bin/vim 100
 fi
 

@@ -5,7 +5,7 @@ set -u
 [ -n "${DEBUG:-}" ] && set -x || true
 
 if [ "$UID" = 0 ]; then
-  sudo dnf install -y zsh glibc-langpack-en findutils rust-fd-find
+  sudo dnf install -y zsh glibc-langpack-en findutils
 
   if ! id ian; then
     useradd -s /usr/bin/zsh -m ian
@@ -35,8 +35,7 @@ fi
 
 mkdir -p ~/bin repos
 
-$SUDO dnf install -y vim-enhanced ripgrep make
-
+$SUDO dnf install -y vim-enhanced ripgrep make rust-fd-find
 pushd repos
 
 if ! command -v fasd &> /dev/null; then
