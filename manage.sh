@@ -147,6 +147,9 @@ function cmd_install() {
     done
     head_cat '#' repos/bd.zsh
     head_cat '#' repos/public/zshrc.after
+    if [[ "$(uname -v)" = iSH* ]]; then
+      echo 'source ~/.zshenv'
+    fi
   ) > ~/.zshrc
   chmod 0440 ~/.zshrc
 
