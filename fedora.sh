@@ -35,7 +35,7 @@ fi
 
 mkdir -p ~/bin repos
 
-$SUDO dnf install -y vim-enhanced rust-ripgrep rust-fd-find make
+$SUDO dnf install -y vim-enhanced ripgrep fd-find make tar openssl
 pushd repos
 
 if ! command -v fasd &> /dev/null; then
