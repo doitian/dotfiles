@@ -59,17 +59,24 @@ done
 
 if [ -n "$INSTALL_APT" ]; then
   $SUDO apt-get update -y
-  $SUDO apt-get install -y unzip vim tmux build-essential autoconf flex bison texinfo libtool libreadline-dev zlib1g-dev rust-fd-find $CUSTOM_PKGS
+  $SUDO apt-get install -y unzip vim tmux build-essential autoconf flex bison texinfo libtool libreadline-dev zlib1g-dev $CUSTOM_PKGS
   $SUDO update-alternatives --install /usr/bin/editor editor /usr/bin/vim 100
 fi
 
 pushd repos
 
 if ! command -v rg &> /dev/null; then
-  RIPGREP_VERSION=11.0.1
-  curl -LO https://github.com/BurntSushi/ripgrep/releases/download/${RIPGREP_VERSION}/ripgrep_${RIPGREP_VERSION}_amd64.deb
-  $SUDO dpkg -i ripgrep_${RIPGREP_VERSION}_amd64.deb
-  rm -f ripgrep_${RIPGREP_VERSION}_amd64.deb
+  RIPGREP_VERSION=13.0.0
+  curl -LO "https://github.com/BurntSushi/ripgrep/releases/download/${RIPGREP_VERSION}/ripgrep_${RIPGREP_VERSION}_amd64.deb"
+  $SUDO dpkg -i "ripgrep_${RIPGREP_VERSION}_amd64.deb"
+  rm -f "ripgrep_${RIPGREP_VERSION}_amd64.deb"
+fi
+
+if ! command -v fd &> /dev/null; then
+  FD_VERSION=8.2.1
+  curl -LO "https://github.com/sharkdp/fd/releases/download/v${FD_VERSION}/fd_${FD_VERSION}_amd64.deb"
+  $SUDO dpkg -i "fd_${FD_VERSION}_amd64.deb"
+  rm -f "fd_${FD_VERSION}_amd64.deb"
 fi
 
 if ! command -v fasd &> /dev/null; then
@@ -88,7 +95,7 @@ if ! command -v fzf &> /dev/null; then
 fi
 /usr/local/opt/fzf/install --no-update-rc --completion --key-bindings
 
-WATCHEXEC_VERSION=1.16.1
+WATCHEXEC_VERSION=1.17.0
 if ! [ -f "$HOME/.dotfiles/repos/watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu/watchexec" ]; then
   curl -LO https://github.com/watchexec/watchexec/releases/download/cli-v$WATCHEXEC_VERSION/watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu.tar.xz
   tar -xJf watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu.tar.xz

@@ -35,7 +35,7 @@ fi
 
 mkdir -p ~/bin repos
 
-$SUDO dnf install -y vim-enhanced ripgrep make rust-fd-find
+$SUDO dnf install -y vim-enhanced rust-ripgrep rust-fd-find make
 pushd repos
 
 if ! command -v fasd &> /dev/null; then
@@ -54,7 +54,7 @@ if ! command -v fzf &> /dev/null; then
 fi
 /usr/local/opt/fzf/install --no-update-rc --completion --key-bindings
 
-WATCHEXEC_VERSION=1.16.1
+WATCHEXEC_VERSION=1.17.0
 if ! [ -f "$HOME/.dotfiles/repos/watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu/watchexec" ]; then
   curl -LO https://github.com/watchexec/watchexec/releases/download/cli-v$WATCHEXEC_VERSION/watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu.tar.xz
   tar -xJf watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu.tar.xz

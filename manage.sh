@@ -9,7 +9,7 @@ set -u
 [ -n "${DEBUG:-}" ] && set -x || true
 
 TMPL_NAME=ian
-TMPL_EMAIL=$(echo bWVAaWFueS5tZQ== | base64 --decode)
+TMPL_EMAIL=$(echo bWVAaWFueS5tZQ== | base64 -d)
 TMPL_HOME="$HOME"
 
 function tmpl_apply() {
@@ -71,7 +71,7 @@ function cmd_repos() {
     ensure_git_clone https://github.com/doitian/dotfiles-public.git repos/public
   fi
   ensure_git_clone https://github.com/robbyrussell/oh-my-zsh.git "$HOME/.oh-my-zsh"
-  if [ -d "$HOME/.asdf" ]; then
+  if [ -d "$HOME/.asdf" ] && [ "${TERM_PROGRAM:-}" != "a-Shell" ]; then
     echo "==> asdf update"
     source "$HOME/.asdf/asdf.sh"
     asdf update
