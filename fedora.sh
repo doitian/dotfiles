@@ -5,7 +5,7 @@ set -u
 [ -n "${DEBUG:-}" ] && set -x || true
 
 if [ "$UID" = 0 ]; then
-  sudo dnf install -y zsh glibc-langpack-en findutils
+  sudo dnf install -y zsh glibc-langpack-en findutils git
 
   if ! id ian; then
     useradd -s /usr/bin/zsh -m ian
