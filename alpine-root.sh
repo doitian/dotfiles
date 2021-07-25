@@ -6,16 +6,16 @@ set -u
 
 mkdir -p ~/bin repos
 
-apk add vim git rsync tmux make perl less findutils ncurses ripgrep fd fzf fzf-vim fzf-zsh-completion
-
-ln -snf /usr/share/fzf/key-bindings.zsh ~/.fzf.zsh
+apk add vim git rsync tmux make perl less findutils ncurses
+# fzf fzf-vim fzf-zsh-completion
+# ripgrep fd 
 
 pushd repos
 
 if ! command -v fasd &> /dev/null; then
   git clone --depth 1 https://github.com/clvv/fasd.git
   pushd fasd
-  $SUDO make install
+  make install
   popd # fasd
   rm -rf fasd
 fi
