@@ -71,12 +71,14 @@ function cmd_repos() {
     ensure_git_clone https://github.com/doitian/dotfiles-public.git repos/public
   fi
   ensure_git_clone https://github.com/robbyrussell/oh-my-zsh.git "$HOME/.oh-my-zsh"
-  if [ -d "$HOME/.asdf" ] && [ "${TERM_PROGRAM:-}" != "a-Shell" ]; then
+  if [ "$UID" != 0 ]; then
+    if [ -d "$HOME/.asdf" ]; then
     echo "==> asdf update"
     source "$HOME/.asdf/asdf.sh"
     asdf update
-  else
-    ensure_git_clone https://github.com/asdf-vm/asdf.git "$HOME/.asdf"
+    else
+      ensure_git_clone https://github.com/asdf-vm/asdf.git "$HOME/.asdf"
+    fi
   fi
   echo "==> curl bd.zsh"
   curl -sSLo repos/bd.zsh https://raw.githubusercontent.com/Tarrasch/zsh-bd/master/bd.zsh
