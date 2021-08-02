@@ -120,9 +120,12 @@ function cmd_install() {
     cat repos/public/gitconfig.common >> "$GITCONFIG_PATH"
   fi
   git config --global core.hooksPath "$HOME/.githooks"
-  if command -v diff-so-fancy &> /dev/null; then
-    git config --global pager.diff "diff-so-fancy | less --tabs=1,5 -RFX"
-    git config --global pager.show "diff-so-fancy | less --tabs=1,5 -RFX"
+  if command -v delta &> /dev/null; then
+    git config --global pager.diff delta
+    git config --global pager.show delta
+    git config --global pager.log delta
+    git config --global pager.reflog delta
+    git config --global interactive.diffFilter 'delta --color-only --features=interactive'
   fi
   chmod 0640 "$GITCONFIG_PATH"
 

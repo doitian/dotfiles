@@ -7,6 +7,4 @@ set -u
 # brew bundle dump --force --file=Brewfile
 brew bundle --file=Brewfile
 
-npm install -g diff-so-fancy
-
 pip3 install -U -r requirements.txt
