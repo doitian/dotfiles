@@ -184,9 +184,6 @@ function cmd_install() {
 
   if [ -f "$HOME/Library/Spelling/LocalDictionary" ]; then
     ln -snf "$HOME/Library/Spelling/LocalDictionary" "$HOME/.vim-spell-en.utf-8.add"
-    if [ -d "$HOME/Library/Application Support/Code/User" ]; then
-      ln -snf "$HOME/Library/Spelling/LocalDictionary" "$HOME/Library/Application Support/Code/User/spellright.dict"
-    fi
   fi
 
   if [ -n "${WSLENV:-}" ]; then
