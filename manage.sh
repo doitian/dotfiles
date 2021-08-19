@@ -125,7 +125,7 @@ function cmd_install() {
     git config --global pager.show delta
     git config --global pager.log delta
     git config --global pager.reflog delta
-    git config --global interactive.diffFilter 'delta --color-only --features=interactive'
+    git config --global interactive.diffFilter 'delta --color-only --features="${TERM_BACKGROUND:-light}-background interactive"'
   fi
   chmod 0640 "$GITCONFIG_PATH"
 
