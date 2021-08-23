@@ -115,9 +115,7 @@ function cmd_install() {
   fi
   cat repos/public/gitconfig.tmpl | tmpl_apply > "$GITCONFIG_PATH"
   if [ "$UNAME" = "Darwin" ]; then
-    cat repos/public/gitconfig.macos >> "$GITCONFIG_PATH"
-  else
-    cat repos/public/gitconfig.common >> "$GITCONFIG_PATH"
+    git config --global credential.helper osxkeychain
   fi
   git config --global core.hooksPath "$HOME/.githooks"
   if command -v delta &> /dev/null; then
