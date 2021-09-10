@@ -41,6 +41,7 @@ brew "p7zip"
 brew "pandoc"
 brew "pidof"
 brew "pinentry-mac"
+brew "pyright"
 brew "reattach-to-user-namespace"
 brew "ripgrep"
 brew "rlwrap"
@@ -49,32 +50,37 @@ brew "rust-analyzer"
 brew "scw"
 brew "smartmontools"
 brew "starship"
+brew "subversion"
 brew "tag"
 brew "tarsnap"
 brew "tmux"
 brew "trash"
 brew "watchexec"
 cask "a-better-finder-rename"
-cask "adobe-acrobat-reader"
+cask "aegisub"
 cask "android-file-transfer"
 cask "android-platform-tools"
 cask "anki"
 cask "app-cleaner"
 cask "app-tamer"
+cask "audacity"
 cask "audio-hijack"
 cask "baidunetdisk"
 cask "calibre"
 cask "carbon-copy-cloner"
+cask "cardhop"
 cask "cleanshot"
 cask "deckset"
+cask "deepl"
 cask "dropbox"
+cask "fantastical"
 cask "fission"
 cask "font-lato"
+cask "font-montserrat-alternates"
 cask "font-noto-sans"
 cask "font-noto-sans-cjk-sc"
 cask "font-noto-serif"
 cask "font-noto-serif-cjk-sc"
-cask "font-victor-mono"
 cask "garmin-express"
 cask "google-chrome"
 cask "handbrake"
@@ -83,7 +89,9 @@ cask "iina"
 cask "imageoptim"
 cask "keyboard-maestro"
 cask "macvim"
+cask "marginnote"
 cask "mathpix-snipping-tool"
+cask "medibangpaintpro"
 cask "microsoft-auto-update"
 cask "microsoft-excel"
 cask "microsoft-powerpoint"
@@ -92,14 +100,16 @@ cask "multipass"
 cask "obs"
 cask "obsidian"
 cask "omnigraffle"
-cask "omniplan"
+cask "omnioutliner"
 cask "oracle-jdk"
 cask "paragon-ntfs"
 cask "paw"
+cask "pdf-expert"
+cask "prowritingaid"
+cask "scapple"
 cask "scrivener"
 cask "sony-xperia-companion"
 cask "tableflip"
-cask "telegram"
 cask "uhk-agent"
 cask "upic"
 cask "vb-cable"
@@ -117,9 +127,10 @@ mas "Cardflow", id: 1439830689
 mas "Contacts Sync for Google Gmail", id: 451691288
 mas "Eagle for Safari", id: 1526651672
 mas "Final Cut Pro", id: 424389933
+mas "Gestimer", id: 990588172
 mas "GoodNotes", id: 1444383602
 mas "HazeOver", id: 430798174
-mas "iA Writer", id: 775737590
+mas "Hidden Bar", id: 1452453066
 mas "Kindle", id: 405399194
 mas "LiquidText", id: 922765270
 mas "Mischief", id: 928430260
@@ -129,8 +140,7 @@ mas "Numbers", id: 409203825
 mas "Pixelmator Pro", id: 1289583905
 mas "QQ音乐", id: 595615424
 mas "Save to Pocket", id: 1477385213
-mas "Save to Raindrop.io", id: 1549370672
 mas "ScanScan", id: 1249901692
-mas "Taskheat", id: 1431995750
 mas "Vimeo", id: 1356686763
+mas "Xee³", id: 639764244
 mas "Yoink", id: 457622435
