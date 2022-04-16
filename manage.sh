@@ -139,10 +139,10 @@ function cmd_install() {
   (
     cat repos/public/zshrc
     local l
-    for l in completion directories functions git grep history key-bindings misc spectrum termsupport theme-and-appearance; do
+    for l in completion directories functions git grep history key-bindings misc spectrum termsupport theme-and-appearance clipboard; do
       head_cat '#' ~/.oh-my-zsh/lib/$l.zsh
     done
-    for l in gpg-agent sudo; do
+    for l in gpg-agent sudo fancy-ctrl-z copybuffer copypath isodate magic-enter encode64 urltools; do
       head_cat '#' ~/.oh-my-zsh/plugins/$l/$l.plugin.zsh
     done
     head_cat '#' ~/.oh-my-zsh/plugins/gitfast/git-prompt.sh
@@ -153,6 +153,9 @@ function cmd_install() {
     head_cat '#' repos/public/zshrc.after
     if [[ "$(uname -v)" = iSH* ]]; then
       echo 'source ~/.zshenv'
+    fi
+    if [ "$UNAME" = "Darwin" ]; then
+      echo 'source ~/.oh-my-zsh/plugins/macos/macos.plugin.zsh'
     fi
   ) > ~/.zshrc
   chmod 0440 ~/.zshrc
