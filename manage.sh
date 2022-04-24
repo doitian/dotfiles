@@ -89,9 +89,11 @@ function cmd_repos() {
 }
 
 function cmd_install() {
-  echo "Run following code to handle completion insecurities"
+  echo "#==> completion securities check"
   echo "source ~/.oh-my-zsh/lib/compfix.zsh"
   echo "handle_completion_insecurities"
+  echo "#==> asdf direnv setup"
+  echo "asdf direnv setup --shell zsh --version system"
 
   mkdir -p ~/.zcompcache
   mkdir -p ~/.vim/backup
