@@ -65,21 +65,21 @@ fi
 
 pushd repos
 
-if ! command -v rg &> /dev/null; then
+if ! command -v rg &>/dev/null; then
   RIPGREP_VERSION=13.0.0
   curl -LO "https://github.com/BurntSushi/ripgrep/releases/download/${RIPGREP_VERSION}/ripgrep_${RIPGREP_VERSION}_amd64.deb"
   $SUDO dpkg -i "ripgrep_${RIPGREP_VERSION}_amd64.deb"
   rm -f "ripgrep_${RIPGREP_VERSION}_amd64.deb"
 fi
 
-if ! command -v fd &> /dev/null; then
+if ! command -v fd &>/dev/null; then
   FD_VERSION=8.2.1
   curl -LO "https://github.com/sharkdp/fd/releases/download/v${FD_VERSION}/fd_${FD_VERSION}_amd64.deb"
   $SUDO dpkg -i "fd_${FD_VERSION}_amd64.deb"
   rm -f "fd_${FD_VERSION}_amd64.deb"
 fi
 
-if ! command -v fasd &> /dev/null; then
+if ! command -v fasd &>/dev/null; then
   git clone --depth 1 https://github.com/clvv/fasd.git
   pushd fasd
   $SUDO make install
@@ -87,7 +87,7 @@ if ! command -v fasd &> /dev/null; then
   rm -rf fasd
 fi
 
-if ! command -v fzf &> /dev/null; then
+if ! command -v fzf &>/dev/null; then
   $SUDO git clone --depth 1 https://github.com/junegunn/fzf.git /usr/local/opt/fzf
   $SUDO /usr/local/opt/fzf/install --bin
   $SUDO ln -snf /usr/local/opt/fzf/bin/fzf /usr/local/bin

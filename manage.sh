@@ -2,7 +2,7 @@
 
 PRIVATE=false
 UNAME="$(uname -s)"
-DOTFILES_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 set -e
 set -u
@@ -23,7 +23,7 @@ function get_or_set_hash() {
   local key="$1"
   local size="${2:-16}"
   if ! [ -f "var/$key.hash" ]; then
-    openssl rand -hex "$size" > "var/$key.hash"
+    openssl rand -hex "$size" >"var/$key.hash"
   fi
 
   local hash="$(cat "var/$key.hash")"
@@ -73,9 +73,9 @@ function cmd_repos() {
   ensure_git_clone https://github.com/robbyrussell/oh-my-zsh.git "$HOME/.oh-my-zsh"
   if [ "$UID" != 0 ]; then
     if [ -d "$HOME/.asdf" ]; then
-    echo "==> asdf update"
-    source "$HOME/.asdf/asdf.sh"
-    asdf update
+      echo "==> asdf update"
+      source "$HOME/.asdf/asdf.sh"
+      asdf update
     else
       ensure_git_clone https://github.com/asdf-vm/asdf.git "$HOME/.asdf"
     fi
@@ -113,12 +113,12 @@ function cmd_install() {
     GITCONFIG_PATH="$HOME/.gitconfig.user"
     git config --global include.path .gitconfig.user
   fi
-  cat repos/public/gitconfig.tmpl | tmpl_apply > "$GITCONFIG_PATH"
+  cat repos/public/gitconfig.tmpl | tmpl_apply >"$GITCONFIG_PATH"
   if [ "$UNAME" = "Darwin" ]; then
     git config --global credential.helper osxkeychain
   fi
   git config --global core.hooksPath "$HOME/.githooks"
-  if command -v delta &> /dev/null; then
+  if command -v delta &>/dev/null; then
     git config --global pager.diff delta
     git config --global pager.show delta
     git config --global pager.log delta
@@ -128,11 +128,11 @@ function cmd_install() {
   chmod 0640 "$GITCONFIG_PATH"
 
   mkdir -p ~/.aria2/
-  cat repos/public/aria2rpc.conf.tmpl | tmpl_apply | get_or_set_hash aria2rpc 8 > ~/.aria2/aria2rpc.conf
+  cat repos/public/aria2rpc.conf.tmpl | tmpl_apply | get_or_set_hash aria2rpc 8 >~/.aria2/aria2rpc.conf
   chmod 0640 ~/.aria2/aria2rpc.conf
 
   rm -f ~/.safebin
-  echo __HASH__ | get_or_set_hash safebin 4 > ~/.safebin
+  echo __HASH__ | get_or_set_hash safebin 4 >~/.safebin
   chmod 0400 ~/.safebin
 
   rm -f ~/.zshrc
@@ -157,7 +157,7 @@ function cmd_install() {
     if [ "$UNAME" = "Darwin" ]; then
       echo 'source ~/.oh-my-zsh/plugins/macos/macos.plugin.zsh'
     fi
-  ) > ~/.zshrc
+  ) >~/.zshrc
   chmod 0440 ~/.zshrc
 
   rm -f ~/.bashrc
@@ -165,7 +165,7 @@ function cmd_install() {
     cat repos/public/bashrc
     head_cat '#' repos/public/zsh/aliases.zsh
     head_cat '#' repos/public/zsh/functions.zsh
-  ) > ~/.bashrc
+  ) >~/.bashrc
   chmod 0440 ~/.bashrc
 
   find_relative_d repos/public/default | xargs -I % mkdir -p "$HOME/%"
@@ -180,7 +180,7 @@ function cmd_install() {
   if [ "$UNAME" = "Darwin" ]; then
     rsync -a -h repos/public/MacOS_cp/ ~/
     mkdir -p ~/.MacOSX
-    cat repos/public/environment.plist.tmpl | tmpl_apply > ~/.MacOSX/environment.plist
+    cat repos/public/environment.plist.tmpl | tmpl_apply >~/.MacOSX/environment.plist
   fi
 
   if [ -f "$HOME/Library/Spelling/LocalDictionary" ]; then
@@ -198,7 +198,7 @@ function cmd_install() {
   mkdir -p ~/.gnupg
   cp "$DOTFILES_DIR/repos/public/gpg-agent.conf" ~/.gnupg/gpg-agent.conf
   if [ -f /usr/local/bin/pinentry-mac ]; then
-    echo 'pinentry-program /usr/local/bin/pinentry-mac' >> ~/.gnupg/gpg-agent.conf
+    echo 'pinentry-program /usr/local/bin/pinentry-mac' >>~/.gnupg/gpg-agent.conf
   fi
 }
 
@@ -239,10 +239,10 @@ function main() {
   fi
 
   case "$command" in
-    repos|r)
+    repos | r)
       cmd_repos
       ;;
-    install|i)
+    install | i)
       cmd_install
       ;;
     uninstall)

@@ -38,7 +38,7 @@ mkdir -p ~/bin repos
 $SUDO dnf install -y vim-enhanced ripgrep fd-find make tar openssl
 pushd repos
 
-if ! command -v fasd &> /dev/null; then
+if ! command -v fasd &>/dev/null; then
   git clone --depth 1 https://github.com/clvv/fasd.git
   pushd fasd
   $SUDO make install
@@ -46,7 +46,7 @@ if ! command -v fasd &> /dev/null; then
   rm -rf fasd
 fi
 
-if ! command -v fzf &> /dev/null; then
+if ! command -v fzf &>/dev/null; then
   $SUDO git clone --depth 1 https://github.com/junegunn/fzf.git /usr/local/opt/fzf
   $SUDO /usr/local/opt/fzf/install --bin
   $SUDO ln -snf /usr/local/opt/fzf/bin/fzf /usr/local/bin

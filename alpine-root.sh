@@ -8,11 +8,11 @@ mkdir -p ~/bin repos
 
 apk add vim git rsync tmux make perl less findutils ncurses
 # fzf fzf-vim fzf-zsh-completion
-# ripgrep fd 
+# ripgrep fd
 
 pushd repos
 
-if ! command -v fasd &> /dev/null; then
+if ! command -v fasd &>/dev/null; then
   git clone --depth 1 https://github.com/clvv/fasd.git
   pushd fasd
   make install
