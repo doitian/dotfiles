@@ -54,6 +54,13 @@ function head_cat() {
   cat "$2"
 }
 
+function head_safe_cat() {
+  echo "$* {{""{1"
+  echo  "() {"
+  cat "$2"
+  echo "}"
+}
+
 function find_relative() {
   find "$@" -type f | sed -e "s|^${1%/}/||"
 }
@@ -145,7 +152,7 @@ function cmd_install() {
       head_cat '#' ~/.oh-my-zsh/lib/$l.zsh
     done
     for l in gpg-agent sudo fancy-ctrl-z copybuffer copypath isodate magic-enter encode64 urltools direnv; do
-      head_cat '#' ~/.oh-my-zsh/plugins/$l/$l.plugin.zsh
+      head_safe_cat '#' ~/.oh-my-zsh/plugins/$l/$l.plugin.zsh
     done
     head_cat '#' ~/.oh-my-zsh/plugins/gitfast/git-prompt.sh
     for l in $(find repos/public/zsh -name '*.zsh'); do
