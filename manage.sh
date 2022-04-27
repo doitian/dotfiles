@@ -151,7 +151,7 @@ function cmd_install() {
     for l in completion directories functions git grep history key-bindings misc spectrum termsupport theme-and-appearance clipboard; do
       head_cat '#' ~/.oh-my-zsh/lib/$l.zsh
     done
-    for l in gpg-agent sudo fancy-ctrl-z copybuffer copypath isodate magic-enter encode64 urltools direnv; do
+    for l in gpg-agent sudo copybuffer copypath isodate magic-enter encode64 urltools direnv; do
       head_safe_cat '#' ~/.oh-my-zsh/plugins/$l/$l.plugin.zsh
     done
     head_cat '#' ~/.oh-my-zsh/plugins/gitfast/git-prompt.sh
