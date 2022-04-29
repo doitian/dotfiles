@@ -79,6 +79,7 @@ function cmd_repos() {
     ensure_git_clone https://github.com/doitian/dotfiles-public.git repos/public
   fi
   ensure_git_clone https://github.com/robbyrussell/oh-my-zsh.git repos/oh-my-zsh
+  rm -rf "$HOME/.oh-my-zsh"
   ln -snf "$DOTFILES_DIR/repos/oh-my-zsh" "$HOME/.oh-my-zsh"
   if [ "$UID" != 0 ]; then
     if [ -d "$HOME/.asdf" ]; then
@@ -87,6 +88,7 @@ function cmd_repos() {
       asdf update
     else
       ensure_git_clone https://github.com/asdf-vm/asdf.git repos/asdf
+      rm -rf "$HOME/.asdf"
       ln -snf "$DOTFILES_DIR/repos/asdf" "$HOME/.asdf"
     fi
   fi
