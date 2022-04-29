@@ -70,21 +70,28 @@ function find_relative_d() {
 }
 
 function cmd_repos() {
-  mkdir -p repos
+  if [ -n "${GITPOD_WORKSPACE_ID:-}" ]; then
+    mkdir -p /workspace/dotfiles-repos
+    ln -snf /workspace/dotfiles-repos repos
+  else
+    mkdir -p repos
+  fi
   if [ "$PRIVATE" = "true" ]; then
     ensure_git_clone git@github.com:doitian/dotfiles-public.git repos/public
     ensure_git_clone git@github.com:doitian/dotfiles-private.git repos/private
   else
     ensure_git_clone https://github.com/doitian/dotfiles-public.git repos/public
   fi
-  ensure_git_clone https://github.com/robbyrussell/oh-my-zsh.git "$HOME/.oh-my-zsh"
+  ensure_git_clone https://github.com/robbyrussell/oh-my-zsh.git repos/oh-my-zsh
+  ln -snf "$DOTFILES_DIR/repos/oh-my-zsh" "$HOME/.oh-my-zsh"
   if [ "$UID" != 0 ]; then
     if [ -d "$HOME/.asdf" ]; then
       echo "==> asdf update"
       source "$HOME/.asdf/asdf.sh"
       asdf update
     else
-      ensure_git_clone https://github.com/asdf-vm/asdf.git "$HOME/.asdf"
+      ensure_git_clone https://github.com/asdf-vm/asdf.git repos/asdf
+      ln -snf "$DOTFILES_DIR/repos/asdf" "$HOME/.asdf"
     fi
   fi
   echo "==> curl bd.zsh"
