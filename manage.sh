@@ -70,12 +70,8 @@ function find_relative_d() {
 }
 
 function cmd_repos() {
-  if [ -n "${GITPOD_WORKSPACE_ID:-}" ]; then
-    mkdir -p /workspace/dotfiles-repos
-    ln -snf /workspace/dotfiles-repos repos
-  else
-    mkdir -p repos
-  fi
+  mkdir -p repos
+
   if [ "$PRIVATE" = "true" ]; then
     ensure_git_clone git@github.com:doitian/dotfiles-public.git repos/public
     ensure_git_clone git@github.com:doitian/dotfiles-private.git repos/private
