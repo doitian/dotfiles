@@ -171,9 +171,6 @@ function cmd_install() {
     if [ "$UNAME" = "Darwin" ]; then
       echo 'source ~/.oh-my-zsh/plugins/macos/macos.plugin.zsh'
     fi
-    if [ -n "${GITPOD_WORKSPACE_ID:-}" ]; then
-      echo 'source $HOME/.rvm/scripts/rvm'
-    fi
   ) >~/.zshrc
   chmod 0440 ~/.zshrc
 
@@ -182,9 +179,6 @@ function cmd_install() {
     cat repos/public/bashrc
     head_cat '#' repos/public/zsh/aliases.zsh
     head_cat '#' repos/public/zsh/functions.zsh
-    if [ -n "${GITPOD_WORKSPACE_ID:-}" ]; then
-      echo 'source $HOME/.rvm/scripts/rvm'
-    fi
   ) >~/.bashrc
   chmod 0440 ~/.bashrc
 
