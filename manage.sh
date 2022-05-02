@@ -108,10 +108,10 @@ function cmd_install() {
   echo "asdf direnv setup --shell zsh --version system"
 
   mkdir -p ~/.zcompcache/completions
-  mkdir -p ~/.vim/backup
-  mkdir -p ~/.vim/undo
-  mkdir -p ~/.vim/nvim-undo
-  mkdir -p ~/.vim/swap
+  mkdir -p ~/.vim/files/backup
+  mkdir -p ~/.vim/files/undo
+  mkdir -p ~/.vim/files/nvim-undo
+  mkdir -p ~/.vim/files/swap
   mkdir -p ~/.vim/autoload
   mkdir -p ~/bin
   mkdir -p ~/.zsh-completions
