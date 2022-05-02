@@ -14,6 +14,6 @@ if [ -n "${GITPOD_WORKSPACE_ID:-}" ]; then
   ln -snf /workspace/dotfiles-repos repos
 fi
 
-./debian.sh
+./debian.sh --apt
 ./manage.sh r
 ./manage.sh i
