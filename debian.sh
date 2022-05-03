@@ -36,13 +36,6 @@ if [ -n "${http_proxy:-}" ]; then
   SUDO="sudo --preserve-env=http_proxy,https_proxy"
 fi
 
-CUSTOM_PKGS="libssl1.0-dev"
-IS_UBUNTU=
-if uname -a | grep -q Ubuntu; then
-  IS_UBUNTU=true
-  CUSTOM_PKGS="libssl-dev"
-fi
-
 INSTALL_APT=
 INSTALL_BREW=
 while [ "$#" != 0 ]; do
@@ -64,7 +57,7 @@ done
 
 if [ -n "$INSTALL_APT" ]; then
   $SUDO apt-get update -y
-  $SUDO apt-get install -y unzip vim tmux build-essential autoconf flex bison texinfo libtool libreadline-dev zlib1g-dev $CUSTOM_PKGS
+  $SUDO apt-get install -y unzip vim tmux build-essential autoconf flex bison texinfo libtool libreadline-dev zlib1g-dev libssl-dev
   $SUDO update-alternatives --install /usr/bin/editor editor /usr/bin/vim 100
   if [ -z "$INSTALL_BREW" ]; then
     $SUDO apt-get install -y fd-find fasd ripgrep fzf
