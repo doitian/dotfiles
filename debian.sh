@@ -44,10 +44,15 @@ if uname -a | grep -q Ubuntu; then
 fi
 
 INSTALL_APT=
+INSTALL_BREW=
 while [ "$#" != 0 ]; do
   case "$1" in
     --apt)
       INSTALL_APT=true
+      shift
+      ;;
+    --brew)
+      INSTALL_BREW=true
       shift
       ;;
     *)
@@ -59,18 +64,26 @@ done
 
 if [ -n "$INSTALL_APT" ]; then
   $SUDO apt-get update -y
-  $SUDO apt-get install -y unzip vim tmux build-essential autoconf flex bison texinfo libtool libreadline-dev zlib1g-dev fd fasd ripgrep fzf $CUSTOM_PKGS
+  $SUDO apt-get install -y unzip vim tmux build-essential autoconf flex bison texinfo libtool libreadline-dev zlib1g-dev $CUSTOM_PKGS
   $SUDO update-alternatives --install /usr/bin/editor editor /usr/bin/vim 100
+  if [ -z "$INSTALL_BREW" ]; then
+    $SUDO apt-get install -y fd-find fasd ripgrep fzf
+    $SUDO update-alternatives --install /usr/bin/fd fd /usr/bin/fdfind 100
+  fi
 fi
 
-pushd repos
+if [ -n "$INSTALL_BREW" ]; then
+  brew install fd fasd ripgrep fzf
+else
+  pushd repos
 
-WATCHEXEC_VERSION=1.19.0
-if ! [ -f "$HOME/.dotfiles/repos/watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu/watchexec" ]; then
-  curl -LO https://github.com/watchexec/watchexec/releases/download/cli-v$WATCHEXEC_VERSION/watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu.tar.xz
-  tar -xJf watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu.tar.xz
-  ln -snf "$HOME/.dotfiles/repos/watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu/watchexec" ~/bin/watchexec
-  rm -f watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu.tar.gz
+  WATCHEXEC_VERSION=1.19.0
+  if ! [ -f "$HOME/.dotfiles/repos/watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu/watchexec" ]; then
+    curl -LO https://github.com/watchexec/watchexec/releases/download/cli-v$WATCHEXEC_VERSION/watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu.tar.xz
+    tar -xJf watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu.tar.xz
+    ln -snf "$HOME/.dotfiles/repos/watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu/watchexec" ~/bin/watchexec
+    rm -f watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu.tar.gz
+  fi
+
+  popd # repos
 fi
-
-popd # repos

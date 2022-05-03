@@ -14,6 +14,10 @@ if [ -n "${GITPOD_WORKSPACE_ID:-}" ]; then
   ln -snf /workspace/dotfiles-repos repos
 fi
 
-./debian.sh --apt
+if type -f brew &> /dev/null; then
+  ./debian.sh --apt --brew
+else
+  ./debian.sh --apt
+fi
 ./manage.sh r
 ./manage.sh i
