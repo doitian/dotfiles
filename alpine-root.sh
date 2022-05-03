@@ -4,6 +4,8 @@ set -e
 set -u
 [ -n "${DEBUG:-}" ] && set -x || true
 
+DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 mkdir -p ~/bin repos
 
 apk add vim git rsync tmux make perl less findutils ncurses
@@ -20,11 +22,11 @@ if ! command -v fasd &>/dev/null; then
   rm -rf fasd
 fi
 
-WATCHEXEC_VERSION=1.17.0
-if ! [ -f "$HOME/.dotfiles/repos/watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu/watchexec" ]; then
+WATCHEXEC_VERSION=1.19.0
+if ! [ -f "$DOTFILES_DIR/repos/watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu/watchexec" ]; then
   curl -LO https://github.com/watchexec/watchexec/releases/download/cli-v$WATCHEXEC_VERSION/watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu.tar.xz
   tar -xJf watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu.tar.xz
-  ln -snf "$HOME/.dotfiles/repos/watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu/watchexec" ~/bin/watchexec
+  ln -snf "$DOTFILES_DIR/repos/watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu/watchexec" ~/bin/watchexec
   rm -f watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu.tar.gz
 fi
 

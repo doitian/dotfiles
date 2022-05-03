@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
-PRIVATE=false
-UNAME="$(uname -s)"
-DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-
 set -e
 set -u
 [ -n "${DEBUG:-}" ] && set -x || true
+
+PRIVATE=false
+UNAME="$(uname -s)"
+DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 TMPL_NAME=ian
 TMPL_EMAIL=$(echo bWVAaWFueS5tZQ== | base64 -d)
@@ -106,6 +106,10 @@ function cmd_install() {
   echo "handle_completion_insecurities"
   echo "#==> asdf direnv setup"
   echo "asdf direnv setup --shell zsh --version system"
+
+  if ! [ -d ~/.dotfiles ]; then
+    ln -snf "$DOTFILES_DIR" ~/.dotfiles
+  fi
 
   mkdir -p ~/.zcompcache/completions
   mkdir -p ~/.vim/files/backup

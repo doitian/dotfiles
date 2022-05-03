@@ -4,8 +4,10 @@ set -e
 set -u
 [ -n "${DEBUG:-}" ] && set -x || true
 
+DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 if [ "$UID" = 0 ]; then
-  sudo dnf install -y zsh glibc-langpack-en findutils git direnv
+  sudo dnf install -y zsh glibc-langpack-en findutils git direnv fzf
 
   if ! id ian; then
     useradd -s /usr/bin/zsh -m ian
@@ -36,6 +38,7 @@ fi
 mkdir -p ~/bin repos
 
 $SUDO dnf install -y vim-enhanced ripgrep fd-find make tar openssl
+
 pushd repos
 
 if ! command -v fasd &>/dev/null; then
@@ -46,19 +49,11 @@ if ! command -v fasd &>/dev/null; then
   rm -rf fasd
 fi
 
-if ! command -v fzf &>/dev/null; then
-  $SUDO git clone --depth 1 https://github.com/junegunn/fzf.git /usr/local/opt/fzf
-  $SUDO /usr/local/opt/fzf/install --bin
-  $SUDO ln -snf /usr/local/opt/fzf/bin/fzf /usr/local/bin
-  $SUDO ln -snf /usr/local/opt/fzf/bin/fzf-tmux /usr/local/bin
-fi
-/usr/local/opt/fzf/install --no-update-rc --completion --key-bindings
-
 WATCHEXEC_VERSION=1.19.0
-if ! [ -f "$HOME/.dotfiles/repos/watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu/watchexec" ]; then
+if ! [ -f "$DOTFILES_DIR/repos/watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu/watchexec" ]; then
   curl -LO https://github.com/watchexec/watchexec/releases/download/cli-v$WATCHEXEC_VERSION/watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu.tar.xz
   tar -xJf watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu.tar.xz
-  ln -snf "$HOME/.dotfiles/repos/watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu/watchexec" ~/bin/watchexec
+  ln -snf "$DOTFILES_DIR/repos/watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu/watchexec" ~/bin/watchexec
   rm -f watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu.tar.gz
 fi
 
