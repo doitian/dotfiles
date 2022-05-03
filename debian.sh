@@ -66,7 +66,7 @@ if [ -n "$INSTALL_APT" ]; then
 fi
 
 if [ -n "$INSTALL_BREW" ]; then
-  brew install fd fasd ripgrep fzf
+  brew install fd fasd ripgrep fzf watchexec
 else
   pushd repos
 
