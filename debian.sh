@@ -59,7 +59,7 @@ done
 
 if [ -n "$INSTALL_APT" ]; then
   $SUDO apt-get update -y
-  $SUDO apt-get install -y unzip vim tmux build-essential autoconf flex bison texinfo libtool libreadline-dev zlib1g-dev libssl-dev
+  $SUDO apt-get install -y unzip vim direnv tmux build-essential autoconf flex bison texinfo libtool libreadline-dev zlib1g-dev libssl-dev
   $SUDO update-alternatives --install /usr/bin/editor editor /usr/bin/vim 100
   if [ -z "$INSTALL_BREW" ]; then
     $SUDO apt-get install -y fd-find fasd ripgrep fzf
