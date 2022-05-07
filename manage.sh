@@ -110,6 +110,8 @@ function cmd_install() {
   if ! [ -d ~/.dotfiles ]; then
     ln -snf "$DOTFILES_DIR" ~/.dotfiles
   fi
+  rm -rf "$HOME/.oh-my-zsh"
+  ln -snf "$DOTFILES_DIR/repos/oh-my-zsh" "$HOME/.oh-my-zsh"
 
   mkdir -p ~/.zcompcache/completions
   mkdir -p ~/.vim/files/backup
