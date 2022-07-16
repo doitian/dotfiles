@@ -116,8 +116,10 @@ function cmd_install() {
   mkdir -p ~/.zcompcache/completions
   mkdir -p ~/.vim/files/backup
   mkdir -p ~/.vim/files/undo
+  mkdir -p ~/.vim/files/nvim-undo
   mkdir -p ~/.vim/files/swap
   mkdir -p ~/.vim/autoload
+  mkdir -p ~/.local/share/nvim/site/autoload
   mkdir -p ~/bin
   mkdir -p ~/.zsh-completions
   if [ "$UNAME" = "Darwin" ]; then
@@ -125,6 +127,7 @@ function cmd_install() {
   fi
 
   ln -snf "$DOTFILES_DIR/repos/plug.vim" ~/.vim/autoload/plug.vim
+  ln -snf "$DOTFILES_DIR/repos/plug.vim" ~/.local/share/nvim/site/autoload/plug.vim
   ln -snf "$DOTFILES_DIR/repos/public/default/.zshenv" ~/.bash_profile
 
   GITCONFIG_PATH="$HOME/.gitconfig"
@@ -237,6 +240,7 @@ function cmd_uninstall() {
   rm -f ~/.gitconfig
   rm -f ~/.bash_profile
   rm -f ~/.vim/autoload/plug.vim
+  rm -f ~/.local/share/nvim/site/autoload/plug.vim
   rm -f ~/.mutt
   rm -f ~/.vim/UltiSnips
 
