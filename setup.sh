@@ -15,5 +15,11 @@ if type -f brew &> /dev/null; then
 else
   ./debian.sh --apt
 fi
-./manage.sh r
-./manage.sh i
+
+if [ -d "$DOTFILES_DIR/repos/private" ]; then
+  ./manage.sh r -p
+  ./manage.sh i -p
+else
+  ./manage.sh r
+  ./manage.sh i
+fi
