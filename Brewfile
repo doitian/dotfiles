@@ -135,7 +135,6 @@ mas "Contacts Sync for Google Gmail", id: 451691288
 mas "Day One", id: 1055511498
 mas "Eagle for Safari", id: 1526651672
 mas "Final Cut Pro", id: 424389933
-mas "Gestimer", id: 990588172
 mas "GoodNotes", id: 1444383602
 mas "HazeOver", id: 430798174
 mas "Hex Fiend", id: 1342896380
