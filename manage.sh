@@ -86,6 +86,11 @@ function cmd_repos() {
       echo "==> asdf update"
       source "$HOME/.asdf/asdf.sh"
       asdf update
+    elif [ -d repos/asdf ]; then
+      echo "==> asdf update"
+      ln -snf "$DOTFILES_DIR/repos/asdf" "$HOME/.asdf"
+      source "$HOME/.asdf/asdf.sh"
+      asdf update
     else
       ensure_git_clone https://github.com/asdf-vm/asdf.git repos/asdf
       rm -rf "$HOME/.asdf"
