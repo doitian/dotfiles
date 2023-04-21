@@ -8,6 +8,7 @@ UNAME="$(uname -s)"
 
 case "$UNAME" in
   Darwin)
+    brew install librsvg
     brew install --cask basictex
     eval "$(/usr/libexec/path_helper)"
     ;;
@@ -20,6 +21,6 @@ esac
 sudo tlmgr update --self
 sudo tlmgr update --all
 for pkg in texliveonfly xelatex adjustbox tcolorbox collectbox ucs environ \
-  trimspaces titling enumitem rsfs xecjk fvextra; do
+  trimspaces titling enumitem rsfs xecjk fvextra svg transparent; do
   sudo tlmgr install $pkg
 done
