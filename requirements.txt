@@ -3,3 +3,5 @@ autopep8
 beautifulsoup4
 honcho
 requests
+pynvim
+ruff-lsp
