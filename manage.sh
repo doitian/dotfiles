@@ -79,6 +79,7 @@ function cmd_repos() {
     ensure_git_clone https://github.com/doitian/dotfiles-public.git repos/public
   fi
   ensure_git_clone https://github.com/robbyrussell/oh-my-zsh.git repos/oh-my-zsh
+  ensure_git_clone https://github.com/doitian/rime-wubi86-jidian.git repos/rime-wubi86-jidian
   rm -rf "$HOME/.oh-my-zsh"
   ln -snf "$DOTFILES_DIR/repos/oh-my-zsh" "$HOME/.oh-my-zsh"
   if [ "$UID" != 0 ]; then
@@ -226,6 +227,12 @@ function cmd_install() {
   cp "$DOTFILES_DIR/repos/public/gpg-agent.conf" ~/.gnupg/gpg-agent.conf
   if [ -f /usr/local/bin/pinentry-mac ]; then
     echo 'pinentry-program /usr/local/bin/pinentry-mac' >>~/.gnupg/gpg-agent.conf
+  fi
+
+
+  if [ "$UNAME" = "Linux" ]; then
+    rm -rf "$HOME/.local/share/fcitx5/rime"
+    ln -snf "$DOTFILES_DIR/repos/rime-wubi86-jidian" "$HOME/.local/share/fcitx5/rime"
   fi
 }
 
