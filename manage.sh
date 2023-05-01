@@ -232,6 +232,7 @@ function cmd_install() {
 
   if [ "$UNAME" = "Linux" ]; then
     rm -rf "$HOME/.local/share/fcitx5/rime"
+    mkdir -p "$HOME/.local/share/fcitx5"
     ln -snf "$DOTFILES_DIR/repos/rime-wubi86-jidian" "$HOME/.local/share/fcitx5/rime"
   fi
 }
