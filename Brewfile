@@ -3,10 +3,10 @@ tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/cask-drivers"
 tap "homebrew/cask-fonts"
-tap "homebrew/core"
 tap "homebrew/services"
 brew "age"
 brew "aria2"
+brew "awscli"
 brew "bat"
 brew "coreutils"
 brew "croc"
@@ -37,6 +37,7 @@ brew "hugo"
 brew "imageoptim-cli"
 brew "ipython"
 brew "jq"
+brew "librsvg"
 brew "mas"
 brew "mdbook"
 brew "mosh"
@@ -46,7 +47,6 @@ brew "p7zip"
 brew "pandoc"
 brew "pidof"
 brew "pinentry-mac"
-brew "pyright"
 brew "ripgrep"
 brew "rlwrap"
 brew "rsync"
@@ -73,6 +73,7 @@ cask "app-cleaner"
 cask "app-tamer"
 cask "audacity"
 cask "audio-hijack"
+cask "basictex"
 cask "brave-browser"
 cask "calibre"
 cask "carbon-copy-cloner"
@@ -81,26 +82,30 @@ cask "cleanshot"
 cask "deckset"
 cask "deepl"
 cask "dropbox"
+cask "eudic"
 cask "fantastical"
 cask "fission"
+cask "font-jetbrains-mono"
 cask "font-lato"
-cask "font-montserrat-alternates"
+cask "font-lxgw-bright-gb"
+cask "font-lxgw-wenkai"
 cask "font-noto-sans"
 cask "font-noto-sans-cjk-sc"
 cask "font-noto-serif"
 cask "font-noto-serif-cjk-sc"
+cask "font-roboto"
 cask "garmin-express"
-cask "google-chrome"
 cask "handbrake"
-cask "hook"
+cask "hookmark"
 cask "iina"
 cask "imageoptim"
 cask "keyboard-maestro"
 cask "macvim"
-cask "marginnote"
 cask "mathpix-snipping-tool"
 cask "medibangpaintpro"
+cask "metaimage"
 cask "microsoft-auto-update"
+cask "microsoft-edge"
 cask "microsoft-excel"
 cask "microsoft-powerpoint"
 cask "microsoft-remote-desktop"
@@ -115,6 +120,7 @@ cask "pdf-expert"
 cask "prowritingaid"
 cask "resilio-sync"
 cask "scrivener"
+cask "snapmotion"
 cask "tableflip"
 cask "transmission"
 cask "uhk-agent"
@@ -124,7 +130,6 @@ cask "visual-studio-code"
 cask "wacom-inkspace"
 cask "wacom-tablet"
 cask "wechat"
-cask "yt-music"
 cask "yubico-authenticator"
 cask "yubico-yubikey-manager"
 cask "zotero"
@@ -135,6 +140,7 @@ mas "Contacts Sync for Google Gmail", id: 451691288
 mas "Day One", id: 1055511498
 mas "Eagle for Safari", id: 1526651672
 mas "Final Cut Pro", id: 424389933
+mas "GarageBand", id: 682658836
 mas "GoodNotes", id: 1444383602
 mas "HazeOver", id: 430798174
 mas "Hex Fiend", id: 1342896380
@@ -144,13 +150,14 @@ mas "Kindle", id: 405399194
 mas "LiquidText", id: 922765270
 mas "Mischief", id: 928430260
 mas "Motion", id: 434290957
-mas "Notability", id: 360593530
 mas "Numbers", id: 409203825
 mas "Pixelmator Pro", id: 1289583905
 mas "QQ音乐", id: 595615424
 mas "ScanScan", id: 1249901692
+mas "TencentMeeting", id: 1484048379
 mas "Tiny Softbox", id: 1599476381
 mas "Vimeo", id: 1356686763
 mas "Wakeout", id: 1242116567
 mas "Xee³", id: 639764244
 mas "Yoink", id: 457622435
+mas "剪映专业版", id: 1529999940
