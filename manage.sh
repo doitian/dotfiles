@@ -110,8 +110,10 @@ function cmd_install() {
   echo "#==> completion securities check"
   echo "source ~/.oh-my-zsh/lib/compfix.zsh"
   echo "handle_completion_insecurities"
-  echo "#==> asdf direnv setup"
+  echo "#==> asdf setup"
   echo "asdf direnv setup --shell zsh --version system"
+  echo "asdf plugin add nodejs"
+  echo "asdf install nodejs 16.16.0"
 
   if ! [ -d ~/.dotfiles ]; then
     ln -snf "$DOTFILES_DIR" ~/.dotfiles
