@@ -113,7 +113,7 @@ function cmd_install() {
   echo "#==> asdf setup"
   echo "asdf direnv setup --shell zsh --version system"
   echo "asdf plugin add nodejs"
-  echo "asdf install nodejs 16.16.0"
+  echo "asdf install nodejs lts"
 
   if ! [ -d ~/.dotfiles ]; then
     ln -snf "$DOTFILES_DIR" ~/.dotfiles
