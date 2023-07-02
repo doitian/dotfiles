@@ -8,6 +8,7 @@ UNAME="$(uname -s)"
 TLPKGS=(
   texliveonfly xelatex adjustbox tcolorbox collectbox ucs environ
   trimspaces titling enumitem rsfs xecjk fvextra svg transparent
+  lualatex-math selnolig
 )
 
 case "$UNAME" in

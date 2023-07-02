@@ -114,6 +114,8 @@ function cmd_install() {
   echo "asdf direnv setup --shell zsh --version system"
   echo "asdf plugin add nodejs"
   echo "asdf install nodejs lts"
+  echo "#==> env for spotlight launched apps"
+  echo 'sudo launchctl config user path "$PATH"'
 
   if ! [ -d ~/.dotfiles ]; then
     ln -snf "$DOTFILES_DIR" ~/.dotfiles
