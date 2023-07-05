@@ -139,6 +139,7 @@ function cmd_install() {
   ln -snf "$DOTFILES_DIR/repos/plug.vim" ~/.vim/autoload/plug.vim
   ln -snf "$DOTFILES_DIR/repos/plug.vim" ~/.local/share/nvim/site/autoload/plug.vim
   ln -snf "$DOTFILES_DIR/repos/public/default/.zshenv" ~/.bash_profile
+  ln -snf "$DOTFILES_DIR/repos/public/pandoc" ~/.pandoc
 
   GITCONFIG_PATH="$HOME/.gitconfig"
   if [ -n "${GITHUB_CODESPACE_TOKEN:-}" ]; then
@@ -260,6 +261,7 @@ function cmd_uninstall() {
   rm -f ~/.local/share/nvim/site/autoload/plug.vim
   rm -f ~/.mutt
   rm -f ~/.vim/UltiSnips
+  rm -f ~/.pandoc
 
   rm -rf ~/Library/KeyBindings/
 
