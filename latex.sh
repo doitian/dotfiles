@@ -8,7 +8,7 @@ UNAME="$(uname -s)"
 TLPKGS=(
   texliveonfly xelatex adjustbox tcolorbox collectbox ucs environ
   trimspaces titling enumitem rsfs xecjk fvextra svg transparent
-  lualatex-math selnolig xpatch
+  lualatex-math selnolig xpatch changepage ifoddpage
 )
 
 case "$UNAME" in
