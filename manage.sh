@@ -207,7 +207,6 @@ function cmd_install() {
   private find_relative_d repos/private/default | xargs -I % mkdir -p "$HOME/%"
   private find_relative repos/private/default | xargs -I % ln -snf "$DOTFILES_DIR/repos/private/default/%" "$HOME/%"
 
-  private ln -snf "$DOTFILES_DIR/repos/private/UltiSnips" ~/.vim/UltiSnips
   private ln -snf "$DOTFILES_DIR/repos/private/mutt" ~/.mutt
   private mkdir -p ~/.mutt/cred/
   private find_relative ~/.mutt/accounts | xargs -I % touch ~/.mutt/cred/%
@@ -260,7 +259,6 @@ function cmd_uninstall() {
   rm -f ~/.vim/autoload/plug.vim
   rm -f ~/.local/share/nvim/site/autoload/plug.vim
   rm -f ~/.mutt
-  rm -f ~/.vim/UltiSnips
   rm -f ~/.pandoc
   rm -f ~/.config/nvim
 
