@@ -146,6 +146,13 @@ function cmd_install() {
   ln -snf "$DOTFILES_DIR/repos/private/snippets/package.json" ~/.config/nvim/package.json
   ln -snf "$DOTFILES_DIR/repos/private/snippets/snippets" ~/.vim/snippets
   ln -snf "$DOTFILES_DIR/repos/private/snippets/package.json" ~/.vim/package.json
+  local VSCODE_SNIPPETS_DIR
+  for VSCODE_SNIPPETS_DIR in "$HOME/Library/Application Support/Code/User/snippets"; do
+    if [ -d "$VSCODE_SNIPPETS_DIR" ]; then
+      rm -rf "$VSCODE_SNIPPETS_DIR"
+      ln -snf "$DOTFILES_DIR/repos/private/snippets/snippets" "$VSCODE_SNIPPETS_DIR"
+    fi
+  done
 
   GITCONFIG_PATH="$HOME/.gitconfig"
   if [ -n "${GITHUB_CODESPACE_TOKEN:-}" ]; then
