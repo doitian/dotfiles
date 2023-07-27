@@ -142,6 +142,11 @@ function cmd_install() {
   mkdir -p ~/.config
   ln -snf "$DOTFILES_DIR/repos/public/nvim" ~/.config/nvim
 
+  ln -snf "$DOTFILES_DIR/repos/private/snippets/snippets" ~/.config/nvim/snippets
+  ln -snf "$DOTFILES_DIR/repos/private/snippets/package.json" ~/.config/nvim/package.json
+  ln -snf "$DOTFILES_DIR/repos/private/snippets/snippets" ~/.vim/snippets
+  ln -snf "$DOTFILES_DIR/repos/private/snippets/package.json" ~/.vim/package.json
+
   GITCONFIG_PATH="$HOME/.gitconfig"
   if [ -n "${GITHUB_CODESPACE_TOKEN:-}" ]; then
     GITCONFIG_PATH="$HOME/.gitconfig.user"
