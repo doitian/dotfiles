@@ -56,7 +56,7 @@ function head_cat() {
 
 function head_safe_cat() {
   echo "$* {{""{1"
-  echo  "() {"
+  echo "() {"
   cat "$2"
   echo "}"
 }
@@ -126,10 +126,8 @@ function cmd_install() {
   mkdir -p ~/.zcompcache/completions
   mkdir -p ~/.vim/files/backup
   mkdir -p ~/.vim/files/undo
-  mkdir -p ~/.vim/files/nvim-undo
   mkdir -p ~/.vim/files/swap
   mkdir -p ~/.vim/autoload
-  mkdir -p ~/.local/share/nvim/site/autoload
   mkdir -p ~/bin
   mkdir -p ~/.zsh-completions
   if [ "$UNAME" = "Darwin" ]; then
@@ -137,9 +135,12 @@ function cmd_install() {
   fi
 
   ln -snf "$DOTFILES_DIR/repos/plug.vim" ~/.vim/autoload/plug.vim
-  ln -snf "$DOTFILES_DIR/repos/plug.vim" ~/.local/share/nvim/site/autoload/plug.vim
   ln -snf "$DOTFILES_DIR/repos/public/default/.zshenv" ~/.bash_profile
+  rm -rf ~/.pandoc
   ln -snf "$DOTFILES_DIR/repos/public/pandoc" ~/.pandoc
+  rm -rf ~/.config/nvim
+  mkdir -p ~/.config
+  ln -snf "$DOTFILES_DIR/repos/public/nvim" ~/.config/nvim
 
   GITCONFIG_PATH="$HOME/.gitconfig"
   if [ -n "${GITHUB_CODESPACE_TOKEN:-}" ]; then
@@ -234,7 +235,6 @@ function cmd_install() {
     echo 'pinentry-program /usr/local/bin/pinentry-mac' >>~/.gnupg/gpg-agent.conf
   fi
 
-
   if [ "$UNAME" = "Linux" ]; then
     rm -rf "$HOME/.local/share/fcitx5/rime"
     mkdir -p "$HOME/.local/share/fcitx5"
@@ -262,6 +262,7 @@ function cmd_uninstall() {
   rm -f ~/.mutt
   rm -f ~/.vim/UltiSnips
   rm -f ~/.pandoc
+  rm -f ~/.config/nvim
 
   rm -rf ~/Library/KeyBindings/
 
@@ -281,18 +282,18 @@ function main() {
   fi
 
   case "$command" in
-    repos | r)
-      cmd_repos
-      ;;
-    install | i)
-      cmd_install
-      ;;
-    uninstall)
-      cmd_uninstall
-      ;;
-    *)
-      echo "manage.sh repos|install|uninstall [--private]"
-      ;;
+  repos | r)
+    cmd_repos
+    ;;
+  install | i)
+    cmd_install
+    ;;
+  uninstall)
+    cmd_uninstall
+    ;;
+  *)
+    echo "manage.sh repos|install|uninstall [--private]"
+    ;;
   esac
 }
 
