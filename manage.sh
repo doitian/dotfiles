@@ -152,6 +152,9 @@ function cmd_install() {
       ln -snf "$DOTFILES_DIR/repos/private/snippets/snippets" "$VSCODE_SNIPPETS_DIR"
     fi
   done
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    ln -snf "$DOTFILES_DIR/repos/public/default/.config/lazygit/config.yml" "$HOME/Library/Application Support/lazygit/config.yml"
+  fi
 
   GITCONFIG_PATH="$HOME/.gitconfig"
   if [ -n "${GITHUB_CODESPACE_TOKEN:-}" ]; then
