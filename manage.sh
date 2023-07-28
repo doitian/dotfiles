@@ -5,7 +5,6 @@ set -u
 [ -n "${DEBUG:-}" ] && set -x || true
 
 PRIVATE=false
-UNAME="$(uname -s)"
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 TMPL_NAME=ian
@@ -130,7 +129,7 @@ function cmd_install() {
   mkdir -p ~/.vim/autoload
   mkdir -p ~/bin
   mkdir -p ~/.zsh-completions
-  if [ "$UNAME" = "Darwin" ]; then
+  if [[ "$OSTYPE" == "darwin"* ]]; then
     mkdir -p ~/Library/KeyBindings
   fi
 
@@ -160,7 +159,7 @@ function cmd_install() {
     git config --global include.path .gitconfig.user
   fi
   cat repos/public/gitconfig.tmpl | tmpl_apply >"$GITCONFIG_PATH"
-  if [ "$UNAME" = "Darwin" ]; then
+  if [[ "$OSTYPE" == "darwin"* ]]; then
     git config --global credential.helper osxkeychain
   fi
   git config --global core.hooksPath "$HOME/.githooks"
@@ -200,7 +199,7 @@ function cmd_install() {
     if [[ "$(uname -v)" = iSH* ]]; then
       echo 'source ~/.zshenv'
     fi
-    if [ "$UNAME" = "Darwin" ]; then
+    if [[ "$OSTYPE" == "darwin"* ]]; then
       echo 'source ~/.oh-my-zsh/plugins/macos/macos.plugin.zsh'
     fi
   ) >~/.zshrc
@@ -222,7 +221,7 @@ function cmd_install() {
   private ln -snf "$DOTFILES_DIR/repos/private/mutt" ~/.mutt
   private mkdir -p ~/.mutt/cred/
   private find_relative ~/.mutt/accounts | xargs -I % touch ~/.mutt/cred/%
-  if [ "$UNAME" = "Darwin" ]; then
+  if [[ "$OSTYPE" == "darwin"* ]]; then
     rsync -a -h repos/public/MacOS_cp/ ~/
     mkdir -p ~/.MacOSX
     cat repos/public/environment.plist.tmpl | tmpl_apply >~/.MacOSX/environment.plist
@@ -246,7 +245,7 @@ function cmd_install() {
     echo 'pinentry-program /usr/local/bin/pinentry-mac' >>~/.gnupg/gpg-agent.conf
   fi
 
-  if [ "$UNAME" = "Linux" ]; then
+  if [[ "$OSTYPE" == "linux"* ]]; then
     rm -rf "$HOME/.local/share/fcitx5/rime"
     mkdir -p "$HOME/.local/share/fcitx5"
     ln -snf "$DOTFILES_DIR/repos/rime-wubi86-jidian" "$HOME/.local/share/fcitx5/rime"
