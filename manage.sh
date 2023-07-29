@@ -141,10 +141,6 @@ function cmd_install() {
   mkdir -p ~/.config
   ln -snf "$DOTFILES_DIR/repos/public/nvim" ~/.config/nvim
 
-  ln -snf "$DOTFILES_DIR/repos/private/snippets/snippets" ~/.config/nvim/snippets
-  ln -snf "$DOTFILES_DIR/repos/private/snippets/package.json" ~/.config/nvim/package.json
-  ln -snf "$DOTFILES_DIR/repos/private/snippets/snippets" ~/.vim/snippets
-  ln -snf "$DOTFILES_DIR/repos/private/snippets/package.json" ~/.vim/package.json
   local VSCODE_SNIPPETS_DIR
   for VSCODE_SNIPPETS_DIR in "$HOME/Library/Application Support/Code/User/snippets"; do
     if [ -d "$VSCODE_SNIPPETS_DIR" ]; then
