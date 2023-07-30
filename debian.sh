@@ -42,18 +42,18 @@ INSTALL_APT=
 INSTALL_BREW=
 while [ "$#" != 0 ]; do
   case "$1" in
-    --apt)
-      INSTALL_APT=true
-      shift
-      ;;
-    --brew)
-      INSTALL_BREW=true
-      shift
-      ;;
-    *)
-      echo 'debian.sh [--apt]' >&2
-      exit 1
-      ;;
+  --apt)
+    INSTALL_APT=true
+    shift
+    ;;
+  --brew)
+    INSTALL_BREW=true
+    shift
+    ;;
+  *)
+    echo 'debian.sh [--apt]' >&2
+    exit 1
+    ;;
   esac
 done
 
@@ -63,7 +63,7 @@ if [ -n "$INSTALL_APT" ]; then
     fonts-noto fonts-wqy-zenhei fonts-wqy-microhei fonts-ibm-plex fonts-lato fonts-jetbrains-mono fonts-noto-cjk
   $SUDO update-alternatives --install /usr/bin/editor editor /usr/bin/vim 100
   if [ -z "$INSTALL_BREW" ]; then
-    $SUDO apt-get install -y fd-find fasd ripgrep fzf
+    $SUDO apt-get install -y fd-find zoxide ripgrep fzf
     $SUDO update-alternatives --install /usr/bin/fd fd /usr/bin/fdfind 100
   fi
 
@@ -73,7 +73,7 @@ if [ -n "$INSTALL_APT" ]; then
 fi
 
 if [ -n "$INSTALL_BREW" ]; then
-  brew install fd fasd ripgrep fzf watchexec
+  brew install fd zoxide ripgrep fzf watchexec
 else
   pushd repos
 

@@ -202,6 +202,10 @@ function cmd_install() {
     if [[ "$OSTYPE" == "darwin"* ]]; then
       echo 'source ~/.oh-my-zsh/plugins/macos/macos.plugin.zsh'
     fi
+    if type -f zoxide &>/dev/null; then
+      zoxide init zsh --cmd j
+      echo 'alias jl="zoxide query -l"'
+    fi
   ) >~/.zshrc
   chmod 0440 ~/.zshrc
 
@@ -210,6 +214,10 @@ function cmd_install() {
     cat repos/public/bashrc
     head_cat '#' repos/public/zsh/aliases.zsh
     head_cat '#' repos/public/zsh/functions.zsh
+    if type -f zoxike &>/dev/null; then
+      zoxide init bash --cmd j
+      echo 'alias jl="zoxide query -l"'
+    fi
   ) >~/.bashrc
   chmod 0440 ~/.bashrc
 

@@ -41,20 +41,4 @@ $SUDO dnf install -y vim-enhanced ripgrep fd-find make tar openssl
 
 pushd repos
 
-if ! command -v fasd &>/dev/null; then
-  git clone --depth 1 https://github.com/clvv/fasd.git
-  pushd fasd
-  $SUDO make install
-  popd # fasd
-  rm -rf fasd
-fi
-
-WATCHEXEC_VERSION=1.19.0
-if ! [ -f "$DOTFILES_DIR/repos/watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu/watchexec" ]; then
-  curl -LO https://github.com/watchexec/watchexec/releases/download/cli-v$WATCHEXEC_VERSION/watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu.tar.xz
-  tar -xJf watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu.tar.xz
-  ln -snf "$DOTFILES_DIR/repos/watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu/watchexec" ~/bin/watchexec
-  rm -f watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu.tar.gz
-fi
-
 popd # repos
