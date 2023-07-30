@@ -186,7 +186,7 @@ function cmd_install() {
     for l in completion directories functions git grep history key-bindings misc spectrum theme-and-appearance clipboard; do
       head_cat '#' ~/.oh-my-zsh/lib/$l.zsh
     done
-    echo 'source ~/.oh-my-zsh/lib/termsupport.zsh'
+    head_safe_cat '#' ~/.oh-my-zsh/lib/termsupport.zsh
     for l in gpg-agent sudo copybuffer copypath isodate magic-enter encode64 urltools direnv fzf; do
       head_safe_cat '#' ~/.oh-my-zsh/plugins/$l/$l.plugin.zsh
     done
