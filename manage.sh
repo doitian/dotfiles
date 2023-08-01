@@ -78,7 +78,9 @@ function cmd_repos() {
     ensure_git_clone https://github.com/doitian/dotfiles-public.git repos/public
   fi
   ensure_git_clone https://github.com/robbyrussell/oh-my-zsh.git repos/oh-my-zsh
-  ensure_git_clone https://github.com/doitian/rime-wubi86-jidian.git repos/rime-wubi86-jidian
+  if [[ "$OSTYPE" == "linux"* ]]; then
+    ensure_git_clone https://github.com/doitian/rime-wubi86-jidian.git repos/rime-wubi86-jidian
+  fi
   rm -rf "$HOME/.oh-my-zsh"
   ln -snf "$DOTFILES_DIR/repos/oh-my-zsh" "$HOME/.oh-my-zsh"
   if [ "$UID" != 0 ]; then
