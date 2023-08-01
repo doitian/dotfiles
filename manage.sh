@@ -177,10 +177,6 @@ function cmd_install() {
   cat repos/public/aria2rpc.conf.tmpl | tmpl_apply | get_or_set_hash aria2rpc 8 >~/.aria2/aria2rpc.conf
   chmod 0640 ~/.aria2/aria2rpc.conf
 
-  rm -f ~/.safebin
-  echo __HASH__ | get_or_set_hash safebin 4 >~/.safebin
-  chmod 0400 ~/.safebin
-
   rm -f ~/.zshrc
   (
     cat repos/public/zshrc
@@ -268,7 +264,6 @@ function cmd_uninstall() {
 
   rm -f ~/.bashrc
   rm -f ~/.zshrc
-  rm -f ~/.safebin
   rm -f ~/.gitignore
   rm -rf ~/.aria2/
   rm -f ~/.gitconfig
