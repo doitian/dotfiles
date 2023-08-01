@@ -181,10 +181,9 @@ function cmd_install() {
   (
     cat repos/public/zshrc
     local l
-    for l in completion directories functions grep history key-bindings misc spectrum theme-and-appearance clipboard; do
-      head_cat '#' ~/.oh-my-zsh/lib/$l.zsh
+    for l in completion directories functions grep history key-bindings misc theme-and-appearance clipboard termsupport; do
+      head_safe_cat '#' ~/.oh-my-zsh/lib/$l.zsh
     done
-    head_safe_cat '#' ~/.oh-my-zsh/lib/termsupport.zsh
     for l in sudo copybuffer copypath isodate magic-enter encode64 urltools direnv fzf; do
       head_safe_cat '#' ~/.oh-my-zsh/plugins/$l/$l.plugin.zsh
     done
