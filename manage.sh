@@ -49,12 +49,12 @@ function ensure_git_clone() {
 }
 
 function head_cat() {
-  echo "$* {{""{1"
+  echo "$* {{""{{1"
   cat "$2"
 }
 
 function head_safe_cat() {
-  echo "$* {{""{1"
+  echo "$* {{""{{1"
   echo "() {"
   cat "$2"
   echo "}"
@@ -187,7 +187,7 @@ function cmd_install() {
       head_cat '#' ~/.oh-my-zsh/lib/$l.zsh
     done
     head_safe_cat '#' ~/.oh-my-zsh/lib/termsupport.zsh
-    for l in gpg-agent sudo copybuffer copypath isodate magic-enter encode64 urltools direnv fzf; do
+    for l in sudo copybuffer copypath isodate magic-enter encode64 urltools direnv fzf; do
       head_safe_cat '#' ~/.oh-my-zsh/plugins/$l/$l.plugin.zsh
     done
     head_cat '#' ~/.oh-my-zsh/plugins/gitfast/git-prompt.sh
@@ -195,12 +195,13 @@ function cmd_install() {
       head_cat '#' "$l"
     done
     head_cat '#' repos/bd.zsh
+    if type -f zoxide &>/dev/null; then
+      echo "# zoxide {{""{{1"
+      zoxide init zsh --cmd j
+    fi
     head_cat '#' repos/public/zshrc.after
     if [[ "$(uname -v)" = iSH* ]]; then
       echo 'source ~/.zshenv'
-    fi
-    if type -f zoxide &>/dev/null; then
-      zoxide init zsh --cmd j
     fi
   ) >~/.zshrc
   chmod 0440 ~/.zshrc
@@ -210,7 +211,8 @@ function cmd_install() {
     cat repos/public/bashrc
     head_cat '#' repos/public/zsh/aliases.zsh
     head_cat '#' repos/public/zsh/functions.zsh
-    if type -f zoxike &>/dev/null; then
+    if type -f zoxide &>/dev/null; then
+      echo "# zoxide {{""{{1"
       zoxide init bash --cmd j
     fi
   ) >~/.bashrc
