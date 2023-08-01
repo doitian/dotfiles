@@ -199,9 +199,6 @@ function cmd_install() {
     if [[ "$(uname -v)" = iSH* ]]; then
       echo 'source ~/.zshenv'
     fi
-    if [[ "$OSTYPE" == "darwin"* ]]; then
-      echo 'source ~/.oh-my-zsh/plugins/macos/macos.plugin.zsh'
-    fi
     if type -f zoxide &>/dev/null; then
       zoxide init zsh --cmd j
     fi
