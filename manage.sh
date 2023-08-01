@@ -225,8 +225,6 @@ function cmd_install() {
   private find_relative ~/.mutt/accounts | xargs -I % touch ~/.mutt/cred/%
   if [[ "$OSTYPE" == "darwin"* ]]; then
     rsync -a -h repos/public/MacOS_cp/ ~/
-    mkdir -p ~/.MacOSX
-    cat repos/public/environment.plist.tmpl | tmpl_apply >~/.MacOSX/environment.plist
   fi
 
   if [ -f "$HOME/Library/Spelling/LocalDictionary" ]; then
@@ -255,9 +253,6 @@ function cmd_install() {
 }
 
 function cmd_uninstall() {
-  rm -f ~/.MacOSX/environment.plist
-  rmdir ~/.MacOSX || true
-
   find_relative repos/public/MacOS_cp | xargs -I % rm -f "$HOME/%"
   private find_relative repos/private/default | xargs -I % rm -f "$HOME/%"
   find_relative repos/public/default | xargs -I % rm -f "$HOME/%"
