@@ -209,6 +209,14 @@ function cmd_install() {
       echo "# zoxide {{""{{1"
       zoxide init bash --cmd j
     fi
+    if command -v direnv &>/dev/null; then
+      echo "# direnv {{""{{1"
+      direnv hook bash
+    fi
+    if command -v starship &>/dev/null; then
+      echo "# starship {{""{{1"
+      echo 'eval "$(starship init bash)"'
+    fi
   ) >~/.bashrc
   chmod 0440 ~/.bashrc
 
