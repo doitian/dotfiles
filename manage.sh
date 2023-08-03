@@ -189,7 +189,7 @@ function cmd_install() {
       head_cat '#' "$l"
     done
     head_cat '#' repos/bd.zsh
-    if type -f zoxide &>/dev/null; then
+    if command -v zoxide &>/dev/null; then
       echo "# zoxide {{""{{1"
       zoxide init zsh --cmd j
     fi
@@ -205,7 +205,7 @@ function cmd_install() {
     cat repos/public/bashrc
     head_cat '#' repos/public/zsh/aliases.zsh
     head_cat '#' repos/public/zsh/functions.zsh
-    if type -f zoxide &>/dev/null; then
+    if command -v zoxide &>/dev/null; then
       echo "# zoxide {{""{{1"
       zoxide init bash --cmd j
     fi

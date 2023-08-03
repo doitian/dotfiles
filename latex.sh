@@ -23,7 +23,7 @@ darwin*)
   done
   ;;
 linux*)
-  if type -f apt &>/dev/null; then
+  if command -v apt &>/dev/null; then
     sudo apt install texlive-xetex
   else
     echo "Unsupported system $OSTYPE" >&2

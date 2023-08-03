@@ -10,7 +10,7 @@ if [ -n "${GITPOD_WORKSPACE_ID:-}" ]; then
   ln -snf /workspace/dotfiles-repos "$DOTFILES_DIR/repos"
 fi
 
-if type -f brew &> /dev/null; then
+if command -v brew &>/dev/null; then
   ./debian.sh --apt --brew
 else
   ./debian.sh --apt
