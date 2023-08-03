@@ -124,13 +124,11 @@ function cmd_install() {
   rm -rf "$HOME/.oh-my-zsh"
   ln -snf "$DOTFILES_DIR/repos/oh-my-zsh" "$HOME/.oh-my-zsh"
 
-  mkdir -p ~/.zcompcache/completions
-  mkdir -p ~/.vim/files/backup
-  mkdir -p ~/.vim/files/undo
-  mkdir -p ~/.vim/files/swap
-  mkdir -p ~/.vim/autoload
   mkdir -p ~/bin
+  mkdir -p ~/.local/state/vim/{backup,undo,swap}
+  mkdir -p ~/.vim/autoload
   mkdir -p ~/.zsh-completions
+  mkdir -p ~/.zcompcache/completions
   if [[ "$OSTYPE" == "darwin"* ]]; then
     mkdir -p ~/Library/KeyBindings
   fi
