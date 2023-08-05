@@ -141,13 +141,19 @@ function cmd_install() {
   mkdir -p ~/.config
   ln -snf "$DOTFILES_DIR/repos/public/nvim" ~/.config/nvim
 
+  local PRIVATE_SNIPPETS_DIR="$DOTFILES_DIR/repos/private/private-snippets.vim"
+  private ln -snf "$PRIVATE_SNIPPETS_DIR" ~/.private-snippets.vim
   local VSCODE_SNIPPETS_DIR
   for VSCODE_SNIPPETS_DIR in "$HOME/Library/Application Support/Code/User/snippets"; do
     if [ -d "$VSCODE_SNIPPETS_DIR" ]; then
       rm -rf "$VSCODE_SNIPPETS_DIR"
-      ln -snf "$DOTFILES_DIR/repos/private/snippets/snippets" "$VSCODE_SNIPPETS_DIR"
+      ln -snf "$DOTFILES_DIR/repos/public/nvim/local/iy-snippets.vim/snippets" "$VSCODE_SNIPPETS_DIR"
+      if [ "$PRIVATE" = "true" ] && command -v jq &>/dev/null; then
+        jq -s 'reduce .[] as $item ({}; . * $item)' "$PRIVATE_SNIPPETS_DIR/snippets"/* >"$VSCODE_SNIPPETS_DIR/private-snippets.code-snippets"
+      fi
     fi
   done
+
   if [[ "$OSTYPE" == "darwin"* ]]; then
     ln -snf "$DOTFILES_DIR/repos/public/default/.config/lazygit/config.yml" "$HOME/Library/Application Support/lazygit/config.yml"
   fi
@@ -228,6 +234,7 @@ function cmd_install() {
   private ln -snf "$DOTFILES_DIR/repos/private/mutt" ~/.mutt
   private mkdir -p ~/.mutt/cred/
   private find_relative ~/.mutt/accounts | xargs -I % touch ~/.mutt/cred/%
+
   if [[ "$OSTYPE" == "darwin"* ]]; then
     rsync -a -h repos/public/MacOS_cp/ ~/
   fi
@@ -269,12 +276,12 @@ function cmd_uninstall() {
   rm -f ~/.gitconfig
   rm -f ~/.bash_profile
   rm -f ~/.vim/autoload/plug.vim
-  rm -f ~/.local/share/nvim/site/autoload/plug.vim
   rm -f ~/.mutt
   rm -f ~/.pandoc
   rm -f ~/.config/nvim
-
   rm -rf ~/Library/KeyBindings/
+
+  priate rm ~/.private-snippets.vim
 
   if [ -n "${WSLENV:-}" ]; then
     rm -f "$HOME/bin/ssh"
