@@ -48,15 +48,18 @@ function ensure_git_clone() {
   fi
 }
 
+function shell_cat() {
+  cat "$@" | grep -v "^\s*#"
+}
 function head_cat() {
   echo "$* {{""{{1"
-  cat "$2"
+  shell_cat "$2"
 }
 
 function head_safe_cat() {
   echo "$* {{""{{1"
   echo "() {"
-  cat "$2"
+  shell_cat "$2"
   echo "}"
 }
 
@@ -68,6 +71,88 @@ function find_relative_d() {
   find "$@" -mindepth 1 -type d | sed -e "s|^${1%/}/||"
 }
 
+function command_ok() {
+  command "$@" &>/dev/null
+}
+function command_stdio_ok() {
+  command "$@" &>/dev/null <<<""
+}
+function command_1arg_ok() {
+  command "$@" /dev/null &>/dev/null
+}
+function command_2args_ok() {
+  command "$@" /dev/null /dev/null &>/dev/null
+}
+function detect_aliases() {
+  # Ignore these folders (if the necessary grep flags are available)
+  local EXC_FOLDERS="{.bzr,CVS,.git,.hg,.svn,.idea,.tox}"
+  local GREP_OPTIONS
+
+  if command_stdio_ok grep "" --color=auto --exclude-dir=.cvs; then
+    GREP_OPTIONS="--color=auto --exclude-dir=$EXC_FOLDERS"
+  elif command_stdio_ok --color=auto --exclude=.cvs; then
+    GREP_OPTIONS="--color=auto --exclude=$EXC_FOLDERS"
+  fi
+
+  if [[ -n "$GREP_OPTIONS" ]]; then
+    echo "alias grep='grep $GREP_OPTIONS'"
+  fi
+
+  if command_2args_ok diff --color; then
+    echo "alias diff='diff --color'"
+  fi
+
+  if command_1arg_ok ls --color; then
+    echo "alias ls='ls --color=tty'"
+  elif command_1arg_ok ls -G; then
+    echo "alias ls='ls -G'"
+  fi
+}
+
+function fzf_setup() {
+  local fzf_base fzf_shell fzfdirs dir
+
+  test -d "${FZF_BASE:-}" && fzf_base="${FZF_BASE}"
+
+  if [[ -z "${fzf_base}" ]]; then
+    fzfdirs=(
+      "${HOME}/.fzf"
+      "${HOME}/.nix-profile/share/fzf"
+      "${XDG_DATA_HOME:-$HOME/.local/share}/fzf"
+      "/usr/local/opt/fzf"
+      "/opt/homebrew/opt/fzf"
+      "/usr/share/fzf"
+      "/usr/local/share/examples/fzf"
+    )
+    for dir in "${fzfdirs[@]}"; do
+      if [[ -d "${dir}" ]]; then
+        fzf_base="${dir}"
+        break
+      fi
+    done
+  fi
+
+  if [[ ! -d "${fzf_base}" ]]; then
+    return
+  fi
+
+  # Fix fzf shell directory for Arch Linux, NixOS or Void Linux packages
+  if [[ ! -d "${fzf_base}/shell" ]]; then
+    fzf_shell="${fzf_base}"
+  else
+    fzf_shell="${fzf_base}/shell"
+  fi
+
+  # Auto-completion
+  echo "source '${fzf_shell}/completion.$1' 2> /dev/null"
+  echo "source '${fzf_shell}/key-bindings.$1' 2> /dev/null"
+  if command -v fd &>/dev/null; then
+    echo "export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git'"
+  elif command -v fd &>/dev/null; then
+    echo "export FZF_DEFAULT_COMMAND='rg --files --hidden --glob \"!.git/*\"'"
+  fi
+}
+
 function cmd_repos() {
   mkdir -p repos
 
@@ -77,12 +162,9 @@ function cmd_repos() {
   else
     ensure_git_clone https://github.com/doitian/dotfiles-public.git repos/public
   fi
-  ensure_git_clone https://github.com/robbyrussell/oh-my-zsh.git repos/oh-my-zsh
   if [[ "$OSTYPE" == "linux"* ]]; then
     ensure_git_clone https://github.com/doitian/rime-wubi86-jidian.git repos/rime-wubi86-jidian
   fi
-  rm -rf "$HOME/.oh-my-zsh"
-  ln -snf "$DOTFILES_DIR/repos/oh-my-zsh" "$HOME/.oh-my-zsh"
   if [ "$UID" != 0 ]; then
     if [ -d "$HOME/.asdf" ]; then
       echo "==> asdf update"
@@ -99,35 +181,38 @@ function cmd_repos() {
       ln -snf "$DOTFILES_DIR/repos/asdf" "$HOME/.asdf"
     fi
   fi
-  echo "==> curl bd.zsh"
-  curl -sSLo repos/bd.zsh https://raw.githubusercontent.com/Tarrasch/zsh-bd/master/bd.zsh
   echo "==> curl plug.vim"
   curl -sSLo repos/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  echo "==> curl unicodes.txt"
-  curl -sSLo repos/unicodes.txt https://gist.github.com/doitian/f80a5f885946e10f3b42cc1e0392192b/raw/6d8227a4d7161ac7de77fbe290659a3d2e5cb1a3/unicodes.txt
+  if [[ ! -e repos/unicodes.txt ]]; then
+    echo "==> curl unicodes.txt"
+    curl -sSLo repos/unicodes.txt https://gist.github.com/doitian/f80a5f885946e10f3b42cc1e0392192b/raw/6d8227a4d7161ac7de77fbe290659a3d2e5cb1a3/unicodes.txt
+  else
+    echo "==> curl unicodes.txt (skipped)"
+  fi
 }
 
 function cmd_install() {
-  echo "#==> completion securities check"
-  echo "source ~/.oh-my-zsh/lib/compfix.zsh"
-  echo "handle_completion_insecurities"
   echo "#==> asdf setup"
   echo "asdf direnv setup --shell zsh --version system"
   echo "asdf plugin add nodejs"
   echo "asdf install nodejs lts"
-  echo "#==> env for spotlight launched apps"
-  echo 'sudo launchctl config user path "$PATH"'
 
   if ! [ -d ~/.dotfiles ]; then
     ln -snf "$DOTFILES_DIR" ~/.dotfiles
   fi
-  rm -rf "$HOME/.oh-my-zsh"
-  ln -snf "$DOTFILES_DIR/repos/oh-my-zsh" "$HOME/.oh-my-zsh"
 
   mkdir -p ~/bin
+  if command -v nvim &>/dev/null; then
+    ln -snf "$(which nvim)" ~/bin/vim
+  elif command -v vim &>/dev/null; then
+    ln -snf "$(which vim)" ~/bin/vim
+  else
+    echo "vim not found"
+    exit 1
+  fi
+
   mkdir -p ~/.local/state/vim/{backup,undo,swap}
   mkdir -p ~/.vim/autoload
-  mkdir -p ~/.zsh-completions
   mkdir -p ~/.zcompcache/completions
   if [[ "$OSTYPE" == "darwin"* ]]; then
     mkdir -p ~/Library/KeyBindings
@@ -183,23 +268,32 @@ function cmd_install() {
 
   rm -f ~/.zshrc
   (
-    cat repos/public/zshrc
+    echo '# vim: fmr={{{{,}}}}:fdm=marker'
+    head_cat '#' repos/public/zshrc
     local l
-    for l in completion directories functions grep history key-bindings misc theme-and-appearance clipboard termsupport; do
-      head_safe_cat '#' ~/.oh-my-zsh/lib/$l.zsh
-    done
-    for l in sudo copybuffer copypath isodate magic-enter encode64 urltools direnv fzf; do
-      head_safe_cat '#' ~/.oh-my-zsh/plugins/$l/$l.plugin.zsh
-    done
-    for l in $(find repos/public/zsh -name '*.zsh'); do
+    for l in $(find repos/public/zsh -depth 1 -name '*.zsh' | sort); do
       head_cat '#' "$l"
     done
-    head_cat '#' repos/bd.zsh
+    echo "# detected aliases {{""{{1"
+    detect_aliases
+    for l in $(find repos/public/zsh/after -name '*.zsh' | sort); do
+      head_cat '#' "$l"
+    done
     if command -v zoxide &>/dev/null; then
       echo "# zoxide {{""{{1"
-      zoxide init zsh --cmd j
+      zoxide init zsh --cmd j | grep -v "^\s*#"
     fi
-    head_cat '#' repos/public/zshrc.after
+    if command -v direnv &>/dev/null; then
+      echo "# direnv {{""{{1"
+      direnv hook zsh | grep -v "^\s*#"
+    fi
+    if command -v fzf &>/dev/null; then
+      echo "# fzf {{""{{1"
+      fzf_setup zsh
+    fi
+    if command -v okc-ssh-agent &>/dev/null; then
+      head_cat '#' repos/public/zsh/extras/okc-ssh-agent.zsh
+    fi
     if [[ "$(uname -v)" = iSH* ]]; then
       echo 'source ~/.zshenv'
     fi
@@ -208,16 +302,23 @@ function cmd_install() {
 
   rm -f ~/.bashrc
   (
-    cat repos/public/bashrc
-    head_cat '#' repos/public/zsh/aliases.zsh
-    head_cat '#' repos/public/zsh/functions.zsh
+    echo '# vim: fmr={{{{,}}}}:fdm=marker'
+    head_cat '#' repos/public/bashrc
+    head_cat '#' repos/public/zsh/after/aliases.zsh
+    echo "# detected aliases {{""{{1"
+    detect_aliases
+    head_cat '#' repos/public/zsh/after/functions.zsh
     if command -v zoxide &>/dev/null; then
       echo "# zoxide {{""{{1"
-      zoxide init bash --cmd j
+      zoxide init bash --cmd j | grep -v "^\s*#"
     fi
     if command -v direnv &>/dev/null; then
       echo "# direnv {{""{{1"
-      direnv hook bash
+      direnv hook bash | grep -v "^\s*#"
+    fi
+    if command -v fzf &>/dev/null; then
+      echo "# fzf {{""{{1"
+      fzf_setup bash
     fi
     if command -v starship &>/dev/null; then
       echo "# starship {{""{{1"
@@ -269,6 +370,7 @@ function cmd_uninstall() {
   private find_relative repos/private/default | xargs -I % rm -f "$HOME/%"
   find_relative repos/public/default | xargs -I % rm -f "$HOME/%"
 
+  rm -f ~/bin/vim
   rm -f ~/.bashrc
   rm -f ~/.zshrc
   rm -f ~/.gitignore
