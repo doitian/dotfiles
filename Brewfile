@@ -90,6 +90,7 @@ cask "font-jetbrains-mono"
 cask "font-lato"
 cask "font-lxgw-bright-gb"
 cask "font-lxgw-wenkai"
+cask "font-montserrat"
 cask "font-noto-sans"
 cask "font-noto-sans-cjk-sc"
 cask "font-noto-serif"
@@ -139,7 +140,7 @@ cask "zotero"
 mas "Amphetamine", id: 937984704
 mas "ArtRage Vitae", id: 1532816883
 mas "Cardflow", id: 1439830689
-mas "Contacts Sync for Google Gmail", id: 451691288
+mas "Contacts Sync", id: 451691288
 mas "Day One", id: 1055511498
 mas "Eagle for Safari", id: 1526651672
 mas "Final Cut Pro", id: 424389933
@@ -164,7 +165,8 @@ mas "Wakeout", id: 1242116567
 mas "Xee³", id: 639764244
 mas "Yoink", id: 457622435
 mas "剪映专业版", id: 1529999940
-vscode "dbaeumer.vscode-eslint"
+vscode "Catppuccin.catppuccin-vsc"
+vscode "Catppuccin.catppuccin-vsc-icons"
 vscode "donjayamanne.githistory"
 vscode "EditorConfig.EditorConfig"
 vscode "esbenp.prettier-vscode"
@@ -176,16 +178,11 @@ vscode "gitpod.gitpod-desktop"
 vscode "golang.go"
 vscode "Gruntfuggly.todo-tree"
 vscode "kortina.vscode-markdown-notes"
-vscode "mathiasfrohlich.Kotlin"
 vscode "mkhl.shfmt"
-vscode "ms-dotnettools.csharp"
 vscode "ms-vscode-remote.remote-ssh"
 vscode "ms-vscode.remote-explorer"
 vscode "Orta.vscode-jest"
-vscode "pomdtr.excalidraw-editor"
 vscode "Rubymaniac.vscode-direnv"
 vscode "rust-lang.rust-analyzer"
 vscode "streetsidesoftware.code-spell-checker"
-vscode "vscjava.vscode-gradle"
 vscode "vscodevim.vim"
-vscode "wholroyd.jinja"
