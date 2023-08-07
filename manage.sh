@@ -202,13 +202,15 @@ function cmd_install() {
   fi
 
   mkdir -p ~/bin
-  if command -v nvim &>/dev/null; then
-    ln -snf "$(which nvim)" ~/bin/vim
-  elif command -v vim &>/dev/null; then
-    ln -snf "$(which vim)" ~/bin/vim
-  else
-    echo "vim not found"
-    exit 1
+  if ! [ -e ~/bin/nvim ]; then
+    if command -v nvim &>/dev/null; then
+      ln -snf "$(which nvim)" ~/bin/nvim
+    elif command -v vim &>/dev/null; then
+      ln -snf "$(which vim)" ~/bin/nvim
+    else
+      echo "vim not found"
+      exit 1
+    fi
   fi
 
   mkdir -p ~/.local/state/vim/{backup,undo,swap}
@@ -291,6 +293,9 @@ function cmd_install() {
       echo "# fzf {{""{{1"
       fzf_setup zsh
     fi
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+      head_cat '#' repos/public/zsh/extras/macos.zsh
+    fi
     if command -v okc-ssh-agent &>/dev/null; then
       head_cat '#' repos/public/zsh/extras/okc-ssh-agent.zsh
     fi
@@ -308,6 +313,9 @@ function cmd_install() {
     echo "# detected aliases {{""{{1"
     detect_aliases
     head_cat '#' repos/public/zsh/after/functions.zsh
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+      head_cat '#' repos/public/zsh/extras/macos.zsh
+    fi
     if command -v zoxide &>/dev/null; then
       echo "# zoxide {{""{{1"
       zoxide init bash --cmd j | grep -v "^\s*#"
