@@ -192,11 +192,6 @@ function cmd_repos() {
 }
 
 function cmd_install() {
-  echo "#==> asdf setup"
-  echo "asdf direnv setup --shell zsh --version system"
-  echo "asdf plugin add nodejs"
-  echo "asdf install nodejs lts"
-
   if ! [ -d ~/.dotfiles ]; then
     ln -snf "$DOTFILES_DIR" ~/.dotfiles
   fi
@@ -241,10 +236,6 @@ function cmd_install() {
     fi
   done
 
-  if [[ "$OSTYPE" == "darwin"* ]]; then
-    ln -snf "$DOTFILES_DIR/repos/public/default/.config/lazygit/config.yml" "$HOME/Library/Application Support/lazygit/config.yml"
-  fi
-
   GITCONFIG_PATH="$HOME/.gitconfig"
   if [ -n "${GITHUB_CODESPACE_TOKEN:-}" ]; then
     GITCONFIG_PATH="$HOME/.gitconfig.user"
@@ -267,6 +258,10 @@ function cmd_install() {
   mkdir -p ~/.aria2/
   cat repos/public/aria2rpc.conf.tmpl | tmpl_apply | get_or_set_hash aria2rpc 8 >~/.aria2/aria2rpc.conf
   chmod 0640 ~/.aria2/aria2rpc.conf
+
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    ln -snf "$DOTFILES_DIR/repos/public/default/.config/lazygit/config.yml" "$HOME/Library/Application Support/lazygit/config.yml"
+  fi
 
   rm -f ~/.zshrc
   (
