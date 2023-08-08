@@ -207,7 +207,6 @@ function cmd_install() {
   fi
 
   mkdir -p ~/.local/state/vim/{backup,undo,swap}
-  mkdir -p ~/.vim/pack/local/opt
   mkdir -p ~/.zcompcache/completions
   if [[ "$OSTYPE" == "darwin"* ]]; then
     mkdir -p ~/Library/KeyBindings
