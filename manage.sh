@@ -162,7 +162,6 @@ function cmd_repos() {
   else
     ensure_git_clone https://github.com/doitian/dotfiles-public.git repos/public
   fi
-  ensure_git_clone https://github.com/k-takata/minpac.git repos/minpac
   if [[ "$OSTYPE" == "linux"* ]]; then
     ensure_git_clone https://github.com/doitian/rime-wubi86-jidian.git repos/rime-wubi86-jidian
   fi
@@ -220,7 +219,6 @@ function cmd_install() {
   rm -rf ~/.config/nvim
   mkdir -p ~/.config
   ln -snf "$DOTFILES_DIR/repos/public/nvim" ~/.config/nvim
-  ln -snf "$DOTFILES_DIR/repos/minpac" ~/.vim/pack/minpac/opt/minpac
 
   local PUBLIC_SNIPPETS_DIR="$DOTFILES_DIR/repos/public/nvim/snippets"
   local PRIVATE_SNIPPETS_DIR="$DOTFILES_DIR/repos/private/nvim/snippets"
