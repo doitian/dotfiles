@@ -181,8 +181,6 @@ function cmd_repos() {
       ln -snf "$DOTFILES_DIR/repos/asdf" "$HOME/.asdf"
     fi
   fi
-  echo "==> curl plug.vim"
-  curl -sSLo repos/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   if [[ ! -e repos/unicodes.txt ]]; then
     echo "==> curl unicodes.txt"
     curl -sSLo repos/unicodes.txt https://gist.github.com/doitian/f80a5f885946e10f3b42cc1e0392192b/raw/6d8227a4d7161ac7de77fbe290659a3d2e5cb1a3/unicodes.txt
@@ -215,7 +213,6 @@ function cmd_install() {
     mkdir -p ~/Library/KeyBindings
   fi
 
-  ln -snf "$DOTFILES_DIR/repos/plug.vim" ~/.vim/autoload/plug.vim
   ln -snf "$DOTFILES_DIR/repos/public/default/.zshenv" ~/.bash_profile
   rm -rf ~/.pandoc
   ln -snf "$DOTFILES_DIR/repos/public/pandoc" ~/.pandoc
@@ -380,7 +377,6 @@ function cmd_uninstall() {
   rm -rf ~/.aria2/
   rm -f ~/.gitconfig
   rm -f ~/.bash_profile
-  rm -f ~/.vim/autoload/plug.vim
   rm -f ~/.mutt
   rm -f ~/.pandoc
   rm -f ~/.config/nvim
