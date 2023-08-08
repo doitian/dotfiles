@@ -220,16 +220,16 @@ function cmd_install() {
   mkdir -p ~/.config
   ln -snf "$DOTFILES_DIR/repos/public/nvim" ~/.config/nvim
 
-  local PRIVATE_SNIPPETS_DIR="$DOTFILES_DIR/repos/private/private-snippets.vim"
-  private ln -snf "$PRIVATE_SNIPPETS_DIR" ~/.private-snippets.vim
+  local PUBLIC_SNIPPETS_DIR="$DOTFILES_DIR/repos/public/nvim/pack/local/start/snippets/snippets"
+  local PRIVATE_SNIPPETS_DIR="$DOTFILES_DIR/repos/private/nvim/snippets"
+  if [ "$PRIVATE" = "true" ] && command -v jq &>/dev/null; then
+    jq -s 'reduce .[] as $item ({}; . * $item)' "$PRIVATE_SNIPPETS_DIR"/* >"$PUBLIC_SNIPPETS_DIR/private-snippets.code-snippets"
+  fi
   local VSCODE_SNIPPETS_DIR
   for VSCODE_SNIPPETS_DIR in "$HOME/Library/Application Support/Code/User/snippets"; do
     if [ -d "$VSCODE_SNIPPETS_DIR" ]; then
       rm -rf "$VSCODE_SNIPPETS_DIR"
-      ln -snf "$DOTFILES_DIR/repos/public/nvim/local/iy-snippets.vim/snippets" "$VSCODE_SNIPPETS_DIR"
-      if [ "$PRIVATE" = "true" ] && command -v jq &>/dev/null; then
-        jq -s 'reduce .[] as $item ({}; . * $item)' "$PRIVATE_SNIPPETS_DIR/snippets"/* >"$VSCODE_SNIPPETS_DIR/private-snippets.code-snippets"
-      fi
+      ln -snf "$PUBLIC_SNIPPETS_DIR" "$VSCODE_SNIPPETS_DIR"
     fi
   done
 
