@@ -44,7 +44,7 @@ function ensure_git_clone() {
     git -C "$target" pull
   else
     echo "==> clone clone $origin"
-    git clone --depth 1 --filter blob:none "$origin" "$target"
+    git clone --filter=blob:none "$origin" "$target"
   fi
 }
 

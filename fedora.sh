@@ -23,7 +23,7 @@ SSH
     sudo chmod o-rw,g-w .ssh/authorized_keys .ssh/known_hosts
   fi
   if ! [ -d .dotfiles ]; then
-    git clone --depth 1 git@github.com:doitian/dotfiles.git .dotfiles
+    git clone --filter=tree:0 git@github.com:doitian/dotfiles.git .dotfiles
     chown -R ian:ian .dotfiles
   fi
   popd # /home/ian
