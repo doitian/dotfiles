@@ -44,7 +44,7 @@ function ensure_git_clone() {
     git -C "$target" pull
   else
     echo "==> clone clone $origin"
-    git clone --depth 1 "$origin" "$target"
+    git clone --depth 1 --filter blob:none "$origin" "$target"
   fi
 }
 
@@ -162,6 +162,7 @@ function cmd_repos() {
   else
     ensure_git_clone https://github.com/doitian/dotfiles-public.git repos/public
   fi
+  ensure_git_clone https://github.com/k-takata/minpac.git repos/minpac
   if [[ "$OSTYPE" == "linux"* ]]; then
     ensure_git_clone https://github.com/doitian/rime-wubi86-jidian.git repos/rime-wubi86-jidian
   fi
@@ -207,7 +208,7 @@ function cmd_install() {
   fi
 
   mkdir -p ~/.local/state/vim/{backup,undo,swap}
-  mkdir -p ~/.vim/autoload
+  mkdir -p ~/.vim/pack/local/opt
   mkdir -p ~/.zcompcache/completions
   if [[ "$OSTYPE" == "darwin"* ]]; then
     mkdir -p ~/Library/KeyBindings
@@ -219,8 +220,9 @@ function cmd_install() {
   rm -rf ~/.config/nvim
   mkdir -p ~/.config
   ln -snf "$DOTFILES_DIR/repos/public/nvim" ~/.config/nvim
+  ln -snf "$DOTFILES_DIR/repos/minpac" ~/.vim/pack/minpac/opt/minpac
 
-  local PUBLIC_SNIPPETS_DIR="$DOTFILES_DIR/repos/public/nvim/pack/local/start/snippets/snippets"
+  local PUBLIC_SNIPPETS_DIR="$DOTFILES_DIR/repos/public/nvim/snippets"
   local PRIVATE_SNIPPETS_DIR="$DOTFILES_DIR/repos/private/nvim/snippets"
   if [ "$PRIVATE" = "true" ] && command -v jq &>/dev/null; then
     jq -s 'reduce .[] as $item ({}; . * $item)' "$PRIVATE_SNIPPETS_DIR"/* >"$PUBLIC_SNIPPETS_DIR/private-snippets.code-snippets"
