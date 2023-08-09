@@ -107,6 +107,12 @@ function detect_aliases() {
   elif command_1arg_ok ls -G; then
     echo "alias ls='ls -G'"
   fi
+
+  if command -v exa &>/dev/null; then
+    echo "alias l='exa'"
+  else
+    echo "alias l='ls'"
+  fi
 }
 
 function fzf_setup() {
