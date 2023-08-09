@@ -181,9 +181,10 @@ function cmd_repos() {
       ln -snf "$DOTFILES_DIR/repos/asdf" "$HOME/.asdf"
     fi
   fi
+
   if [[ ! -e repos/unicodes.txt ]]; then
     echo "==> curl unicodes.txt"
-    curl -sSLo repos/unicodes.txt https://gist.github.com/doitian/f80a5f885946e10f3b42cc1e0392192b/raw/6d8227a4d7161ac7de77fbe290659a3d2e5cb1a3/unicodes.txt
+    curl -fsSLo repos/unicodes.txt https://gist.github.com/doitian/f80a5f885946e10f3b42cc1e0392192b/raw/6d8227a4d7161ac7de77fbe290659a3d2e5cb1a3/unicodes.txt
   else
     echo "==> curl unicodes.txt (skipped)"
   fi
@@ -207,7 +208,7 @@ function cmd_install() {
   fi
 
   mkdir -p ~/.local/state/vim/{backup,undo,swap}
-  mkdir -p ~/.zcompcache/completions
+  mkdir -p ~/.zcompcache
   if [[ "$OSTYPE" == "darwin"* ]]; then
     mkdir -p ~/Library/KeyBindings
   fi
