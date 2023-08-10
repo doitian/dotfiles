@@ -110,8 +110,10 @@ function detect_aliases() {
 
   if command -v exa &>/dev/null; then
     echo "alias l='exa'"
+    echo "alias li='exa --icons'"
   else
     echo "alias l='ls'"
+    echo "alias li='ls'"
   fi
 }
 
