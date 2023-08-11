@@ -252,11 +252,8 @@ function cmd_install() {
   fi
   git config --global core.hooksPath "$HOME/.githooks"
   if command -v delta &>/dev/null; then
-    git config --global pager.diff delta
-    git config --global pager.show delta
-    git config --global pager.log delta
-    git config --global pager.reflog delta
-    git config --global interactive.diffFilter 'delta --color-only --features="interactive"'
+    git config --global core.pager delta
+    git config --global interactive.diffFilter 'delta --color-only'
   fi
   chmod 0640 "$GITCONFIG_PATH"
 
