@@ -270,7 +270,7 @@ function cmd_install() {
     echo '# vim: fmr={{{{,}}}}:fdm=marker'
     head_cat '#' repos/public/zshrc
     local l
-    for l in $(find repos/public/zsh -depth 1 -name '*.zsh' | sort); do
+    for l in $(find repos/public/zsh -maxdepth 1 -name '*.zsh' | sort); do
       head_cat '#' "$l"
     done
     echo "# detected aliases {{""{{1"
