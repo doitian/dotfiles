@@ -204,7 +204,30 @@ function cmd_install() {
     ln -snf "$DOTFILES_DIR" ~/.dotfiles
   fi
 
+  # directories
   mkdir -p ~/bin
+  mkdir -p ~/.local/state/vim/{backup,undo,swap}
+  mkdir -p ~/.zcompcache
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    mkdir -p ~/Library/KeyBindings
+  fi
+  ln -snf "$DOTFILES_DIR/repos/public/default/.zshenv" ~/.bash_profile
+  rm -rf ~/.pandoc
+  ln -snf "$DOTFILES_DIR/repos/public/pandoc" ~/.pandoc
+  rm -rf ~/.config/nvim
+  mkdir -p ~/.config
+  ln -snf "$DOTFILES_DIR/repos/public/nvim" ~/.config/nvim
+
+  # default
+  find_relative_d repos/public/default | xargs -I % mkdir -p "$HOME/%"
+  find_relative repos/public/default | xargs -I % ln -snf "$DOTFILES_DIR/repos/public/default/%" "$HOME/%"
+  private find_relative_d repos/private/default | xargs -I % mkdir -p "$HOME/%"
+  private find_relative repos/private/default | xargs -I % ln -snf "$DOTFILES_DIR/repos/private/default/%" "$HOME/%"
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    rsync -a -h repos/public/MacOS_cp/ ~/
+  fi
+
+  # editor
   if ! [ -e ~/bin/nvim ]; then
     if command -v nvim &>/dev/null; then
       ln -snf "$(which nvim)" ~/bin/nvim
@@ -215,19 +238,6 @@ function cmd_install() {
       exit 1
     fi
   fi
-
-  mkdir -p ~/.local/state/vim/{backup,undo,swap}
-  mkdir -p ~/.zcompcache
-  if [[ "$OSTYPE" == "darwin"* ]]; then
-    mkdir -p ~/Library/KeyBindings
-  fi
-
-  ln -snf "$DOTFILES_DIR/repos/public/default/.zshenv" ~/.bash_profile
-  rm -rf ~/.pandoc
-  ln -snf "$DOTFILES_DIR/repos/public/pandoc" ~/.pandoc
-  rm -rf ~/.config/nvim
-  mkdir -p ~/.config
-  ln -snf "$DOTFILES_DIR/repos/public/nvim" ~/.config/nvim
 
   local PUBLIC_SNIPPETS_DIR="$DOTFILES_DIR/repos/public/nvim/snippets"
   local PRIVATE_SNIPPETS_DIR="$DOTFILES_DIR/repos/private/nvim/snippets"
@@ -242,6 +252,19 @@ function cmd_install() {
     fi
   done
 
+  if [ -f "$HOME/Library/Spelling/LocalDictionary" ]; then
+    ln -snf "$HOME/Library/Spelling/LocalDictionary" "$HOME/.vim-spell-en.utf-8.add"
+  fi
+
+  # gpg
+  mkdir -p ~/.gnupg
+  cp "$DOTFILES_DIR/repos/public/gpg-agent.conf" ~/.gnupg/gpg-agent.conf
+  if [ -f /usr/local/bin/pinentry-mac ]; then
+    echo 'pinentry-program /usr/local/bin/pinentry-mac' >>~/.gnupg/gpg-agent.conf
+  fi
+  local EXPORT_SSH_AUTH_SOCK="export SSH_AUTH_SOCK='$(gpgconf --list-dirs agent-ssh-socket 2>/dev/null || true)'"
+
+  # git
   GITCONFIG_PATH="$HOME/.gitconfig"
   if [ -n "${GITHUB_CODESPACE_TOKEN:-}" ]; then
     GITCONFIG_PATH="$HOME/.gitconfig.user"
@@ -257,16 +280,11 @@ function cmd_install() {
     git config --global interactive.diffFilter 'delta --color-only'
   fi
   chmod 0640 "$GITCONFIG_PATH"
-
-  mkdir -p ~/.aria2/
-  cat repos/public/aria2rpc.conf.tmpl | tmpl_apply | get_or_set_hash aria2rpc 8 >~/.aria2/aria2rpc.conf
-  chmod 0640 ~/.aria2/aria2rpc.conf
-
   if [[ "$OSTYPE" == "darwin"* ]]; then
     ln -snf "$DOTFILES_DIR/repos/public/default/.config/lazygit/config.yml" "$HOME/Library/Application Support/lazygit/config.yml"
   fi
 
-  local EXPORT_SSH_AUTH_SOCK="export SSH_AUTH_SOCK='$(gpgconf --list-dirs agent-ssh-socket 2>/dev/null || true)'"
+  # zsh
   rm -f ~/.zshrc
   (
     echo '# vim: fmr={{{{,}}}}:fdm=marker'
@@ -307,6 +325,7 @@ function cmd_install() {
   ) >~/.zshrc
   chmod 0440 ~/.zshrc
 
+  # bash
   rm -f ~/.bashrc
   (
     echo '# vim: fmr={{{{,}}}}:fdm=marker'
@@ -340,22 +359,10 @@ function cmd_install() {
   ) >~/.bashrc
   chmod 0440 ~/.bashrc
 
-  find_relative_d repos/public/default | xargs -I % mkdir -p "$HOME/%"
-  find_relative repos/public/default | xargs -I % ln -snf "$DOTFILES_DIR/repos/public/default/%" "$HOME/%"
-  private find_relative_d repos/private/default | xargs -I % mkdir -p "$HOME/%"
-  private find_relative repos/private/default | xargs -I % ln -snf "$DOTFILES_DIR/repos/private/default/%" "$HOME/%"
-
+  # mutt
   private ln -snf "$DOTFILES_DIR/repos/private/mutt" ~/.mutt
   private mkdir -p ~/.mutt/cred/
   private find_relative ~/.mutt/accounts | xargs -I % touch ~/.mutt/cred/%
-
-  if [[ "$OSTYPE" == "darwin"* ]]; then
-    rsync -a -h repos/public/MacOS_cp/ ~/
-  fi
-
-  if [ -f "$HOME/Library/Spelling/LocalDictionary" ]; then
-    ln -snf "$HOME/Library/Spelling/LocalDictionary" "$HOME/.vim-spell-en.utf-8.add"
-  fi
 
   if [ -n "${WSLENV:-}" ]; then
     ln -snf "$(which ssh.exe)" "$HOME/bin/ssh"
@@ -365,17 +372,16 @@ function cmd_install() {
     git config --global core.sshCommand "$(which ssh.exe)"
   fi
 
-  mkdir -p ~/.gnupg
-  cp "$DOTFILES_DIR/repos/public/gpg-agent.conf" ~/.gnupg/gpg-agent.conf
-  if [ -f /usr/local/bin/pinentry-mac ]; then
-    echo 'pinentry-program /usr/local/bin/pinentry-mac' >>~/.gnupg/gpg-agent.conf
-  fi
-
   if [[ "$OSTYPE" == "linux"* && (-n "$DISPLAY" || -n "$WAYLAND_DISPLAY") ]]; then
     rm -rf "$HOME/.local/share/fcitx5/rime"
     mkdir -p "$HOME/.local/share/fcitx5"
     ln -snf "$DOTFILES_DIR/repos/rime-wubi86-jidian" "$HOME/.local/share/fcitx5/rime"
   fi
+
+  # aria2
+  mkdir -p ~/.aria2/
+  cat repos/public/aria2rpc.conf.tmpl | tmpl_apply | get_or_set_hash aria2rpc 8 >~/.aria2/aria2rpc.conf
+  chmod 0640 ~/.aria2/aria2rpc.conf
 }
 
 function cmd_uninstall() {
