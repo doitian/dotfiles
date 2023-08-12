@@ -266,10 +266,14 @@ function cmd_install() {
     ln -snf "$DOTFILES_DIR/repos/public/default/.config/lazygit/config.yml" "$HOME/Library/Application Support/lazygit/config.yml"
   fi
 
+  local EXPORT_SSH_AUTH_SOCK="export SSH_AUTH_SOCK='$(gpgconf --list-dirs agent-ssh-socket 2>/dev/null || true)'"
   rm -f ~/.zshrc
   (
     echo '# vim: fmr={{{{,}}}}:fdm=marker'
     head_cat '#' repos/public/zshrc
+    if [ -n "$EXPORT_SSH_AUTH_SOCK" ]; then
+      echo "$EXPORT_SSH_AUTH_SOCK"
+    fi
     local l
     for l in $(find repos/public/zsh -maxdepth 1 -name '*.zsh' | sort); do
       head_cat '#' "$l"
@@ -307,6 +311,9 @@ function cmd_install() {
   (
     echo '# vim: fmr={{{{,}}}}:fdm=marker'
     head_cat '#' repos/public/bashrc
+    if [ -n "$EXPORT_SSH_AUTH_SOCK" ]; then
+      echo "$EXPORT_SSH_AUTH_SOCK"
+    fi
     head_cat '#' repos/public/zsh/after/aliases.zsh
     echo "# detected aliases {{""{{1"
     detect_aliases
