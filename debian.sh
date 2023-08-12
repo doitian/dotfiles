@@ -74,16 +74,4 @@ fi
 
 if [ -n "$INSTALL_BREW" ]; then
   brew install fd zoxide ripgrep fzf watchexec
-else
-  pushd repos
-
-  WATCHEXEC_VERSION=1.19.0
-  if ! [ -f "$DOTFILES_DIR/repos/watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu/watchexec" ]; then
-    curl -LO https://github.com/watchexec/watchexec/releases/download/cli-v$WATCHEXEC_VERSION/watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu.tar.xz
-    tar -xJf watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu.tar.xz
-    ln -snf "$DOTFILES_DIR/repos/watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu/watchexec" ~/bin/watchexec
-    rm -f watchexec-$WATCHEXEC_VERSION-x86_64-unknown-linux-gnu.tar.gz
-  fi
-
-  popd # repos
 fi
