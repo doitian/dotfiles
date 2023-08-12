@@ -122,13 +122,13 @@ function fzf_setup() {
 
   test -d "${FZF_BASE:-}" && fzf_base="${FZF_BASE}"
 
-  if [[ -z "${fzf_base}" ]]; then
+  if [[ -z "${fzf_base:-}" ]]; then
     fzfdirs=(
       "${HOME}/.fzf"
-      "${HOME}/.nix-profile/share/fzf"
       "${XDG_DATA_HOME:-$HOME/.local/share}/fzf"
       "/usr/local/opt/fzf"
       "/opt/homebrew/opt/fzf"
+      "/home/linuxbrew/.linuxbrew/opt/fzf"
       "/usr/share/fzf"
       "/usr/local/share/examples/fzf"
     )
@@ -140,7 +140,8 @@ function fzf_setup() {
     done
   fi
 
-  if [[ ! -d "${fzf_base}" ]]; then
+  if [[ ! -d "${fzf_base:-}" ]]; then
+    echo "fzf not found" >&2
     return
   fi
 
@@ -170,7 +171,7 @@ function cmd_repos() {
   else
     ensure_git_clone https://github.com/doitian/dotfiles-public.git repos/public
   fi
-  if [[ "$OSTYPE" == "linux"* ]]; then
+  if [[ "$OSTYPE" == "linux"* && (-n "$DISPLAY" || -n "$WAYLAND_DISPLAY") ]]; then
     ensure_git_clone https://github.com/doitian/rime-wubi86-jidian.git repos/rime-wubi86-jidian
   fi
   if [ "$UID" != 0 ]; then
@@ -363,7 +364,7 @@ function cmd_install() {
     echo 'pinentry-program /usr/local/bin/pinentry-mac' >>~/.gnupg/gpg-agent.conf
   fi
 
-  if [[ "$OSTYPE" == "linux"* ]]; then
+  if [[ "$OSTYPE" == "linux"* && (-n "$DISPLAY" || -n "$WAYLAND_DISPLAY") ]]; then
     rm -rf "$HOME/.local/share/fcitx5/rime"
     mkdir -p "$HOME/.local/share/fcitx5"
     ln -snf "$DOTFILES_DIR/repos/rime-wubi86-jidian" "$HOME/.local/share/fcitx5/rime"
