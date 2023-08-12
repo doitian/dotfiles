@@ -372,16 +372,20 @@ function cmd_install() {
     git config --global core.sshCommand "$(which ssh.exe)"
   fi
 
-  if [[ "$OSTYPE" == "linux"* && (-n "$DISPLAY" || -n "$WAYLAND_DISPLAY") ]]; then
-    rm -rf "$HOME/.local/share/fcitx5/rime"
-    mkdir -p "$HOME/.local/share/fcitx5"
-    ln -snf "$DOTFILES_DIR/repos/rime-wubi86-jidian" "$HOME/.local/share/fcitx5/rime"
-  fi
-
   # aria2
   mkdir -p ~/.aria2/
   cat repos/public/aria2rpc.conf.tmpl | tmpl_apply | get_or_set_hash aria2rpc 8 >~/.aria2/aria2rpc.conf
   chmod 0640 ~/.aria2/aria2rpc.conf
+
+  # Linux GUI
+  if [[ "$OSTYPE" == "linux"* && (-n "$DISPLAY" || -n "$WAYLAND_DISPLAY") ]]; then
+    rm -rf "$HOME/.local/share/fcitx5/rime"
+    mkdir -p "$HOME/.local/share/fcitx5"
+    ln -snf "$DOTFILES_DIR/repos/rime-wubi86-jidian" "$HOME/.local/share/fcitx5/rime"
+
+    mkdir -p "$HOME/.config/fontconfig"
+    cp -f "$DOTFILES_DIR/repos/public/fontconfig/fonts.conf" "$HOME/.config/fontconfig/"
+  fi
 }
 
 function cmd_uninstall() {

@@ -60,7 +60,7 @@ done
 if [ -n "$INSTALL_APT" ]; then
   $SUDO apt-get update -y
   $SUDO apt-get install -y unzip vim direnv tmux build-essential autoconf flex bison texinfo libtool libreadline-dev zlib1g-dev libssl-dev python3 python3-pip bat \
-    fonts-noto fonts-wqy-zenhei fonts-wqy-microhei fonts-ibm-plex fonts-lato fonts-jetbrains-mono fonts-noto-cjk
+    fonts-noto fonts-lato fonts-jetbrains-mono fonts-noto-cjk
   $SUDO update-alternatives --install /usr/bin/editor editor /usr/bin/vim 100
   if [ -z "$INSTALL_BREW" ]; then
     $SUDO apt-get install -y fd-find zoxide ripgrep fzf
