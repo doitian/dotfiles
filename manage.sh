@@ -171,7 +171,7 @@ function cmd_repos() {
   else
     ensure_git_clone https://github.com/doitian/dotfiles-public.git repos/public
   fi
-  if [[ "$OSTYPE" == "linux"* && (-n "$DISPLAY" || -n "$WAYLAND_DISPLAY") ]]; then
+  if [[ "$OSTYPE" == "linux"* && (-n "${DISPLAY:-}" || -n "${WAYLAND_DISPLAY:-}") ]]; then
     ensure_git_clone https://github.com/doitian/rime-wubi86-jidian.git repos/rime-wubi86-jidian
   fi
   if [ "$UID" != 0 ]; then
@@ -378,7 +378,7 @@ function cmd_install() {
   chmod 0640 ~/.aria2/aria2rpc.conf
 
   # Linux GUI
-  if [[ "$OSTYPE" == "linux"* && (-n "$DISPLAY" || -n "$WAYLAND_DISPLAY") ]]; then
+  if [[ "$OSTYPE" == "linux"* && (-n "${DISPLAY:-}" || -n "${WAYLAND_DISPLAY:-}") ]]; then
     rm -rf "$HOME/.local/share/fcitx5/rime"
     mkdir -p "$HOME/.local/share/fcitx5"
     ln -snf "$DOTFILES_DIR/repos/rime-wubi86-jidian" "$HOME/.local/share/fcitx5/rime"
