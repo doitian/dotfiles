@@ -342,6 +342,7 @@ function cmd_install() {
     if [[ "$OSTYPE" == "darwin"* ]]; then
       head_cat '#' repos/public/zsh/extras/macos.zsh
     fi
+    head_cat '#' repos/public/zsh/after/asdf.zsh
     if command -v zoxide &>/dev/null; then
       echo "# zoxide {{""{{1"
       zoxide init bash --cmd j | grep -v "^\s*#"
