@@ -39,6 +39,7 @@ brew "mas"
 brew "mdbook"
 brew "mosh"
 brew "neovim"
+brew "node"
 brew "oath-toolkit"
 brew "p7zip"
 brew "pandoc"
@@ -139,7 +140,7 @@ mas "Day One", id: 1055511498
 mas "Eagle for Safari", id: 1526651672
 mas "Final Cut Pro", id: 424389933
 mas "GarageBand", id: 682658836
-mas "GoodNotes", id: 1444383602
+mas "Goodnotes", id: 1444383602
 mas "HazeOver", id: 430798174
 mas "Hex Fiend", id: 1342896380
 mas "Hidden Bar", id: 1452453066
