@@ -1,8 +1,6 @@
 tap "filippo.io/age", "https://filippo.io/age"
 tap "homebrew/bundle"
-tap "homebrew/cask-drivers"
 tap "homebrew/cask-fonts"
-tap "homebrew/services"
 brew "age"
 brew "aria2"
 brew "awscli"
