@@ -1,6 +1,5 @@
 tap "filippo.io/age", "https://filippo.io/age"
 tap "homebrew/bundle"
-tap "homebrew/cask"
 tap "homebrew/cask-drivers"
 tap "homebrew/cask-fonts"
 tap "homebrew/services"
@@ -8,6 +7,7 @@ brew "age"
 brew "aria2"
 brew "awscli"
 brew "bat"
+brew "btop"
 brew "coreutils"
 brew "croc"
 brew "ctags"
@@ -27,9 +27,9 @@ brew "git"
 brew "git-delta"
 brew "git-flow-avh"
 brew "git-lfs"
-brew "gitui"
 brew "gnu-sed"
 brew "gnupg"
+brew "go"
 brew "gopass"
 brew "grep"
 brew "hugo"
@@ -81,22 +81,21 @@ cask "carbon-copy-cloner"
 cask "cardhop"
 cask "cleanshot"
 cask "deckset"
-cask "deepl"
 cask "dropbox"
 cask "eudic"
 cask "fantastical"
 cask "fission"
+cask "font-atkinson-hyperlegible"
+cask "font-cascadia-code"
+cask "font-inter"
 cask "font-jetbrains-mono"
 cask "font-lato"
 cask "font-lxgw-bright-gb"
 cask "font-lxgw-wenkai"
-cask "font-montserrat"
-cask "font-noto-sans"
 cask "font-noto-sans-cjk-sc"
-cask "font-noto-serif"
 cask "font-noto-serif-cjk-sc"
+cask "font-roboto-slab"
 cask "font-symbols-only-nerd-font"
-cask "font-twitter-color-emoji"
 cask "garmin-express"
 cask "handbrake"
 cask "hookmark"
@@ -115,14 +114,12 @@ cask "microsoft-remote-desktop"
 cask "microsoft-word"
 cask "obs"
 cask "obsidian"
-cask "omnigraffle"
 cask "oracle-jdk"
 cask "paragon-ntfs"
-cask "paw"
 cask "pdf-expert"
 cask "prowritingaid"
+cask "rapidapi"
 cask "resilio-sync"
-cask "scrivener"
 cask "snapmotion"
 cask "tableflip"
 cask "transmission"
@@ -132,14 +129,13 @@ cask "vb-cable"
 cask "visual-studio-code"
 cask "wacom-inkspace"
 cask "wacom-tablet"
-cask "wechat"
 cask "wezterm"
 cask "yubico-authenticator"
 cask "yubico-yubikey-manager"
 cask "zotero"
 mas "Amphetamine", id: 937984704
 mas "ArtRage Vitae", id: 1532816883
-mas "Cardflow", id: 1439830689
+mas "bookmarker for pinboard", id: 1451400394
 mas "Contacts Sync", id: 451691288
 mas "Day One", id: 1055511498
 mas "Eagle for Safari", id: 1526651672
@@ -151,15 +147,16 @@ mas "Hex Fiend", id: 1342896380
 mas "Hidden Bar", id: 1452453066
 mas "iA Writer", id: 775737590
 mas "Kindle", id: 405399194
+mas "Lingocloud for Safari", id: 1567588461
 mas "LiquidText", id: 922765270
 mas "Mischief", id: 928430260
 mas "Motion", id: 434290957
 mas "Numbers", id: 409203825
 mas "Pixelmator Pro", id: 1289583905
-mas "QQ音乐", id: 595615424
+mas "Save to Reader", id: 1640236961
 mas "ScanScan", id: 1249901692
-mas "TencentMeeting", id: 1484048379
 mas "Tiny Softbox", id: 1599476381
+mas "Userscripts-Mac-App", id: 1463298887
 mas "Vimeo", id: 1356686763
 mas "Wakeout", id: 1242116567
 mas "Xee³", id: 639764244
