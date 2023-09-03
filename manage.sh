@@ -103,7 +103,7 @@ function detect_aliases() {
   fi
 
   if command_1arg_ok ls --color; then
-    echo "alias ls='ls --color=tty'"
+    echo "alias ls='ls --color'"
   elif command_1arg_ok ls -G; then
     echo "alias ls='ls -G'"
   fi
