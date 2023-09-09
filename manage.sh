@@ -131,6 +131,7 @@ function fzf_setup() {
       "/home/linuxbrew/.linuxbrew/opt/fzf"
       "/usr/share/fzf"
       "/usr/local/share/examples/fzf"
+      "/data/data/com.termux/files/usr/share/fzf"
     )
     for dir in "${fzfdirs[@]}"; do
       if [[ -d "${dir}" ]]; then
@@ -388,6 +389,14 @@ function cmd_install() {
 
     mkdir -p "$HOME/.config/fontconfig"
     cp -f "$DOTFILES_DIR/repos/public/fontconfig/fonts.conf" "$HOME/.config/fontconfig/"
+  fi
+
+  # termux
+  if [[ -n "${TERMUX_VERSION:-}" ]]; then
+    mkdir -p "$HOME/.termux"
+
+    ln -snf "$DOTFILES_DIR/repos/public/termux/colors.properties" "$HOME/.termux/"
+    ln -snf "$DOTFILES_DIR/repos/public/termux/termux.properties" "$HOME/.termux/"
   fi
 }
 
