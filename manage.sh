@@ -398,6 +398,11 @@ function cmd_install() {
     ln -snf "$DOTFILES_DIR/repos/public/termux/colors.properties" "$HOME/.termux/"
     ln -snf "$DOTFILES_DIR/repos/public/termux/termux.properties" "$HOME/.termux/"
   fi
+
+  # npmrc
+  if ! [[ -f "$HOME/.npmrc" ]]; then
+    echo "init-author-name = Ian Yang" >"$HOME/.npmrc"
+  fi
 }
 
 function cmd_uninstall() {
