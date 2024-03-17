@@ -8,6 +8,9 @@ ssh-keyscan -H github.com | tee "$HOME/.ssh/known_hosts"
 if [ -n "${GITPOD_WORKSPACE_ID:-}" ]; then
   mkdir -p /workspace/dotfiles-repos
   ln -snf /workspace/dotfiles-repos "$DOTFILES_DIR/repos"
+  if [ -d /home/gitpod/.config/direnv ]; then
+    sudo chown -R gitpod: /home/gitpod/.config/direnv
+  fi
 fi
 
 if command -v brew &>/dev/null; then
