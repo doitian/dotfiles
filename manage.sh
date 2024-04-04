@@ -369,10 +369,10 @@ function cmd_install() {
   private find_relative ~/.mutt/accounts | xargs -I % touch ~/.mutt/cred/%
 
   if [ -n "${WSLENV:-}" ]; then
-    ln -snf "$(which ssh.exe)" "$HOME/bin/ssh"
-    ln -snf "$(which scp.exe)" "$HOME/bin/scp"
-    ln -snf "$(which gpg.exe)" "$HOME/bin/gpg"
-    ln -snf "$(which gopass.exe)" "$HOME/bin/gopass"
+    sudo ln -snf "$(which ssh.exe)" "/usr/local/bin/ssh"
+    sudo ln -snf "$(which scp.exe)" "/usr/local/bin/scp"
+    sudo ln -snf "$(which gpg.exe)" "/usr/local/bin/gpg"
+    sudo ln -snf "$(which gopass.exe)" "/usr/local/bin/gopass"
     git config --global core.sshCommand "$(which ssh.exe)"
   fi
 
