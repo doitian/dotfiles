@@ -130,6 +130,7 @@ function fzf_setup() {
       "/opt/homebrew/opt/fzf"
       "/home/linuxbrew/.linuxbrew/opt/fzf"
       "/usr/share/fzf"
+      "/usr/share/doc/fzf/examples"
       "/usr/local/share/examples/fzf"
       "/data/data/com.termux/files/usr/share/fzf"
     )
