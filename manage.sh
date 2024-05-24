@@ -173,7 +173,7 @@ function cmd_repos() {
   else
     ensure_git_clone https://github.com/doitian/dotfiles-public.git repos/public
   fi
-  if [[ "$OSTYPE" == "linux"* && (-n "${DISPLAY:-}" || -n "${WAYLAND_DISPLAY:-}") ]]; then
+  if [[ "$OSTYPE" == "linux"* && -z "${WSLENV:-}" && (-n "${DISPLAY:-}" || -n "${WAYLAND_DISPLAY:-}") ]]; then
     ensure_git_clone https://github.com/doitian/rime-wubi86-jidian.git repos/rime-wubi86-jidian
   fi
   if [ "$UID" != 0 ]; then

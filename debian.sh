@@ -68,7 +68,8 @@ if [ -n "$INSTALL_APT" ]; then
   fi
 
   if [ -f /usr/bin/batcat ]; then
-    ln -snf /usr/bin/batcat "$HOME/bat"
+    mkdir -p "$HOME/bin"
+    ln -snf /usr/bin/batcat "$HOME/bin/bat"
   fi
 fi
 
