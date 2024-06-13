@@ -307,7 +307,7 @@ function cmd_install() {
     done
     if command -v zoxide &>/dev/null; then
       echo "# zoxide {{""{{1"
-      zoxide init zsh --cmd j | grep -v "^\s*#"
+      zoxide init zsh --cmd j | grep -v -e "^\s*#" -e '^alias jq'
     fi
     if command -v direnv &>/dev/null; then
       echo "# direnv {{""{{1"
