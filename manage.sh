@@ -279,10 +279,6 @@ function cmd_install() {
     git config --global credential.helper osxkeychain
   fi
   git config --global core.hooksPath "$HOME/.githooks"
-  if command -v delta &>/dev/null; then
-    git config --global core.pager delta
-    git config --global interactive.diffFilter 'delta --color-only'
-  fi
   chmod 0640 "$GITCONFIG_PATH"
   if [[ "$OSTYPE" == "darwin"* ]]; then
     ln -snf "$DOTFILES_DIR/repos/public/default/.config/lazygit/config.yml" "$HOME/Library/Application Support/lazygit/config.yml"
