@@ -176,24 +176,6 @@ function cmd_repos() {
   if [[ "$OSTYPE" == "linux"* && -z "${WSLENV:-}" && (-n "${DISPLAY:-}" || -n "${WAYLAND_DISPLAY:-}") ]]; then
     ensure_git_clone https://github.com/doitian/rime-wubi86-jidian.git repos/rime-wubi86-jidian
   fi
-  if [ "$UID" != 0 ]; then
-    if [ -d "$HOME/.asdf" ]; then
-      echo "==> asdf update"
-      source "$HOME/.asdf/asdf.sh"
-      asdf update
-      asdf plugin update --all
-    elif [ -d repos/asdf ]; then
-      echo "==> asdf update"
-      ln -snf "$DOTFILES_DIR/repos/asdf" "$HOME/.asdf"
-      source "$HOME/.asdf/asdf.sh"
-      asdf update
-      asdf plugin update --all
-    else
-      ensure_git_clone https://github.com/asdf-vm/asdf.git repos/asdf
-      rm -rf "$HOME/.asdf"
-      ln -snf "$DOTFILES_DIR/repos/asdf" "$HOME/.asdf"
-    fi
-  fi
 
   if [[ ! -e repos/unicodes.txt ]]; then
     echo "==> curl unicodes.txt"
@@ -340,7 +322,6 @@ function cmd_install() {
     if [[ "$OSTYPE" == "darwin"* ]]; then
       head_cat '#' repos/public/zsh/extras/macos.zsh
     fi
-    head_cat '#' repos/public/zsh/after/asdf.zsh
     if command -v zoxide &>/dev/null; then
       echo "# zoxide {{""{{1"
       zoxide init bash --cmd j | grep -v "^\s*#"
