@@ -287,10 +287,6 @@ function cmd_install() {
       echo "# zoxide {{""{{1"
       zoxide init zsh --cmd j | grep -v -e "^\s*#" -e '^alias jq'
     fi
-    if command -v mise &>/dev/null; then
-      echo "# mise {{""{{1"
-      mise activate zsh | grep -v "^\s*#"
-    fi
     if command -v fzf &>/dev/null; then
       echo "# fzf {{""{{1"
       fzf_setup zsh
@@ -325,10 +321,6 @@ function cmd_install() {
     if command -v zoxide &>/dev/null; then
       echo "# zoxide {{""{{1"
       zoxide init bash --cmd j | grep -v "^\s*#"
-    fi
-    if command -v mise &>/dev/null; then
-      echo "# mise {{""{{1"
-      mise activate bash | grep -v "^\s*#"
     fi
     if command -v fzf &>/dev/null; then
       echo "# fzf {{""{{1"
