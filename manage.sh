@@ -287,9 +287,9 @@ function cmd_install() {
       echo "# zoxide {{""{{1"
       zoxide init zsh --cmd j | grep -v -e "^\s*#" -e '^alias jq'
     fi
-    if command -v direnv &>/dev/null; then
-      echo "# direnv {{""{{1"
-      direnv hook zsh | grep -v "^\s*#"
+    if command -v mise &>/dev/null; then
+      echo "# mise {{""{{1"
+      mise activate zsh | grep -v "^\s*#"
     fi
     if command -v fzf &>/dev/null; then
       echo "# fzf {{""{{1"
@@ -326,9 +326,9 @@ function cmd_install() {
       echo "# zoxide {{""{{1"
       zoxide init bash --cmd j | grep -v "^\s*#"
     fi
-    if command -v direnv &>/dev/null; then
-      echo "# direnv {{""{{1"
-      direnv hook bash | grep -v "^\s*#"
+    if command -v mise &>/dev/null; then
+      echo "# mise {{""{{1"
+      mise activate bash | grep -v "^\s*#"
     fi
     if command -v fzf &>/dev/null; then
       echo "# fzf {{""{{1"

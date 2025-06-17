@@ -7,7 +7,7 @@ set -u
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 if [ "$UID" = 0 ]; then
-  sudo dnf install -y zsh glibc-langpack-en findutils git direnv fzf
+  sudo dnf install -y zsh glibc-langpack-en findutils git fzf
 
   if ! id ian; then
     useradd -s /usr/bin/zsh -m ian
