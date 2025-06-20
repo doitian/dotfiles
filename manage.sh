@@ -377,6 +377,7 @@ function cmd_install() {
   # mise
   mkdir -p ~/.config
   ln -snf "$DOTFILES_DIR/repos/public/mise" ~/.config/mise
+  find "$DOTFILES_DIR/repos/public/mise/tasks" -type f | xargs chmod +x
 }
 
 function cmd_uninstall() {
