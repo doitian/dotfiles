@@ -373,6 +373,10 @@ function cmd_install() {
   if ! [[ -f "$HOME/.npmrc" ]]; then
     echo "init-author-name = Ian Yang" >"$HOME/.npmrc"
   fi
+
+  # mise
+  mkdir -p ~/.config
+  ln -snf "$DOTFILES_DIR/repos/public/mise" ~/.config/mise
 }
 
 function cmd_uninstall() {
@@ -390,6 +394,7 @@ function cmd_uninstall() {
   rm -f ~/.mutt
   rm -f ~/.pandoc
   rm -f ~/.config/nvim
+  rm -f ~/.config/mise
   rm -rf ~/Library/KeyBindings/
 
   priate rm ~/.private-snippets.vim
