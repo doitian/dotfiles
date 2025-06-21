@@ -238,9 +238,9 @@ function cmd_install() {
     fi
   done
 
-  if [ -f "$HOME/Library/Spelling/LocalDictionary" ]; then
-    ln -snf "$HOME/Library/Spelling/LocalDictionary" "$HOME/.vim-spell-en.utf-8.add"
-  fi
+  mkdir -p "$HOME/.config/harper-ls"
+  touch "$HOME/.config/harper-ls/dictionary.txt"
+  ln -snf "$HOME/.config/harper-ls/dictionary.txt" "$HOME/.vim-spell-en.utf-8.add"
 
   # gpg
   mkdir -p ~/.gnupg
