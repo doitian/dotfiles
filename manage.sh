@@ -117,6 +117,15 @@ function detect_aliases() {
   fi
 }
 
+function mise_rc() {
+  if command -v mise &>/dev/null; then
+    echo "# mise {{""{{1"
+    echo 'if [ -f "$HOME/.config/mise/auto" ]; then'
+    echo '  eval "$(mise activate)"'
+    echo 'fi'
+  fi
+}
+
 function fzf_setup() {
   local fzf_base fzf_shell fzfdirs dir
 
@@ -291,6 +300,7 @@ function cmd_install() {
       echo "# fzf {{""{{1"
       fzf_setup zsh
     fi
+    mise_rc
     if [[ "$OSTYPE" == "darwin"* ]]; then
       head_cat '#' repos/public/zsh/extras/macos.zsh
     fi
@@ -326,6 +336,7 @@ function cmd_install() {
       echo "# fzf {{""{{1"
       fzf_setup bash
     fi
+    mise_rc
     if command -v starship &>/dev/null; then
       echo "# starship {{""{{1"
       echo 'eval "$(starship init bash)"'
