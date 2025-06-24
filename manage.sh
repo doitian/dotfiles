@@ -292,10 +292,6 @@ function cmd_install() {
     for l in $(find repos/public/zsh/after -name '*.zsh' | sort); do
       head_cat '#' "$l"
     done
-    if command -v zoxide &>/dev/null; then
-      echo "# zoxide {{""{{1"
-      zoxide init zsh --cmd j | grep -v -e "^\s*#" -e '^alias jq'
-    fi
     if command -v fzf &>/dev/null; then
       echo "# fzf {{""{{1"
       fzf_setup zsh
@@ -327,10 +323,6 @@ function cmd_install() {
     head_cat '#' repos/public/zsh/after/functions.zsh
     if [[ "$OSTYPE" == "darwin"* ]]; then
       head_cat '#' repos/public/zsh/extras/macos.zsh
-    fi
-    if command -v zoxide &>/dev/null; then
-      echo "# zoxide {{""{{1"
-      zoxide init bash --cmd j | grep -v "^\s*#"
     fi
     if command -v fzf &>/dev/null; then
       echo "# fzf {{""{{1"

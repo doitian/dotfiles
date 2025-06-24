@@ -63,7 +63,7 @@ if [ -n "$INSTALL_APT" ]; then
     python3 python3-pip bat
   $SUDO update-alternatives --install /usr/bin/editor editor /usr/bin/vim 100
   if [ -z "$INSTALL_BREW" ]; then
-    $SUDO apt-get install -y fd-find zoxide ripgrep fzf
+    $SUDO apt-get install -y fd-find ripgrep fzf
     $SUDO update-alternatives --install /usr/bin/fd fd /usr/bin/fdfind 100
   fi
 
@@ -74,5 +74,5 @@ if [ -n "$INSTALL_APT" ]; then
 fi
 
 if [ -n "$INSTALL_BREW" ]; then
-  brew install fd zoxide ripgrep fzf watchexec mise
+  brew install fd ripgrep fzf watchexec mise
 fi
