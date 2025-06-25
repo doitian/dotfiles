@@ -1,0 +1,3 @@
+arch: |
+  sudo pacman -S otf-atkinson-hyperlegible ttf-nerd-fonts-symbols ttf-lato inter-font ttf-jetbrains-mono
+  paru -S ttf-roboto-slab
