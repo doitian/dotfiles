@@ -182,9 +182,6 @@ function cmd_repos() {
   else
     ensure_git_clone https://github.com/doitian/dotfiles-public.git repos/public
   fi
-  if [[ "$OSTYPE" == "linux"* && -z "${WSLENV:-}" && (-n "${DISPLAY:-}" || -n "${WAYLAND_DISPLAY:-}") ]]; then
-    ensure_git_clone https://github.com/doitian/rime-wubi86-jidian.git repos/rime-wubi86-jidian
-  fi
 
   if [[ ! -e repos/unicodes.txt ]]; then
     echo "==> curl unicodes.txt"
@@ -356,12 +353,11 @@ function cmd_install() {
 
   # Linux GUI
   if [[ "$OSTYPE" == "linux"* && (-n "${DISPLAY:-}" || -n "${WAYLAND_DISPLAY:-}") ]]; then
-    rm -rf "$HOME/.local/share/fcitx5/rime"
-    mkdir -p "$HOME/.local/share/fcitx5"
-    ln -snf "$DOTFILES_DIR/repos/rime-wubi86-jidian" "$HOME/.local/share/fcitx5/rime"
-
     mkdir -p "$HOME/.config/fontconfig"
     cp -f "$DOTFILES_DIR/repos/public/fontconfig/fonts.conf" "$HOME/.config/fontconfig/"
+
+    mkdir -p "$HOME/.local/share/fcitx5"
+    ln -snf "$DOTFILES_DIR/repos/public/rime" "$HOME/.local/share/fcitx5/"
   fi
 
   # termux
