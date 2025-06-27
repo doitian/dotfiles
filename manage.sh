@@ -355,9 +355,6 @@ function cmd_install() {
   if [[ "$OSTYPE" == "linux"* && (-n "${DISPLAY:-}" || -n "${WAYLAND_DISPLAY:-}") ]]; then
     mkdir -p "$HOME/.config/fontconfig"
     cp -f "$DOTFILES_DIR/repos/public/fontconfig/fonts.conf" "$HOME/.config/fontconfig/"
-
-    mkdir -p "$HOME/.local/share/fcitx5"
-    ln -snf "$DOTFILES_DIR/repos/public/rime" "$HOME/.local/share/fcitx5/"
   fi
 
   # termux
