@@ -268,6 +268,14 @@ function cmd_install() {
   fi
   git config --global core.hooksPath "$HOME/.githooks"
   chmod 0640 "$GITCONFIG_PATH"
+  if command -v meld &>/dev/null; then
+      git config --global diff.guitool meld
+      git config --global merge.guitool meld
+  fi
+  if command -v nvim &>/dev/null; then
+      git config --global diff.tool nvimdiff
+      git config --global merge.tool nvimdiff
+  fi
   if [[ "$OSTYPE" == "darwin"* ]]; then
     ln -snf "$DOTFILES_DIR/repos/public/default/.config/lazygit/config.yml" "$HOME/Library/Application Support/lazygit/config.yml"
   fi
