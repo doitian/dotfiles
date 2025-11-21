@@ -206,9 +206,12 @@ function cmd_install() {
   ln -snf "$DOTFILES_DIR/repos/public/default/.zshenv" ~/.bash_profile
   rm -rf ~/.pandoc
   ln -snf "$DOTFILES_DIR/repos/public/pandoc" ~/.pandoc
-  rm -rf ~/.config/nvim
   mkdir -p ~/.config
+  rm -rf ~/.config/nvim
   ln -snf "$DOTFILES_DIR/repos/public/nvim" ~/.config/nvim
+  mkdir -p ~/.config/aichat
+  rm -rf ~/.config/aichat/roles
+  ln -snf "$DOTFILES_DIR/repos/public/ai/aichat/roles" ~/.config/aichat/roles
 
   # default
   find_relative_d repos/public/default | xargs -I % mkdir -p "$HOME/%"
@@ -400,6 +403,7 @@ function cmd_uninstall() {
   rm -f ~/.pandoc
   rm -f ~/.config/nvim
   rm -f ~/.config/mise
+  rm -f ~/.config/aichat
   rm -rf ~/Library/KeyBindings/
 
   priate rm ~/.private-snippets.vim
