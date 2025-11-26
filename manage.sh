@@ -212,6 +212,9 @@ function cmd_install() {
   mkdir -p ~/.config/aichat
   rm -rf ~/.config/aichat/roles
   ln -snf "$DOTFILES_DIR/repos/public/ai/aichat/roles" ~/.config/aichat/roles
+  mkdir -p ~/.cursor
+  rm -rf ~/.cursor/commands
+  ln -snf "$DOTFILES_DIR/repos/public/ai/cursor/commands" ~/.cursor/commands
 
   # default
   find_relative_d repos/public/default | xargs -I % mkdir -p "$HOME/%"
@@ -404,6 +407,7 @@ function cmd_uninstall() {
   rm -f ~/.config/nvim
   rm -f ~/.config/mise
   rm -f ~/.config/aichat
+  rm -f ~/.cursor/commands
   rm -rf ~/Library/KeyBindings/
 
   priate rm ~/.private-snippets.vim
