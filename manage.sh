@@ -215,6 +215,8 @@ function cmd_install() {
   mkdir -p ~/.cursor
   rm -rf ~/.cursor/commands
   ln -snf "$DOTFILES_DIR/repos/public/ai/cursor/commands" ~/.cursor/commands
+  mkdir -p ~/.gemini
+  ln -snf "$DOTFILES_DIR/repos/public/ai/gemini/settings.json" ~/.gemini/settings.json
 
   # default
   find_relative_d repos/public/default | xargs -I % mkdir -p "$HOME/%"
@@ -408,6 +410,7 @@ function cmd_uninstall() {
   rm -f ~/.config/mise
   rm -f ~/.config/aichat
   rm -f ~/.cursor/commands
+  rm -f ~/.gemini/settings.json
   rm -rf ~/Library/KeyBindings/
 
   priate rm ~/.private-snippets.vim
