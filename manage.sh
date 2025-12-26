@@ -209,10 +209,9 @@ function cmd_install() {
   mkdir -p ~/.config
   rm -rf ~/.config/nvim
   ln -snf "$DOTFILES_DIR/repos/public/nvim" ~/.config/nvim
-  mkdir -p ~/.config/opencode
-  rm -rf ~/.config/opencode/command
-  ln -snf "$DOTFILES_DIR/repos/public/ai/cursor/commands" ~/.config/opencode/command
-  ln -snf "$DOTFILES_DIR/repos/public/ai/opencode/opencode.jsonc" ~/.config/opencode/opencode.jsonc
+  mkdir -p ~/.config/aichat
+  rm -rf ~/.config/aichat/roles
+  ln -snf "$DOTFILES_DIR/repos/public/ai/aichat/roles" ~/.config/aichat/roles
   mkdir -p ~/.cursor
   rm -rf ~/.cursor/commands
   ln -snf "$DOTFILES_DIR/repos/public/ai/cursor/commands" ~/.cursor/commands
@@ -409,7 +408,7 @@ function cmd_uninstall() {
   rm -f ~/.pandoc
   rm -f ~/.config/nvim
   rm -f ~/.config/mise
-  rm -rf ~/.config/opencode
+  rm -f ~/.config/aichat
   rm -f ~/.cursor/commands
   rm -f ~/.gemini/settings.json
   rm -rf ~/Library/KeyBindings/
