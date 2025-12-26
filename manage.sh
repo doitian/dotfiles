@@ -211,7 +211,7 @@ function cmd_install() {
   ln -snf "$DOTFILES_DIR/repos/public/nvim" ~/.config/nvim
   mkdir -p ~/.config/opencode
   rm -rf ~/.config/opencode/command
-  ln -snf "$DOTFILES_DIR/repos/public/ai/cursor/commands" ~/.config/opencode/command
+  ln -snf "$DOTFILES_DIR/repos/public/ai/opencode/command" ~/.config/opencode/command
   ln -snf "$DOTFILES_DIR/repos/public/ai/opencode/opencode.jsonc" ~/.config/opencode/opencode.jsonc
   mkdir -p ~/.cursor
   rm -rf ~/.cursor/commands
