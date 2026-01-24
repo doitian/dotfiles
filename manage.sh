@@ -390,6 +390,9 @@ function cmd_install() {
   mkdir -p ~/.config
   ln -snf "$DOTFILES_DIR/repos/public/mise" ~/.config/mise
   find "$DOTFILES_DIR/repos/public/mise/tasks" -type f ! -name '*.ps1' | xargs chmod +x
+  if command -v mise &>/dev/null && command -v uv &> /dev/null; then
+    mise settings set python.uv_venv_auto true
+  fi
 }
 
 function cmd_uninstall() {
