@@ -1,0 +1,13 @@
+[vars]
+private_repo = "{{config_root}}/repos/private"
+private_flag = "{% if vars.private_repo is exists %}-p{% endif %}"
+
+[tasks.install]
+dir = "{{config_root}}"
+run = "./manage.sh i {{ vars.private_flag }}"
+alias = "default"
+
+[tasks.repo]
+dir = "{{config_root}}"
+run = "./manage.sh r {{ vars.private_flag }}"
+alias = "r"
