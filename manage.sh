@@ -390,6 +390,10 @@ function cmd_install() {
     mkdir -p ~/.config
     ln -snf "$DOTFILES_DIR/repos/public/mise" ~/.config/mise
     touch ~/.config/mise/config.toml
+
+    if command -v mise &>/dev/null && command -v bun &>/dev/null; then
+        mise -C "$DOTFILES_DIR/repos/public" build
+    fi
 }
 
 function cmd_uninstall() {
