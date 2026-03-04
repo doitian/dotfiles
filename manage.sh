@@ -361,6 +361,9 @@ function cmd_install() {
     sudo ln -snf "$(which gopass.exe)" "$HOME/bin/gopass"
     git config --global core.sshCommand "$HOME/bin/ssh"
     git config --global gpg.program "$HOME/bin/gpg"
+    if command -v wslview &>/dev/null; then
+      sudo ln -snf "$(which wslview)" "$HOME/bin/xdg-open"
+    fi
   fi
 
   # aria2

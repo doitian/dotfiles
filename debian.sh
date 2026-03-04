@@ -66,6 +66,9 @@ if [ -n "$INSTALL_APT" ]; then
     $SUDO apt-get install -y fd-find ripgrep fzf
     $SUDO update-alternatives --install /usr/bin/fd fd /usr/bin/fdfind 100
   fi
+  if [ -n "${WSLENV:-}" ]; then
+    $SUDO apt-get install -y wslu
+  fi
 
   if [ -f /usr/bin/batcat ]; then
     mkdir -p "$HOME/bin"
