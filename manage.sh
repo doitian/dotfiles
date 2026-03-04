@@ -218,6 +218,14 @@ function cmd_install() {
   mkdir -p ~/.gemini
   ln -snf "$DOTFILES_DIR/repos/public/ai/gemini/settings.json" ~/.gemini/settings.json
 
+  mkdir -p ~/.config/opencode
+  mkdir -p ~/.copilot
+  local AGENTS_MD="$DOTFILES_DIR/repos/public/ai/rules/linux.md"
+  ln -snf "$AGENTS_MD" ~/.gemini/AGENTS.md
+  ln -snf "$AGENTS_MD" ~/.claude/AGENTS.md
+  ln -snf "$AGENTS_MD" ~/.copilot/copilot-instructions.md
+  ln -snf "$AGENTS_MD" ~/.config/opencode/AGENTS.md
+
   # default
   find_relative_d repos/public/default | xargs -I % mkdir -p "$HOME/%"
   find_relative repos/public/default | xargs -I % ln -snf "$DOTFILES_DIR/repos/public/default/%" "$HOME/%"
@@ -418,6 +426,7 @@ function cmd_uninstall() {
   rm -f ~/.config/mise
   rm -f ~/.config/aichat
   rm -f ~/.claude
+  rm -f ~/.cursor
   rm -f ~/.gemini/settings.json
   rm -rf ~/Library/KeyBindings/
 
