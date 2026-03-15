@@ -393,6 +393,21 @@ function cmd_install() {
     ln -snf "$DOTFILES_DIR/repos/public/termux/termux.properties" "$HOME/.termux/"
   fi
 
+  # cargo
+  mkdir -p ~/.cargo
+  local cargo_build_dir='{cargo-cache-home}/builds/{workspace-path-hash}'
+  local mem_kb
+  if [ -d /dev/shm ] && mem_kb=$(grep -oP '^MemTotal:\s+\K\d+' /proc/meminfo 2>/dev/null) && [ "$mem_kb" -ge 67108864 ]; then
+    cargo_build_dir='/dev/shm/cargo/builds/{workspace-path-hash}'
+  fi
+  (
+    echo '[build]'
+    if command -v sccache &>/dev/null; then
+      echo 'rustc-wrapper = "sccache"'
+    fi
+    echo "build-dir = \"$cargo_build_dir\""
+  ) >~/.cargo/config.toml
+
   # npmrc
   if ! [[ -f "$HOME/.npmrc" ]]; then
     echo "init-author-name = Ian Yang" >"$HOME/.npmrc"
