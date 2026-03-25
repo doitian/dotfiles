@@ -182,13 +182,6 @@ function cmd_repos() {
   else
     ensure_git_clone https://github.com/doitian/dotfiles-public.git repos/public
   fi
-
-  if [[ ! -e repos/unicodes.txt ]]; then
-    echo "==> curl unicodes.txt"
-    curl -fsSLo repos/unicodes.txt https://gist.github.com/doitian/f80a5f885946e10f3b42cc1e0392192b/raw/6d8227a4d7161ac7de77fbe290659a3d2e5cb1a3/unicodes.txt
-  else
-    echo "==> curl unicodes.txt (skipped)"
-  fi
 }
 
 function cmd_install() {
