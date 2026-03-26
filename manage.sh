@@ -98,14 +98,12 @@ function detect_aliases() {
     echo "alias grep='grep $GREP_OPTIONS'"
   fi
 
-  if command_2args_ok diff --color; then
-    echo "alias diff='diff --color'"
+  if command_2args_ok diff --color=auto; then
+    echo "alias diff='diff --color=auto'"
   fi
 
-  if command_1arg_ok ls --color; then
-    echo "alias ls='ls --color'"
-  elif command_1arg_ok ls -G; then
-    echo "alias ls='ls -G'"
+  if command_1arg_ok ls --color=auto; then
+    echo "alias ls='ls --color=auto'"
   fi
 
   if command -v exa &>/dev/null; then
