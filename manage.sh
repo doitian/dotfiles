@@ -124,13 +124,6 @@ function mise_rc() {
   fi
 }
 
-function wsl_rc() {
-  if [ -n "${WSLENV:-}" ]; then
-    echo "# wsl {{""{{1"
-    echo "alias claude='gfw claude'"
-  fi
-}
-
 function fzf_setup() {
   local fzf_base fzf_shell fzfdirs dir
 
@@ -316,7 +309,6 @@ function cmd_install() {
       fzf_setup zsh
     fi
     mise_rc
-    wsl_rc
     if [[ "$OSTYPE" == "darwin"* ]]; then
       head_cat '#' repos/public/zsh/extras/macos.zsh
     fi
@@ -349,7 +341,6 @@ function cmd_install() {
       fzf_setup bash
     fi
     mise_rc
-    wsl_rc
     if command -v starship &>/dev/null; then
       echo "# starship {{""{{1"
       echo 'eval "$(starship init bash)"'
