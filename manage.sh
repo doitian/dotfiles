@@ -318,6 +318,10 @@ function cmd_install() {
     if [[ "$(uname -v)" = iSH* ]]; then
       echo 'source ~/.zshenv'
     fi
+    if [ -n "${WSLENV:-}" ]; then
+      echo '# proxy {{""{{1'
+      echo 'if [ -f /etc/profile.d/proxy.sh ]; then source /etc/profile.d/proxy.sh; fi'
+    fi
   ) >~/.zshrc
   chmod 0440 ~/.zshrc
 
@@ -354,6 +358,9 @@ function cmd_install() {
   private find_relative ~/.mutt/accounts | xargs -I % touch ~/.mutt/cred/%
 
   if [ -n "${WSLENV:-}" ]; then
+    if [ -f /etc/profile.d/proxy.sh ]; then
+      source /etc/profile.d/proxy.sh
+    fi
     sudo ln -snf "$(which ssh.exe)" "$HOME/bin/ssh"
     sudo ln -snf "$(which scp.exe)" "$HOME/bin/scp"
     sudo ln -snf "$(which gpg.exe)" "$HOME/bin/gpg"
