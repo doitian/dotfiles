@@ -118,7 +118,7 @@ function detect_aliases() {
 function mise_rc() {
   if command -v mise &>/dev/null; then
     echo "# mise {{""{{1"
-    echo 'if [ -f "$HOME/.config/mise/auto" ]; then'
+    echo 'if [[ -f "$HOME/.config/mise/auto" || -n "$__MISE_DIFF" ]]; then'
     echo '  eval "$(mise activate)"'
     echo 'fi'
   fi
