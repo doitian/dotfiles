@@ -203,9 +203,9 @@ function cmd_install() {
   mkdir -p ~/.claude
   rm -rf ~/.claude/skills
   ln -snf "$DOTFILES_DIR/repos/public/ai/skills" ~/.claude/skills
-  mkdir -p ~/.cursor
-  rm -rf ~/.cursor/skills
-  ln -snf "$DOTFILES_DIR/repos/public/ai/skills" ~/.cursor/skills
+  mkdir -p ~/.agents
+  rm -rf ~/.agents/skills
+  ln -snf "$DOTFILES_DIR/repos/public/ai/skills" ~/.agents/skills
   mkdir -p ~/.gemini
   ln -snf "$DOTFILES_DIR/repos/public/ai/gemini/settings.json" ~/.gemini/settings.json
 
@@ -437,9 +437,9 @@ function cmd_uninstall() {
   rm -f ~/.pandoc
   rm -f ~/.config/nvim
   rm -f ~/.config/mise
-  rm -f ~/.config/aichat
-  rm -f ~/.claude
-  rm -f ~/.cursor
+  rm -f ~/.claude/skills
+  rm -f ~/.claude/AGENTS.md
+  rm -f ~/.agents/skills
   rm -f ~/.gemini/settings.json
   rm -rf ~/Library/KeyBindings/
 
