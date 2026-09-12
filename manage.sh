@@ -212,11 +212,13 @@ function cmd_install() {
 
   mkdir -p ~/.config/opencode
   mkdir -p ~/.copilot
+  mkdir -p ~/.pi/agent
   local AGENTS_MD="$DOTFILES_DIR/repos/public/ai/rules/linux.md"
   ln -snf "$AGENTS_MD" ~/.gemini/AGENTS.md
   ln -snf "$AGENTS_MD" ~/.claude/AGENTS.md
   ln -snf "$AGENTS_MD" ~/.copilot/copilot-instructions.md
   ln -snf "$AGENTS_MD" ~/.config/opencode/AGENTS.md
+  ln -snf "$AGENTS_MD" ~/.pi/agent/AGENTS.md
 
   # default
   find_relative_d repos/public/default | xargs -I % mkdir -p "$HOME/%"
@@ -440,6 +442,7 @@ function cmd_uninstall() {
   rm -f ~/.config/mise
   rm -f ~/.claude/skills
   rm -f ~/.claude/AGENTS.md
+  rm -f ~/.pi/agent/AGENTS.md
   rm -f ~/.agents/skills
   rm -f ~/.agents/.skill-lock.json
   rm -f ~/.gemini/settings.json
