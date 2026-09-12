@@ -206,6 +206,7 @@ function cmd_install() {
   mkdir -p ~/.agents
   rm -rf ~/.agents/skills
   ln -snf "$DOTFILES_DIR/repos/public/ai/skills" ~/.agents/skills
+  ln -snf "$DOTFILES_DIR/repos/public/ai/skill-lock.json" ~/.agents/.skill-lock.json
   mkdir -p ~/.gemini
   ln -snf "$DOTFILES_DIR/repos/public/ai/gemini/settings.json" ~/.gemini/settings.json
 
@@ -440,6 +441,7 @@ function cmd_uninstall() {
   rm -f ~/.claude/skills
   rm -f ~/.claude/AGENTS.md
   rm -f ~/.agents/skills
+  rm -f ~/.agents/.skill-lock.json
   rm -f ~/.gemini/settings.json
   rm -rf ~/Library/KeyBindings/
 
