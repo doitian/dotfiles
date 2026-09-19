@@ -47,7 +47,3 @@ else
     disown
   fi
 fi
-
-if [ -d "$HOME/.config/mise" ]; then
-  touch "$HOME/.config/mise/auto"
-fi
