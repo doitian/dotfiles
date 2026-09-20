@@ -421,13 +421,6 @@ function cmd_install() {
 
   if command -v mise &>/dev/null && command -v bun &>/dev/null; then
     mise -C "$DOTFILES_DIR/repos/public" build
-    if command -v herdr &>/dev/null; then
-      local manifest
-      for manifest in "$DOTFILES_DIR/repos/public/dist/herdr-plugins"/*/herdr-plugin.toml; do
-        [ -f "$manifest" ] || continue
-        herdr plugin link "${manifest%/herdr-plugin.toml}"
-      done
-    fi
   fi
 }
 
