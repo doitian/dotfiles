@@ -265,7 +265,44 @@ EOF
     fi
 }
 
+_wsl_conf_systemd() {
+    [ -r /etc/wsl.conf ] || return 0
+    awk -F= '
+        /^[[:space:]]*[#;]/ { next }
+        /^[[:space:]]*\[/ { gsub(/[][[:space:]]/, "", $0); section=$0; next }
+        section == "boot" {
+            key=$1; gsub(/[[:space:]]/, "", key)
+            if (tolower(key) == "systemd") {
+                val=$2; gsub(/[[:space:]]/, "", val)
+                print tolower(val)
+                exit
+            }
+        }
+    ' /etc/wsl.conf
+}
+
+_wsl_keyring_systemd_hint() {
+    echo "  enable it by adding this to /etc/wsl.conf:"
+    echo
+    echo "    [boot]"
+    echo "    systemd=true"
+    echo
+    echo "  then run 'wsl.exe --shutdown' and reopen WSL."
+}
+
 _wsl_keyring_status() {
+    local systemd_setting
+    systemd_setting="$(_wsl_conf_systemd)"
+    case "$systemd_setting" in
+        true | 1 | yes | on)
+            echo "systemd : enabled (/etc/wsl.conf)" ;;
+        "")
+            echo "systemd : not enabled (/etc/wsl.conf); the unlock service needs it"
+            _wsl_keyring_systemd_hint ;;
+        *)
+            echo "systemd : disabled (/etc/wsl.conf); the unlock service needs it"
+            _wsl_keyring_systemd_hint ;;
+    esac
     if [ -r "$_KEYRING_PASSWORD_FILE" ]; then
         echo "password: $_KEYRING_PASSWORD_FILE (present)"
     else
