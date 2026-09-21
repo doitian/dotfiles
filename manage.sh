@@ -399,6 +399,11 @@ function cmd_install() {
     echo "init-author-name = Ian Yang" >"$HOME/.npmrc"
   fi
 
+  # cargo
+  if [ -f ~/.local/share/mbx/bin/cargo ] && [ -f /usr/bin/cargo ]; then
+    ln -snf ~/.local/share/mbx/bin/cargo ~/bin/cargo
+  fi
+
   # mise
   mkdir -p ~/.config
   ln -snf "$DOTFILES_DIR/repos/public/mise" ~/.config/mise
