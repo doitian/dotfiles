@@ -402,6 +402,7 @@ function cmd_install() {
   # cargo
   if [ -f ~/.local/share/mbx/bin/cargo ] && [ -f /usr/bin/cargo ]; then
     ln -snf ~/.local/share/mbx/bin/cargo ~/bin/cargo
+    ln -snf ~/.local/share/mbx/bin/mbx-target ~/bin/mbx-target
   fi
 
   # mise
