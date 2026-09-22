@@ -405,15 +405,6 @@ function cmd_install() {
     ln -snf ~/.local/share/mbx/bin/mbx-target ~/bin/mbx-target
   fi
 
-  # codex
-  if [ -f "$HOME/.codex/config.toml" ] && ! grep -qF "$HOME/.cache/mbx" "$HOME/.codex/config.toml"; then
-    cat >>"$HOME/.codex/config.toml" <<EOF
-
-[sandbox_workspace_write]
-writable_roots = ["$HOME/.cache/mbx"]
-EOF
-  fi
-
   # mise
   mkdir -p ~/.config
   ln -snf "$DOTFILES_DIR/repos/public/mise" ~/.config/mise
@@ -421,6 +412,7 @@ EOF
 
   if command -v mise &>/dev/null && command -v bun &>/dev/null; then
     mise -C "$DOTFILES_DIR/repos/public" build
+    "$DOTFILES_DIR/repos/public/dist/mise-tasks/g-agent-config"
   fi
 }
 
