@@ -384,6 +384,19 @@ function cmd_install() {
   if [[ "$OSTYPE" == "linux"* && (-n "${DISPLAY:-}" || -n "${WAYLAND_DISPLAY:-}") ]]; then
     mkdir -p "$HOME/.config/fontconfig"
     cp -f "$DOTFILES_DIR/repos/public/fontconfig/fonts.conf" "$HOME/.config/fontconfig/"
+
+    # rofi window mode looks up icons by lowercased app_id in the icon theme
+    local icon_link
+    for icon_link in \
+      "256x256/apps/com.anthropic.claude.png:/usr/share/icons/hicolor/256x256/apps/claude-desktop.png" \
+      "512x512/apps/md.obsidian.obsidian.png:/usr/share/icons/hicolor/512x512/apps/obsidian.png"; do
+      local link="$HOME/.local/share/icons/hicolor/${icon_link%%:*}"
+      local target="${icon_link#*:}"
+      if [ -f "$target" ]; then
+        mkdir -p "$(dirname "$link")"
+        ln -snf "$target" "$link"
+      fi
+    done
   fi
 
   # termux
