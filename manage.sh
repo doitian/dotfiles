@@ -369,7 +369,6 @@ function cmd_install() {
     sudo ln -snf "$(which gpg.exe)" "$HOME/bin/gpg"
     sudo ln -snf "$(which gopass.exe)" "$HOME/bin/gopass"
     git config --global core.sshCommand "$HOME/bin/ssh"
-    git config --global gpg.program "$HOME/bin/gpg"
     if command -v wslview &>/dev/null; then
       sudo ln -snf "$(which wslview)" "$HOME/bin/xdg-open"
     fi
@@ -426,6 +425,13 @@ function cmd_install() {
   if command -v mise &>/dev/null && command -v bun &>/dev/null; then
     mise -C "$DOTFILES_DIR/repos/public" build
     "$DOTFILES_DIR/repos/public/dist/mise-tasks/g-agent-config"
+  fi
+  if [ ! -x "$DOTFILES_DIR/repos/public/dist/git-gpg" ]; then
+    if [ -n "${WSLENV:-}" ]; then
+      git config --global gpg.program "$HOME/bin/gpg"
+    else
+      git config --global --unset gpg.program || true
+    fi
   fi
 }
 
