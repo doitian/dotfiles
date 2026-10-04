@@ -1,3 +1,4 @@
 arch: |
-  sudo pacman -S otf-atkinson-hyperlegible ttf-nerd-fonts-symbols ttf-lato inter-font ttf-jetbrains-mono
+  # Atkinson Hyperlegible Next: install manually into ~/.local/share/fonts
+  sudo pacman -S ttf-nerd-fonts-symbols ttf-lato inter-font ttf-jetbrains-mono
   paru -S ttf-roboto-slab
