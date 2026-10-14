@@ -8,30 +8,14 @@ DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 if [ "$UID" = 0 ]; then
   apt-get update -y
-  apt-get install -y git zsh dirmngr
+  apt-get install -y git zsh dirmngr sudo openssh-client
 
-  if ! id ian; then
-    useradd -s /usr/bin/zsh -m ian
-  fi
-
-  pushd /home/ian
-  if ! [ -d .ssh ]; then
-    sudo -H -u ian mkdir -p .ssh
-    sudo -H -u ian tee .ssh/authorized_keys <<"SSH"
-ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO+Gm8XO6FLDbmYjaFfHoFMtAe/YvkTycV/Sj/uXH6sp ian
-SSH
-    ssh-keyscan -H github.com | sudo -H -u ian tee .ssh/known_hosts
-    sudo chmod o-rw,g-w .ssh/authorized_keys .ssh/known_hosts
-  fi
-  if ! [ -d .dotfiles ]; then
-    git clone --filter=blob:none git@github.com:doitian/dotfiles.git .dotfiles
-    chown -R ian:ian .dotfiles
-  fi
-  popd # /home/ian
+  source "$DOTFILES_DIR/bootstrap.sh"
+  bootstrap_user sudo
   exit 0
 fi
 
-mkdir -p ~/bin repos
+mkdir -p ~/bin
 
 SUDO=sudo
 if [ -n "${http_proxy:-}" ]; then
@@ -51,7 +35,7 @@ while [ "$#" != 0 ]; do
     shift
     ;;
   *)
-    echo 'debian.sh [--apt]' >&2
+    echo 'debian.sh [--apt] [--brew]' >&2
     exit 1
     ;;
   esac

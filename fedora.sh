@@ -7,26 +7,10 @@ set -u
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 if [ "$UID" = 0 ]; then
-  sudo dnf install -y zsh glibc-langpack-en findutils git fzf
+  dnf install -y zsh glibc-langpack-en findutils git fzf sudo openssh-clients
 
-  if ! id ian; then
-    useradd -s /usr/bin/zsh -m ian
-  fi
-
-  pushd /home/ian
-  if ! [ -d .ssh ]; then
-    sudo -H -u ian mkdir -p .ssh
-    sudo -H -u ian tee .ssh/authorized_keys <<"SSH"
-ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO+Gm8XO6FLDbmYjaFfHoFMtAe/YvkTycV/Sj/uXH6sp ian
-SSH
-    ssh-keyscan -H github.com | sudo -H -u ian tee .ssh/known_hosts
-    sudo chmod o-rw,g-w .ssh/authorized_keys .ssh/known_hosts
-  fi
-  if ! [ -d .dotfiles ]; then
-    git clone --filter=blob:none git@github.com:doitian/dotfiles.git .dotfiles
-    chown -R ian:ian .dotfiles
-  fi
-  popd # /home/ian
+  source "$DOTFILES_DIR/bootstrap.sh"
+  bootstrap_user wheel
   exit 0
 fi
 
@@ -35,10 +19,6 @@ if [ -n "${http_proxy:-}" ]; then
   SUDO="sudo --preserve-env=http_proxy,https_proxy"
 fi
 
-mkdir -p ~/bin repos
+mkdir -p ~/bin
 
 $SUDO dnf install -y vim-enhanced ripgrep fd-find make tar openssl
-
-pushd repos
-
-popd # repos

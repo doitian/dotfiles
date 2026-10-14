@@ -7,34 +7,23 @@ set -u
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 if [ "$UID" = 0 ]; then
-  pacman -S --noconfirm zsh
+  pacman -S --needed --noconfirm zsh git sudo openssh
 
-  if ! id ian; then
-    useradd -s /usr/bin/zsh -m ian
+  if ! [ -f /etc/sudoers.d/wheel ]; then
+    echo '%wheel ALL=(ALL:ALL) ALL' >/etc/sudoers.d/wheel
+    chmod 440 /etc/sudoers.d/wheel
   fi
-
-  pushd /home/ian
-  if ! [ -d .ssh ]; then
-    sudo -H -u ian mkdir -p .ssh
-    sudo -H -u ian tee .ssh/authorized_keys <<"SSH"
-ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO+Gm8XO6FLDbmYjaFfHoFMtAe/YvkTycV/Sj/uXH6sp ian
-SSH
-    ssh-keyscan -H github.com | sudo -H -u ian tee .ssh/known_hosts
-    sudo chmod o-rw,g-w .ssh/authorized_keys .ssh/known_hosts
-  fi
-  if ! [ -d .dotfiles ]; then
-    git clone --filter=blob:none git@github.com:doitian/dotfiles.git .dotfiles
-    chown -R ian:ian .dotfiles
-  fi
-  popd # /home/ian
+  source "$DOTFILES_DIR/bootstrap.sh"
+  bootstrap_user wheel
   exit 0
 fi
 
-mkdir -p ~/bin repos
+mkdir -p ~/bin
 
 SUDO=sudo
 if [ -n "${http_proxy:-}" ]; then
   SUDO="sudo --preserve-env=http_proxy,https_proxy"
 fi
 
-$SUDO pacman -S --noconfirm zsh neovim-git tmux mise
+$SUDO pacman -S --needed --noconfirm zsh neovim tmux mise git git-lfs gnupg openssl \
+  jq fzf fd ripgrep bat eza lazygit starship uv bun typos gopass ctags awesome-terminal-fonts
