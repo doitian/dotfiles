@@ -2,10 +2,12 @@
 
 set -e
 set -u
+set -o pipefail
 [ -n "${DEBUG:-}" ] && set -x || true
 
 PRIVATE=false
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$DOTFILES_DIR"
 
 TMPL_NAME=ian
 TMPL_EMAIL=$(echo bWVAaWFueS5tZQ== | base64 -d)
@@ -21,12 +23,23 @@ function get_or_set_hash() {
   local content="$(cat)"
   local key="$1"
   local size="${2:-16}"
-  if ! [ -f "var/$key.hash" ]; then
-    openssl rand -hex "$size" >"var/$key.hash"
+  local file="var/$key.hash"
+  if ! [ -s "$file" ]; then
+    if ! command -v openssl &>/dev/null; then
+      echo "openssl is required to generate $file" >&2
+      return 1
+    fi
+    (
+      umask 077
+      openssl rand -hex "$size" >"$file.tmp"
+    )
+    mv -f "$file.tmp" "$file"
   fi
+  chmod 600 "$file"
 
-  local hash="$(cat "var/$key.hash")"
-  echo "$content" | sed -e "s|__HASH__|$hash|g"
+  local hash
+  hash="$(cat "$file")"
+  echo "${content//__HASH__/$hash}"
 }
 
 function private() {
@@ -86,11 +99,11 @@ function command_2args_ok() {
 function detect_aliases() {
   # Ignore these folders (if the necessary grep flags are available)
   local EXC_FOLDERS="{.bzr,CVS,.git,.hg,.svn,.idea,.tox}"
-  local GREP_OPTIONS
+  local GREP_OPTIONS=""
 
   if command_stdio_ok grep "" --color=auto --exclude-dir=.cvs; then
     GREP_OPTIONS="--color=auto --exclude-dir=$EXC_FOLDERS"
-  elif command_stdio_ok --color=auto --exclude=.cvs; then
+  elif command_stdio_ok grep "" --color=auto --exclude=.cvs; then
     GREP_OPTIONS="--color=auto --exclude=$EXC_FOLDERS"
   fi
 
@@ -106,7 +119,10 @@ function detect_aliases() {
     echo "alias ls='ls --color=auto'"
   fi
 
-  if command -v exa &>/dev/null; then
+  if command -v eza &>/dev/null; then
+    echo "alias l='eza'"
+    echo "alias li='eza --icons'"
+  elif command -v exa &>/dev/null; then
     echo "alias l='exa'"
     echo "alias li='exa --icons'"
   else
@@ -161,14 +177,34 @@ function fzf_setup() {
     fzf_shell="${fzf_base}/shell"
   fi
 
-  # Auto-completion
   echo "source '${fzf_shell}/completion.$1' 2> /dev/null"
   echo "source '${fzf_shell}/key-bindings.$1' 2> /dev/null"
   if command -v fd &>/dev/null; then
     echo "export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git'"
-  elif command -v fd &>/dev/null; then
+  elif command -v rg &>/dev/null; then
     echo "export FZF_DEFAULT_COMMAND='rg --files --hidden --glob \"!.git/*\"'"
   fi
+}
+
+function prune_stale_links() {
+  local depth dir link
+  {
+    for dir in "$HOME" "$HOME/.claude" "$HOME/.agents" "$HOME/.gemini" "$HOME/.copilot" "$HOME/.config/opencode" "$HOME/.pi/agent"; do
+      echo "1 $dir"
+    done
+    find_relative_d repos/public/default | sed -e "s|^|1 $HOME/|"
+    private find_relative_d repos/private/default | sed -e "s|^|1 $HOME/|"
+    echo "3 $HOME/.config"
+    echo "3 $HOME/.local/share"
+  } | while read -r depth dir; do
+    [ -d "$dir" ] || continue
+    { find "$dir" -maxdepth "$depth" -type l -lname "$DOTFILES_DIR/repos/*" 2>/dev/null || true; } | while IFS= read -r link; do
+      if ! [ -e "$link" ]; then
+        echo "remove stale link $link"
+        rm -f "$link"
+      fi
+    done
+  done
 }
 
 function cmd_repos() {
@@ -186,6 +222,7 @@ function cmd_install() {
   if ! [ -d ~/.dotfiles ]; then
     ln -snf "$DOTFILES_DIR" ~/.dotfiles
   fi
+  prune_stale_links
 
   # directories
   mkdir -p ~/bin
@@ -243,11 +280,19 @@ function cmd_install() {
 
   local PUBLIC_SNIPPETS_DIR="$DOTFILES_DIR/repos/public/nvim/snippets"
   local PRIVATE_SNIPPETS_DIR="$DOTFILES_DIR/repos/private/nvim/snippets"
-  if [ "$PRIVATE" = "true" ] && command -v jq &>/dev/null; then
-    jq -s 'reduce .[] as $item ({}; . * $item)' "$PRIVATE_SNIPPETS_DIR"/* >"$PUBLIC_SNIPPETS_DIR/private-snippets.code-snippets"
+  if [ "$PRIVATE" = "true" ]; then
+    local private_snippets=()
+    if [ -d "$PRIVATE_SNIPPETS_DIR" ]; then
+      private_snippets=("$PRIVATE_SNIPPETS_DIR"/*)
+    fi
+    if ! [ -e "${private_snippets[0]:-}" ]; then
+      rm -f "$PUBLIC_SNIPPETS_DIR/private-snippets.code-snippets"
+    elif command -v jq &>/dev/null; then
+      jq -s 'reduce .[] as $item ({}; . * $item)' "${private_snippets[@]}" >"$PUBLIC_SNIPPETS_DIR/private-snippets.code-snippets"
+    fi
   fi
   local VSCODE_SNIPPETS_DIR
-  for VSCODE_SNIPPETS_DIR in "$HOME/Library/Application Support/Code/User/snippets"; do
+  for VSCODE_SNIPPETS_DIR in "$HOME/Library/Application Support/Code/User/snippets" "$HOME/.config/Code/User/snippets"; do
     if [ -d "$VSCODE_SNIPPETS_DIR" ]; then
       rm -rf "$VSCODE_SNIPPETS_DIR"
       ln -snf "$PUBLIC_SNIPPETS_DIR" "$VSCODE_SNIPPETS_DIR"
@@ -260,11 +305,17 @@ function cmd_install() {
 
   # gpg
   mkdir -p ~/.gnupg
+  chmod 700 ~/.gnupg
   cp "$DOTFILES_DIR/repos/public/gpg-agent.conf" ~/.gnupg/gpg-agent.conf
-  if [ -f /usr/local/bin/pinentry-mac ]; then
-    echo 'pinentry-program /usr/local/bin/pinentry-mac' >>~/.gnupg/gpg-agent.conf
+  local pinentry_mac
+  if pinentry_mac="$(command -v pinentry-mac)"; then
+    echo "pinentry-program $pinentry_mac" >>~/.gnupg/gpg-agent.conf
   fi
-  local EXPORT_SSH_AUTH_SOCK="export SSH_AUTH_SOCK='$(gpgconf --list-dirs agent-ssh-socket 2>/dev/null || true)'"
+  local ssh_auth_sock EXPORT_SSH_AUTH_SOCK=""
+  ssh_auth_sock="$(gpgconf --list-dirs agent-ssh-socket 2>/dev/null || true)"
+  if [ -n "$ssh_auth_sock" ]; then
+    EXPORT_SSH_AUTH_SOCK="export SSH_AUTH_SOCK='$ssh_auth_sock'"
+  fi
 
   # git
   GITCONFIG_PATH="$HOME/.gitconfig"
@@ -272,7 +323,9 @@ function cmd_install() {
     GITCONFIG_PATH="$HOME/.gitconfig.user"
     git config --global include.path .gitconfig.user
   fi
-  cat repos/public/gitconfig.tmpl | tmpl_apply >"$GITCONFIG_PATH"
+  rm -f "$GITCONFIG_PATH.tmp"
+  tmpl_apply <repos/public/gitconfig.tmpl >"$GITCONFIG_PATH.tmp"
+  mv -f "$GITCONFIG_PATH.tmp" "$GITCONFIG_PATH"
   if [[ "$OSTYPE" == "darwin"* ]]; then
     git config --global credential.helper osxkeychain
   fi
@@ -287,11 +340,12 @@ function cmd_install() {
     git config --global merge.tool nvimdiff
   fi
   if [[ "$OSTYPE" == "darwin"* ]]; then
+    mkdir -p "$HOME/Library/Application Support/lazygit"
     ln -snf "$DOTFILES_DIR/repos/public/default/.config/lazygit/config.yml" "$HOME/Library/Application Support/lazygit/config.yml"
   fi
 
   # zsh
-  rm -f ~/.zshrc
+  rm -f ~/.zshrc.tmp
   (
     echo '# vim: fmr={{{{,}}}}:fdm=marker'
     head_cat '#' repos/public/zshrc
@@ -325,11 +379,12 @@ function cmd_install() {
       echo '# proxy {{""{{1'
       echo 'if [ -f /etc/profile.d/proxy.sh ]; then source /etc/profile.d/proxy.sh; fi'
     fi
-  ) >~/.zshrc
-  chmod 0440 ~/.zshrc
+  ) >~/.zshrc.tmp
+  chmod 0440 ~/.zshrc.tmp
+  mv -f ~/.zshrc.tmp ~/.zshrc
 
   # bash
-  rm -f ~/.bashrc
+  rm -f ~/.bashrc.tmp
   (
     echo '# vim: fmr={{{{,}}}}:fdm=marker'
     head_cat '#' repos/public/bashrc
@@ -352,32 +407,41 @@ function cmd_install() {
       echo "# starship {{""{{1"
       echo 'eval "$(starship init bash)"'
     fi
-  ) >~/.bashrc
-  chmod 0440 ~/.bashrc
+  ) >~/.bashrc.tmp
+  chmod 0440 ~/.bashrc.tmp
+  mv -f ~/.bashrc.tmp ~/.bashrc
 
   # mutt
   private ln -snf "$DOTFILES_DIR/repos/private/mutt" ~/.mutt
   private mkdir -p ~/.mutt/cred/
-  private find_relative ~/.mutt/accounts | xargs -I % touch ~/.mutt/cred/%
+  private chmod -R go-rwx ~/.mutt/cred/
+  private find_relative ~/.mutt/accounts | xargs -I % sh -c 'umask 077 && touch "$1" && chmod 600 "$1"' sh ~/.mutt/cred/%
 
   if [ -n "${WSLENV:-}" ]; then
     if [ -f /etc/profile.d/proxy.sh ]; then
       source /etc/profile.d/proxy.sh
     fi
-    sudo ln -snf "$(which ssh.exe)" "$HOME/bin/ssh"
-    sudo ln -snf "$(which scp.exe)" "$HOME/bin/scp"
-    sudo ln -snf "$(which gpg.exe)" "$HOME/bin/gpg"
-    sudo ln -snf "$(which gopass.exe)" "$HOME/bin/gopass"
+    local exe
+    for exe in ssh scp gpg gopass; do
+      if command -v "$exe.exe" &>/dev/null; then
+        ln -snf "$(command -v "$exe.exe")" "$HOME/bin/$exe"
+      fi
+    done
     git config --global core.sshCommand "$HOME/bin/ssh"
     if command -v wslview &>/dev/null; then
-      sudo ln -snf "$(which wslview)" "$HOME/bin/xdg-open"
+      ln -snf "$(command -v wslview)" "$HOME/bin/xdg-open"
     fi
   fi
 
   # aria2
   mkdir -p ~/.aria2/
-  cat repos/public/aria2rpc.conf.tmpl | tmpl_apply | get_or_set_hash aria2rpc 8 >~/.aria2/aria2rpc.conf
-  chmod 0640 ~/.aria2/aria2rpc.conf
+  rm -f ~/.aria2/aria2rpc.conf.tmp
+  (
+    umask 027
+    tmpl_apply <repos/public/aria2rpc.conf.tmpl | get_or_set_hash aria2rpc 8 >~/.aria2/aria2rpc.conf.tmp
+  )
+  chmod 0640 ~/.aria2/aria2rpc.conf.tmp
+  mv -f ~/.aria2/aria2rpc.conf.tmp ~/.aria2/aria2rpc.conf
 
   # Linux GUI
   if [[ "$OSTYPE" == "linux"* && (-n "${DISPLAY:-}" || -n "${WAYLAND_DISPLAY:-}") ]]; then
@@ -440,10 +504,11 @@ function cmd_uninstall() {
   private find_relative repos/private/default | xargs -I % rm -f "$HOME/%"
   find_relative repos/public/default | xargs -I % rm -f "$HOME/%"
 
-  rm -f ~/bin/vim
+  if [ -L ~/bin/nvim ]; then
+    rm -f ~/bin/nvim
+  fi
   rm -f ~/.bashrc
   rm -f ~/.zshrc
-  rm -f ~/.gitignore
   rm -rf ~/.aria2/
   rm -f ~/.gitconfig
   rm -f ~/.bash_profile
@@ -454,24 +519,34 @@ function cmd_uninstall() {
   rm -f ~/.claude/skills
   rm -f ~/.claude/AGENTS.md
   rm -f ~/.pi/agent/AGENTS.md
+  rm -f ~/.gemini/AGENTS.md
+  rm -f ~/.copilot/copilot-instructions.md
+  rm -f ~/.config/opencode/AGENTS.md
   rm -f ~/.agents/skills
   rm -f ~/.agents/.skill-lock.json
   rm -f ~/.gemini/settings.json
-  rm -rf ~/Library/KeyBindings/
-
-  priate rm ~/.private-snippets.vim
+  rm -f ~/.vim-spell-en.utf-8.add
+  rm -f ~/.gnupg/gpg-agent.conf
+  rm -f ~/.config/fontconfig/fonts.conf
+  rm -f ~/.local/share/icons/hicolor/256x256/apps/com.anthropic.claude.png
+  rm -f ~/.local/share/icons/hicolor/512x512/apps/md.obsidian.obsidian.png
+  rm -f ~/.termux/colors.properties ~/.termux/termux.properties
+  rm -f ~/bin/cargo ~/bin/mbx-target
 
   if [ -n "${WSLENV:-}" ]; then
     rm -f "$HOME/bin/ssh"
     rm -f "$HOME/bin/scp"
     rm -f "$HOME/bin/gpg"
     rm -f "$HOME/bin/gopass"
+    rm -f "$HOME/bin/xdg-open"
   fi
 }
 
 function main() {
   local command="${1:-}"
-  shift
+  if [ "$#" -gt 0 ]; then
+    shift
+  fi
   if [ "${1:-}" = "--private" -o "${1:-}" = "-p" ]; then
     PRIVATE=true
   fi
@@ -487,7 +562,8 @@ function main() {
     cmd_uninstall
     ;;
   *)
-    echo "manage.sh repos|install|uninstall [--private]"
+    echo "manage.sh repos|install|uninstall [--private]" >&2
+    exit 1
     ;;
   esac
 }
