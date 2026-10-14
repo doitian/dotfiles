@@ -1,49 +1,28 @@
 #!/bin/bash
 
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-cd "$DOTFILES_DIR"
+cd "$DOTFILES_DIR" || exit 1
 
 mkdir -p "$HOME/.ssh"
-ssh-keyscan -H github.com | tee "$HOME/.ssh/known_hosts"
-
-if command -v brew &>/dev/null; then
-  if [ -d "$DOTFILES_DIR/repos/private" ]; then
-    ./manage.sh r -p
-    ./manage.sh i -p
-    (
-      ./debian.sh --apt --brew
-      ./manage.sh r -p
-      ./manage.sh i -p
-    ) &
-    disown
-  else
-    ./manage.sh r
-    ./manage.sh i
-    (
-      ./debian.sh --apt --brew
-      ./manage.sh r
-      ./manage.sh i
-    ) &
-    disown
-  fi
-else
-  if [ -d "$DOTFILES_DIR/repos/private" ]; then
-    ./manage.sh r -p
-    ./manage.sh i -p
-    (
-      ./debian.sh --apt
-      ./manage.sh r -p
-      ./manage.sh i -p
-    ) &
-    disown
-  else
-    ./manage.sh r
-    ./manage.sh i
-    (
-      ./debian.sh --apt
-      ./manage.sh r
-      ./manage.sh i
-    ) &
-    disown
-  fi
+chmod 700 "$HOME/.ssh"
+if ! ssh-keygen -F github.com -f "$HOME/.ssh/known_hosts" &>/dev/null; then
+  ssh-keyscan -H github.com >>"$HOME/.ssh/known_hosts"
 fi
+
+MANAGE_FLAGS=()
+if [ -d "$DOTFILES_DIR/repos/private" ]; then
+  MANAGE_FLAGS=(-p)
+fi
+DEBIAN_FLAGS=(--apt)
+if command -v brew &>/dev/null; then
+  DEBIAN_FLAGS+=(--brew)
+fi
+
+./manage.sh r "${MANAGE_FLAGS[@]}"
+./manage.sh i "${MANAGE_FLAGS[@]}"
+(
+  ./debian.sh "${DEBIAN_FLAGS[@]}"
+  ./manage.sh r "${MANAGE_FLAGS[@]}"
+  ./manage.sh i "${MANAGE_FLAGS[@]}"
+) &
+disown
