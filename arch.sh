@@ -26,4 +26,5 @@ if [ -n "${http_proxy:-}" ]; then
 fi
 
 $SUDO pacman -S --needed --noconfirm zsh neovim tmux mise git git-lfs gnupg openssl \
-  jq fzf fd ripgrep bat eza lazygit starship uv bun typos gopass ctags awesome-terminal-fonts
+  jq fzf fd ripgrep bat eza lazygit starship uv bun typos gopass ctags \
+  awesome-terminal-fonts ttf-meslo-nerd
